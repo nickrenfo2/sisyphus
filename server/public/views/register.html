@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sisApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In to your Sisyphus</title>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/scripts/app.js"></script>
+    <link rel="stylesheet" href="views/styles.css">
+</head>
+<body ng-controller="LoginController as log">
+<h1>Please log in below</h1>
+{{log.itworks}}
+<form ng-submit="log.login()">
+    <label for="username">Username:</label> <input type="text" id="username" name="username" ng-model="log.acct.username"><br/>
+    <label for="password">Password:</label> <input type="password" id="password" name="username" ng-model="log.acct.password"><br/>
+    <input type="submit">
+    <button id="register-button" ng-click="goRegister()">Register</button>
+</form>
+
+</body>
+</html>

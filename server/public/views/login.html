@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sisApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In to your Sisyphus</title>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="assets/scripts/app.js"></script>
+    <link rel="stylesheet" href="views/styles.css">
+</head>
+<body ng-controller="LoginController as log">
+    <h1>Please log in below</h1>
+    {{log.itworks}}
+    <!--<form ng-submit="log.login()">-->
+    <form>
+        <label for="username">Username:</label> <input type="text" id="username" name="username" ng-model="log.acct.username"><br/>
+        <label for="password">Password:</label> <input type="password" id="password" name="username" ng-model="log.acct.password"><br/>
+        <div ng-hide="log.registering">
+            <input type="submit" ng-click="log.login()">
+            <div id="register" ng-click="log.registering = true">Register</div>
+        </div>
+        <div ng-show="log.registering">
+            <label for="confirmPass">Password Confirm:</label> <input type="password" id="confirmPass" name="confirm" ng-model="log.acct.confirm"><br/>
+            <label for="sisSerial">Serial Number:</label><input type="text" id="sisSerial" name="serial" ng-model="log.acct.serial"><br/>
+            <label for="sisId">SID:</label><input type="text" id="sisId" name="sisId" ng-model="log.acct.sid"><br/>
+            <button id="register-button" ng-click="log.register()">Register</button>
+            <div id="alreadyRegistered" ng-click="log.registering = false">Already have an account?</div>
+        </div>
+    </form>
+</body>
+</html>
