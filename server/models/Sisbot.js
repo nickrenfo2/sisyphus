@@ -5,12 +5,22 @@ var SisbotSchema = new mongoose.Schema({
     sid:{type:String,required:true},
     state:{
         status:String, //pause, play, sleep
-        curPlaylistName:String,
+        curPlaylistTitle:String,
         curPlaylist:String,
         curPathInd:Number,
-        curPathName:String,
+        curPathTitle:String,
         playlists:[String],
         paths:[String],
+        speed:Number,
+        lights:Number,
         timestamp:String
     }
 });
+
+SisbotSchema.pre('save', function (next) {
+    var date = new Date();
+    this.state.timestamp = date.getTime();
+    next();
+});
+
+module.exports = mongoose.model('Sisbot',SisbotSchema);

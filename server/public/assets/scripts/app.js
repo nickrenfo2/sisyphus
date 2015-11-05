@@ -20,7 +20,12 @@ app.controller('LoginController',['$http',function ($http) {
     vm.register = function(){
         console.log('register...');
         console.log(vm.acct);
-        $http.post('/acct/register',vm.acct);
+        $http.post('/acct/register',vm.acct).then(function (resp) {
+            if(resp.data.accountStatus)
+                console.log('account created');
+            if(resp.data.serialStatus)
+                console.log('sisbot added');
+        });
     }
 
 

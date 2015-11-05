@@ -83,6 +83,22 @@ function onAuthorizeSuccess() {
     console.log('ioAuthSuccess');
 }
 
+//var Sisbot = require('./models/Sisbot');
+//
+//var mySis = new Sisbot();
+//mySis.serial = '123ABD';
+//mySis.sid = '1234';
+//mySis.state = {};
+//
+//console.log(mySis);
+//mySis.save(function (err) {
+//    console.log('something');
+//    if (err) console.log(err);
+//    else console.log('all good in tha hood');
+//});
+
+
+
 
 
 var server = app.listen(process.env.PORT || 3000, function () {

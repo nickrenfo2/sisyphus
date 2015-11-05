@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var router = express.Router();
 var User = require('../models/User');
+var Sisbot = require('../models/Sisbot');
 
 
 router.get('/', function (req,res) {
@@ -26,21 +27,44 @@ router.post('/acct/login', function (req,res) {
 });
 
 
+
+
 router.post('/acct/register', function (req,res) {
-    console.log(req.body);
+    console.log("registering user:",req.body);
     User.create({
-        username:req.body.username,
+        email:req.body.email,
         password:req.body.password,
-        sisSerials:[]
+        sisSerials:['test']
     }, function (err,usr) {
+        if(err){
+            console.log('error:',err);
+            return res.send({accountStatus: "fail", serialStatus: "fail"})
+        }
         console.log(usr);
-        checkSerial(req.body.serial,req.body.sid)
+        if (checkSerial(req.body.serial,req.body.sid)) {
+            usr.sisSerials = [req.body.serial];
+            return res.send({accountStatus: "success", serialStatus: "success"})
+        } else {
+
+            return res.send({accountStatus: "success", serialStatus: "fail"})
+        }
     })
 });
 
-
+//Check that a given sid matches that of a sisbot with the given serial number
 function checkSerial(serial,sid){
     //check sisbots for serial, then check sid
+    Sisbot.findOne({serial:serial}, function (err,sisbot) {
+        if (!sisbot || err){
+            console.log("no sisbot found or error happened");
+        } else {
+            console.log("found sisbot:", sisbot);
+            if(sisbot.sid == sid)
+                return true;
+            else return false;
+        }
+    });
+
 }
 
 
