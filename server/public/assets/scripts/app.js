@@ -33,3 +33,13 @@ app.controller('LoginController',['$http',function ($http) {
 
 
 }]);
+
+app.controller('MainController',['$http', function ($http) {
+    var vm = this;
+
+    vm.logout = function(){
+        $http.get('/logout').then(function () {
+            window.location.href = '/';
+        });
+    }
+}]);

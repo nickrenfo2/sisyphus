@@ -108,7 +108,16 @@ router.post('/acct/register', function (req,res) {
     })
 });
 
+router.get('/logout', function (req,res) {
+    console.log("logging out:",req.user);
+    req.logout();
+    //res.sendFile(path.join(__dirname,"../public/views/login.html"));
+    res.redirect('/test');
+});
 
+router.get('/test', function (req,res) {
+    res.send('test');
+});
 
 
 

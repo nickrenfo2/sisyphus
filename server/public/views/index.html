@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="sisApp">
 <head>
     <meta charset="UTF-8">
     <title>Sisyphus Control</title>
@@ -14,8 +14,11 @@
     <link rel="stylesheet" href="vendor/coverflow/dist/coverflow.css">
     <link rel="stylesheet" href="views/styles.css">
 </head>
-<body>
+<body ng-controller="MainController as main">
     Hello World
+
+    <h1 ng-click="main.logout()">Log Out</h1>
+
     <!--<div id="coverflow">-->
         <!--<img src="http://www.fillmurray.com/200/300">-->
         <!--<img src="http://www.fillmurray.com/200/300">-->
