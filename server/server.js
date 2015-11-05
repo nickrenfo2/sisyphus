@@ -10,14 +10,13 @@ var MongoStore = require('connect-mongo')(session);
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var passportSocketIo = require('passport.socketio');
+var User = require('./models/User');
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,"/public")));
 
-var router = require('./routes/router');
-app.use('/',router);
 
 
 var connString = 'mongodb://localhost:27017/sisyphus';
@@ -48,10 +47,10 @@ app.use(passport.session());
 
 passport.use('local', new localStrategy({
         passReqToCallback : true,
-        usernameField: 'username'
+        usernameField: 'email'
     },
     function(req, username, password, done){
-        User.findOne({ username: username }, function(err, user) {
+        User.findOne({ email: username }, function(err, user) {
             if (err) throw err;
             if (!user)
                 return done(null, false, {message: 'Incorrect username or password.'});
@@ -100,6 +99,8 @@ function onAuthorizeSuccess() {
 
 
 
+var router = require('./routes/router');
+app.use('/',router);
 
 var server = app.listen(process.env.PORT || 3000, function () {
     console.log('listening on port:',server.address().port);

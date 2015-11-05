@@ -14,7 +14,9 @@ app.controller('LoginController',['$http',function ($http) {
 
     vm.login = function(){
         console.log(vm.acct);
-        $http.post('/acct/login',vm.acct);
+        $http.post('/acct/login',vm.acct).then(function (resp) {
+            console.log(resp.data);
+        });
     };
 
     vm.register = function(){

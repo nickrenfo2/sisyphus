@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../models/User');
 var Sisbot = require('../models/Sisbot');
 var passport = require('passport');
+//var User = require('../models/User');
 
 
 router.get('/', function (req,res) {
@@ -17,14 +18,32 @@ router.get('/login', function (req,res) {
     res.sendFile(path.join(__dirname,"../public/views/login.html"));
 });
 
-router.post('/acct/login', function (req,res) {
+router.post('/acct/login', function (req,res,next) {
     console.log('login credentials:');
     console.log(req.body);
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-    });
-    res.sendStatus(200);
+
+    //passport.authenticate('local', {
+    //    successRedirect: '/',
+    //    failureRedirect: '/login'
+    //});
+
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err); // will generate a 500 error
+        }
+        // Generate a JSON response reflecting authentication status
+        if (! user) {
+            return res.send({ success : false, message : 'authentication failed' });
+            //return res.redirect('/');
+        }
+        req.login(user, function(err) {
+            if (err) { return next(err); }
+            return res.send({ success : true, message : 'authentication succeeded' });
+            //return res.redirect('/');
+        });
+    })(req, res, next);
+
+    //res.sendStatus(200);
 });
 
 
@@ -64,6 +83,11 @@ router.post('/acct/register', function (req,res) {
                         //sisbot created successfully, set the account to be able to control the new sisbot
                         usr.sisSerials = [sis.serial];
                         usr.save();
+                        req.login(usr, function (err) {
+                            if (err) {console.log('error logging in:',err)}
+                            else console.log('logged in successfully');
+                        });
+                        //});
                         return res.send({accountStatus: "success", serialStatus: "success"})
                     }
                 });
