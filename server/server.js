@@ -7,10 +7,15 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var MongoStore = require('connect-mongo')(session);
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var Sisbot = require('./models/Sisbot');
+
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
+
 var passportSocketIo = require('passport.socketio');
 var User = require('./models/User');
+
+
 
 
 app.use(bodyParser.json());
@@ -38,7 +43,7 @@ io.use(passportSocketIo.authorize({
     secret:'secret',
     store:new MongoStore({mongooseConnection:mongoose.connection}),
     success:onAuthorizeSuccess,
-    fail:function(){console.log('ioAuthFail')}
+    fail:onAuthorizeFail
 }));
 
 app.use(passport.initialize());
@@ -78,9 +83,78 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-function onAuthorizeSuccess() {
+function onAuthorizeSuccess(data,accept) {
     console.log('ioAuthSuccess');
+    accept();
 }
+
+function onAuthorizeFail(data,message,error,accept){
+    console.log('ioAuthFail');
+    var serial = data._query.serial;
+    var qry = data._query;
+    if(serial){
+        Sisbot.findOne({serial:serial}, function (err,sisbot) {
+            if (err) console.log('error authenticating sisbot:',err);
+            else if (!sisbot) {
+                Sisbot.create({
+                    serial:serial,
+                    sid:qry.sid,
+                    state:{
+                        status:sleep,
+                        curPlaylistTitle:"",
+                        curPlaylist:"",
+                        curPathInd:0,
+                        playlists:[""],
+                        repeat:true,
+                        paths:[""],
+                        speed:100,
+                        lights:5
+                    },
+                    socketid:""
+                },function(err){
+                    if (err) console.log('error registering new sisbot:',err);
+                    accept();
+                });
+            }
+            else accept();
+        })
+    }
+}
+
+
+var router = require('./routes/router');
+app.use('/',router);
+
+//SOCKET IO CONNECTION STUFF
+io.on('connection', function (socket) {
+    console.log('a user connected:',socket.id);
+
+    socket.on('myConn',function(sisbot) {
+        console.log('sisbot connected',sisbot);
+
+        Sisbot.findOne({serial:sisbot.serial}, function (err,bot) {
+            bot.socketid = socket.id;
+            bot.save();
+            //io.sockets.connected[socket.id].emit('test')
+        })
+    });
+
+    socket.on('statechange', function (changes) {
+        var usr = socket.request.user;
+        console.log('state changed by user',usr.email,'for bot',usr.curSisbot);
+        Sisbot.findOne({serial:usr.curSisbot}, function (err,bot) {
+            console.log(bot);
+            io.sockets.connected[bot.socketid].emit('statechange');
+        });
+    });
+});
+
+
+var server = http.listen(process.env.PORT || 3000, function () {
+    console.log('listening on port:',server.address().port);
+});
+
+
 
 //var Sisbot = require('./models/Sisbot');
 //
@@ -95,14 +169,3 @@ function onAuthorizeSuccess() {
 //    if (err) console.log(err);
 //    else console.log('all good in tha hood');
 //});
-
-
-
-
-var router = require('./routes/router');
-app.use('/',router);
-
-var server = app.listen(process.env.PORT || 3000, function () {
-    console.log('listening on port:',server.address().port);
-});
-

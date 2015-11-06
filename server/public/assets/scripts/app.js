@@ -1,11 +1,34 @@
 /**
  * Created by Nick on 11/4/15.
  */
-//$(function () {
-//    $('#coverflow').coverflow();
-//});
+
+var socket = io();
+socket.on('connect', function () {
+//            socket.emit('myTest');
+});
 
 var app = angular.module('sisApp',[]);
+
+
+app.controller('MainController',['$http', function ($http) {
+    var vm = this;
+
+    vm.logout = function(){
+        $http.get('/logout').then(function () {
+            window.location.href = '/';
+        });
+    };
+
+    vm.changeState = function(){
+        var changes = {
+            status:'paused',
+            speed:10
+        };
+
+
+        socket.emit('statechange',changes);
+    }
+}]);
 
 app.controller('LoginController',['$http',function ($http) {
     var vm = this;
@@ -16,6 +39,9 @@ app.controller('LoginController',['$http',function ($http) {
         console.log(vm.acct);
         $http.post('/acct/login',vm.acct).then(function (resp) {
             console.log(resp.data);
+            if (resp.data.success){
+                window.location.href="/";
+            }
         });
     };
 
@@ -23,23 +49,13 @@ app.controller('LoginController',['$http',function ($http) {
         console.log('register...');
         console.log(vm.acct);
         $http.post('/acct/register',vm.acct).then(function (resp) {
-            if(resp.data.accountStatus)
-                console.log('account created');
-            if(resp.data.serialStatus)
-                console.log('sisbot added');
+            //if(resp.data.accountSuccess)
+            //    console.log('account created');
+            //if(resp.data.sisbotSuccess)
+            //    console.log('sisbot added');
+            console.log(resp.data.message);
+            if(resp.data.loggedIn) window.location.href="/";
         });
-    }
+    };
 
-
-
-}]);
-
-app.controller('MainController',['$http', function ($http) {
-    var vm = this;
-
-    vm.logout = function(){
-        $http.get('/logout').then(function () {
-            window.location.href = '/';
-        });
-    }
 }]);

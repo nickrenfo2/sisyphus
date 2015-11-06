@@ -10,11 +10,13 @@ var SisbotSchema = new mongoose.Schema({
         curPathInd:Number,
         curPathTitle:String,
         playlists:[String],
+        repeat:Boolean,
         paths:[String],
         speed:Number,
         lights:Number,
         timestamp:String
-    }
+    },
+    socketid:String
 });
 
 SisbotSchema.pre('save', function (next) {

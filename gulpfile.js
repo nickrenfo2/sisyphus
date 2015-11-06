@@ -52,20 +52,18 @@ var gulp = require('gulp');
 
 gulp.task('copy',function() {
     return gulp.src([
-            'angular/angular.min.js',
-            'angular/angular.min.js.map',
-            //'bootstrap/dist/css/bootstrap.min.css',
-            //'bootstrap/dist/js/bootstrap.min.js',
-            'jquery/dist/jquery.min.js',
-            'jquery/dist/jquery.min.map',
-            'jquery-mobile/dist/jquery.mobile.min.js',
-            'jquery-mobile/dist/jquery.mobile.min.css',
-            'jquery-mobile/dist/jquery.mobile.min.map',
-            'coverflow/dist/coverflow.js',
-            'coverflow/dist/coverflow.css',
-            //'angular-route/angular-route.min.js',
-            //'angular-animate/angular-animate.min.js',
-            'socket.io-client/socket.io.js'
+        'angular/angular.min.js',
+        'angular/angular.min.js.map',
+        //'bootstrap/dist/css/bootstrap.min.css',
+        //'bootstrap/dist/js/bootstrap.min.js',
+        'jquery/dist/jquery.min.js',
+        'jquery/dist/jquery.min.map',
+        'jquery-mobile/dist/jquery.mobile.min.js',
+        'jquery-mobile/dist/jquery.mobile.min.css',
+        'jquery-mobile/dist/jquery.mobile.min.map',
+        //'angular-route/angular-route.min.js',
+        //'angular-animate/angular-animate.min.js',
+        'socket.io-client/socket.io.js'
         ],{cwd:'node_modules',base:'node_modules'})
         .pipe(gulp.dest('server/public/vendor'));
 });
