@@ -92,15 +92,15 @@ function onAuthorizeFail(data,message,error,accept){
     console.log('ioAuthFail');
     var serial = data._query.serial;
     var qry = data._query;
-    if(serial){
+    if(serial && serial!='undefined'){
         Sisbot.findOne({serial:serial}, function (err,sisbot) {
             if (err) console.log('error authenticating sisbot:',err);
             else if (!sisbot) {
                 Sisbot.create({
                     serial:serial,
-                    sid:qry.sid,
+                    sid:'0000',
                     state:{
-                        status:sleep,
+                        status:'sleep',
                         curPlaylistTitle:"",
                         curPlaylist:"",
                         curPathInd:0,
@@ -134,6 +134,7 @@ io.on('connection', function (socket) {
 
         Sisbot.findOne({serial:sisbot.serial}, function (err,bot) {
             bot.socketid = socket.id;
+            bot.sid = sisbot.sid;
             bot.save();
             //io.sockets.connected[socket.id].emit('test')
         })

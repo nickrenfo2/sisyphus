@@ -5,18 +5,17 @@ var SisbotSchema = new mongoose.Schema({
     sid:{type:String,required:true},
     state:{
         status:String, //pause, play, sleep
-        curPlaylistTitle:String,
-        curPlaylist:String,
-        curPathInd:Number,
-        curPathTitle:String,
-        playlists:[String],
-        repeat:Boolean,
-        paths:[String],
-        speed:Number,
-        lights:Number,
-        timestamp:String
+        curPlaylist:String, //filename of current playlist
+        curPathInd:Number, //index of current path in playlist
+        curPathName:String, //filename of current path
+        repeat:Boolean, //whether or not to repeat the playlist upon completion
+        paths:[String], //Array of paths in current playlist
+        speed:Number, //1-10 value for speed of path
+        lights:Number, //0-10 value for intensity of lights
+        timestamp:String //Last updated time of this state object
     },
-    socketid:String
+    playlists:[String], //list of playlists available to this sisbot
+    socketid:String // id of websockets connection
 });
 
 SisbotSchema.pre('save', function (next) {
