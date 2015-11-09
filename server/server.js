@@ -156,12 +156,15 @@ var server = http.listen(process.env.PORT || 3000, function () {
 });
 
 
+/////////////////////////////////////////////////////
+// Uncomment this to add as sisbot to the registry //
+/////////////////////////////////////////////////////
 
 //var Sisbot = require('./models/Sisbot');
 //
 //var mySis = new Sisbot();
-//mySis.serial = '123ABD';
-//mySis.sid = '1234';
+//mySis.serial = 'sisbot1';
+//mySis.sid = '12345';
 //mySis.state = {};
 //
 //console.log(mySis);

@@ -1,35 +1,117 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sisApp">
+<html lang="en" ng-app="sisApp" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="UTF-8">
     <title>Sisyphus Control</title>
 
     <script src="vendor/angular/angular.min.js"></script>
     <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
     <!--<script src="vendor/jquery-mobile/dist/jquery.mobile.min.js"></script>-->
     <script src="vendor/socket.io-client/socket.io.js"></script>
+
+    <!--Progress bar-->
+    <script src="vendor/angular-animate/angular-animate.min.js"></script>
+    <script src="vendor/angular-aria/angular-aria.min.js"></script>
+    <script src="vendor/angular-material/angular-material.min.js"></script>
+    <!--Sliders-->
+    <script src="vendor/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="vendor/angularjs-slider/rzslider.min.js"></script>
     <script src="assets/scripts/app.js"></script>
 
+    <!--CSS-->
     <link rel="stylesheet" href="vendor/jquery-mobile/dist/jquery.mobile.min.css">
+    <link rel="stylesheet" href="vendor/coverflow/dist/coverflow.css">
+    <link rel="stylesheet" href="vendor/angularjs-slider/rzslider.min.css">
+    <link rel="stylesheet" href ="vendor/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="views/styles.css">
-
 </head>
+
+
 <body ng-controller="MainController as main">
-    Hello World
 
-    <h1 ng-click="main.logout()">Log Out</h1>
+    <br/>
+    <div class="awakePlaylistContainer">
+        <!-- Awake -->
+        <div class="awake">
+            <rzslider
+                id="awakeSlider"
+                rz-slider-model="main.awakeSlider.value"
+                rz-slider-floor="main.awakeSlider.floor"
+                rz-slider-ceil= "main.awakeSlider.ceil">
+            </rzslider>Off/On
+        </div>
+        <!-- Playlist -->
+        <div class="playlistDisp">
+        <p>{{main.playlist}}</p>
+        </div>
+    </div>
 
-    <button ng-click="main.changeState()">change state</button>
 
-    <!--<div id="coverflow">-->
-        <!--<img src="http://www.fillmurray.com/200/300">-->
-        <!--<img src="http://www.fillmurray.com/200/300">-->
-        <!--<img src="http://www.fillmurray.com/200/300">-->
-        <!--<img src="http://www.fillmurray.com/200/300">-->
-        <!--<img src="http://www.fillmurray.com/200/300">-->
-    <!--</div>-->
+    <!-- Path path out of playlist -->
+    <div class="xOfYContainer">
+        <p>{{main.pathXOfY}}</p>
+    </div>
 
 
+    <!-- Path progress -->
+    <div class="progressContainer">
+        <md-progress-linear
+            id="progressBar"
+            md-mode="determinate"
+            value="{{main.progress}}">
+        </md-progress-linear>
+    </div>
 
+
+    <!-- PlayPause -->
+    <div class="playPauseContainer">
+        <div class="playPauseButton" ng-click="main.playPauseClick()">
+            <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
+            <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
+        </div>
+    </div>
+
+    <!-- repeat playlist-->
+    <div class="repeatContainer">
+        <input type="checkbox" ng-model="main.repeatVal"> Repeat Playlist
+    </div>
+
+    <!-- Speed -->
+    <div class="speedContainer">
+        Speed
+        <rzslider
+            id="speedSlider"
+            rz-slider-model="main.speedSlider.value"
+            rz-slider-floor="main.speedSlider.floor"
+            rz-slider-ceil= "main.speedSlider.ceil">
+        </rzslider>
+    </div>
+
+
+    <!-- Lights-->
+    <div class="lightsContainer">
+        Lights
+        <rzslider
+            id="lightsSlider"
+            rz-slider-model="main.lightsSlider.value"
+            rz-slider-floor="main.lightsSlider.floor"
+            rz-slider-ceil="main.lightsSlider.ceil">
+        </rzslider>
+    </div>
+
+
+
+    <div class="development">
+
+        <button ng-click="main.captureState()">capture state</button>
+
+        <h3 class="logOutLink" ng-click="main.logout()">Log Out</h3>
+
+        <button ng-click="main.changeState()">change state</button>
+
+    </div>
 </body>
 </html>

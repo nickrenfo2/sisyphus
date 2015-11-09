@@ -49,6 +49,7 @@ router.post('/acct/login', function (req,res,next) {
 
 
 
+
 router.post('/acct/register', function (req,res) {
     console.log("registering user:",req.body);
     //Create a new user
@@ -168,11 +169,47 @@ router.post('/acct/register', function (req,res) {
             return res.send(returnMsg);
         }
     })
-
-
-
-
 });
+
+
+
+
+
+//retrieve the state of a sisbot
+router.post('/sis/getState', function (req,res) {
+    console.log("router: getting state: req.body:");
+    console.log(req.body);
+    var serial = req.body.serial;
+    console.log('serial: ', serial, 'and state:');
+    console.log(state);
+    Sisbot.findOne({serial: serial},function (err, sisbot) {
+            if (err) console.log(err);
+            response.send(sisbot);
+        });
+});
+
+
+
+
+//update the state of a sisbot
+router.post('/sis/putState', function (req,res) {
+    console.log("router: updating state: req.body:");
+    console.log(req.body);
+    console.log(req.body.data);
+    var serial = req.body.data.serial;
+    var newState = req.body.data.state;
+    console.log('router: serial: ', serial, 'and newState:');
+    console.log(newState);
+    Sisbot.findOneAndUpdate({serial: serial}, {$set: {state: newState}},
+        function (err) {
+            if (err) console.log(err);
+            res.sendStatus(200);
+        });
+});
+
+
+
+
 
 router.get('/logout', function (req,res) {
     console.log("logging out:",req.user);

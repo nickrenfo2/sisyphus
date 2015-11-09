@@ -1,3 +1,78 @@
+/* Note: iPhone 5 screen: 320px x 480px */
+
 body {
     background-color:aliceblue;
+}
+
+.awakePlaylistContainer {
+    width:100%;
+    height: 10%;
+}
+.awake {
+    width: 50%;
+    height: 100%;
+    float: left;
+    text-align: left;
+
+}
+#awakeSlider {
+    width:60px;
+    margin-left: 10px;
+}
+
+.playlistDisp {
+    width:40%;
+    height: 60%;
+    float:right;
+    text-align: center;
+}
+
+.xOfYContainer {
+    width: 100%;
+    height: 10%;
+}
+
+.progressContainer {
+    width:100%;
+    height: 5%;
+}
+#progressBar {
+    width: 80%;
+    margin: 5% auto 5% auto;
+}
+
+.playPauseContainer {
+    width: 20%;
+    height: 20%;
+    margin: 5% auto 5% auto;
+}
+
+.repeatContainer {
+    width: 100%;
+    height: 5%;
+}
+
+#speedSlider, #lightsSlider {
+    width: 80%;
+    margin-left: 10%;
+}
+
+.speedContainer, .lightsContainer {
+    width: 100%;
+    height:13%;
+}
+
+.awakePlaylistContainer, .xOutOfYContainer, .progressContainer, .playPauseContainer, .repeatContainer, .speedContainer, .lightsContainer{
+    border: none;
+}
+
+.logOutLink {
+    text-align: center;
+    height: 60px;
+    width: 105px;
+    background-color: #eeeeee;
+    border: 1px solid black
+}
+.development {
+    margin-top:50px;
 }
