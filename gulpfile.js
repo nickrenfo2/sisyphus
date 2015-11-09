@@ -61,6 +61,8 @@ gulp.task('copy',function() {
         'jquery-mobile/dist/jquery.mobile.min.js',
         'jquery-mobile/dist/jquery.mobile.min.css',
         'jquery-mobile/dist/jquery.mobile.min.map',
+        'jquery-flipster/dist/jquery.flipster.css',
+        'jquery-flipster/dist/jquery.flipster.min.js',
         //'angular-route/angular-route.min.js',
         //'angular-animate/angular-animate.min.js',
         'socket.io-client/socket.io.js'

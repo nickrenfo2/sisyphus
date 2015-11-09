@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sisApp">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="vendor/jquery-flipster/dist/jquery.flipster.css">
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/jquery-flipster/dist/jquery.flipster.min.js"></script>
+    <script src="assets/scripts/playlist.js"></script>
+    <title></title>
+</head>
+<body ng-controller="PlaylistController as playlist">
+<form>
+    <select name='playlist-dropdown' onchange='this.form.submit()'>
+        <option selected>Milk</option>
+        <option>Coffee</option>
+        <option>Tea</option>
+        <option>Juice</option>
+    </select>
+    <noscript><input type="submit" value="Submit"></noscript>
+</form>
+
+<div class="flipster">
+    <ul>
+        <li ng-repeat="path in playlist.playlist"><img src="{{path}}"><br><br><label>{{path}}</label></li>
+    </ul>
+</div>
+
+<div class="startHere">
+    <button class="startHere-button" ng-click="startHere()">Start from Here</button>
+</div>
+
+<div class="startBeginning">
+    <button class="startBeginning-button" ng-click="startBeginning()">Start from Beginning</button>
+</div>
+
+</body>
+</html>

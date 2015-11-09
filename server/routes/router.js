@@ -18,6 +18,13 @@ router.get('/login', function (req,res) {
     res.sendFile(path.join(__dirname,"../public/views/login.html"));
 });
 
+router.get('/playlist', function (req, res) {
+    if(!req.isAuthenticated())
+    res.sendFile(path.join(__dirname,"../public/views/login.html"));
+    else
+    res.sendFile(path.join(__dirname,"../public/views/playlist.html"));
+});
+
 router.post('/acct/login', function (req,res,next) {
     console.log('login credentials:');
     console.log(req.body);
