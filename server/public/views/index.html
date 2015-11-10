@@ -44,13 +44,13 @@
             </rzslider>Off/On
         </div>
         <!-- Playlist -->
-        <div class="playlistDisp">
-        <p>{{main.playlist}}</p>
+        <div class="playlistDispContainer">
+        <p class="playlistP" ng-click="main.goToPlaylistPage()">{{main.playlist}}</p>
         </div>
     </div>
 
 
-    <!-- Path path out of playlist -->
+    <!-- Path x out of y playlist -->
     <div class="xOfYContainer">
         <p>{{main.pathXOfY}}</p>
     </div>
@@ -76,7 +76,7 @@
 
     <!-- repeat playlist-->
     <div class="repeatContainer">
-        <input type="checkbox" ng-model="main.repeatVal"> Repeat Playlist
+        <input class="repeatBox" type="checkbox" ng-model="main.repeatVal"> Repeat Playlist
     </div>
 
     <!-- Speed -->
@@ -106,9 +106,9 @@
 
     <div class="development">
 
-        <button ng-click="main.captureState()">capture state</button>
+        <button ng-click="main.captureUIState()">capture state</button>
 
-        <h3 class="logOutLink" ng-click="main.logout()">Log Out</h3>
+        <button ng-click="main.logout()">Log Out</button>
 
         <button ng-click="main.changeState()">change state</button>
 

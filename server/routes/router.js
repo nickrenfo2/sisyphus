@@ -183,15 +183,13 @@ router.post('/acct/register', function (req,res) {
 
 
 //retrieve the state of a sisbot
-router.post('/sis/getState', function (req,res) {
-    console.log("router: getting state: req.body:");
-    console.log(req.body);
-    var serial = req.body.serial;
-    console.log('serial: ', serial, 'and state:');
-    console.log(state);
-    Sisbot.findOne({serial: serial},function (err, sisbot) {
+router.get('/sis/getState', function (req,res) {
+    console.log("router: /sis/getState");
+    Sisbot.findOne({serial: req.user.curSisbot},function (err, sisbot) {
             if (err) console.log(err);
-            response.send(sisbot);
+            res.send(sisbot);
+            console.log("router: /sys/getState:returning sisbot");
+            console.log(sisbot);
         });
 });
 
@@ -202,15 +200,19 @@ router.post('/sis/getState', function (req,res) {
 router.post('/sis/putState', function (req,res) {
     console.log("router: updating state: req.body:");
     console.log(req.body);
-    console.log(req.body.data);
-    var serial = req.body.data.serial;
-    var newState = req.body.data.state;
-    console.log('router: serial: ', serial, 'and newState:');
+
+    var newState = req.body;
+    console.log('router: email: ',req.user.email);
+    console.log('router: password: ',req.user.password);
+    console.log('router: sisSerials: ',req.user.sisSerials)
+    console.log('router: current sysbot: ', req.user.curSisbot);
+    console.log('router: updating to newState:');
     console.log(newState);
-    Sisbot.findOneAndUpdate({serial: serial}, {$set: {state: newState}},
+    Sisbot.findOneAndUpdate({serial: req.user.curSisbot}, {$set: {state: newState}},
         function (err) {
             if (err) console.log(err);
             res.sendStatus(200);
+            console.log("router: finished updating state");
         });
 });
 
