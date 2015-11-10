@@ -7,7 +7,12 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var MongoStore = require('connect-mongo')(session);
+var async = require('async');
+
+
 var Sisbot = require('./models/Sisbot');
+var Path = require('./models/Path');
+var Playlist = require('./models/Playlist');
 
 var http = require('http').createServer(app);
 var io = require('socket.io').listen(http);
@@ -26,6 +31,14 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 var connString = 'mongodb://localhost:27017/sisyphus';
 mongoose.connect(connString);
+
+
+
+var pl = new Playlist();
+pl.name = 'testpl';
+pl.title = 'testpltitle';
+pl.paths = ['test1','test2','test3'];
+//pl.save();
 
 
 app.use(session({
@@ -129,26 +142,63 @@ app.use('/',router);
 io.on('connection', function (socket) {
     console.log('a user connected:',socket.id);
 
-    socket.on('myConn',function(sisbot) {
-        console.log('sisbot connected',sisbot);
+    socket.on('myConn',function(sisbot) { //Sisbot has connected and is sending its info
+        console.log('sisbot connected');
 
         Sisbot.findOne({serial:sisbot.serial}, function (err,bot) {
-            bot.socketid = socket.id;
-            bot.sid = sisbot.sid;
-            bot.save();
-            //io.sockets.connected[socket.id].emit('test')
+            bot.socketid = socket.id; //updating socketid so it can recieve commands
+            bot.sid = sisbot.sid; //make sure SID is up-to-date
+            bot.playlists = sisbot.playlists;
+            bot.save(); //commit changes
+            var tasklist = {};
+            for (var i=0;i<bot.playlists.length;i++){
+                var myPl = bot.playlists[i];
+                tasklist[myPl]=(getPlaylistFunction(myPl));
+            }
+            console.log(tasklist);
+            async.parallel(tasklist,function(err,val){
+                if (err) console.log(err);
+                console.log('tasklist done');
+                for (var pl in val) {
+                    if (!val[pl])
+                    io.sockets.connected[socket.id].emit('getPlaylist',pl);
+                }
+            });
         })
     });
 
-    socket.on('statechange', function (changes) {
+    socket.on('statechange', function (changes) { //generic state change event
         var usr = socket.request.user;
         console.log('state changed by user',usr.email,'for bot',usr.curSisbot);
         Sisbot.findOne({serial:usr.curSisbot}, function (err,bot) {
-            console.log(bot);
+            //console.log(bot);
             io.sockets.connected[bot.socketid].emit('statechange');
         });
     });
+
+    socket.on('getPlaylist', function (playlist) {
+        console.log('Received playlist:',playlist);
+        Playlist.create(playlist, function (err) {
+            if (err) console.log(err);
+        });
+    });
 });
+
+function getPlaylistFunction(playlist){
+    return function(callback){
+        Playlist.findOne({name:playlist}, function (err,pl) {
+            console.log('searching for playlist',playlist);
+            if (!pl){
+                console.log('pl not found');
+            } else {
+                console.log('pl found');
+            }
+            callback(err,pl);
+        });
+        //console.log('search for pl:',playlist);
+        //callback(null, "something1");
+    }
+}
 
 
 var server = http.listen(process.env.PORT || 3000, function () {
@@ -157,7 +207,7 @@ var server = http.listen(process.env.PORT || 3000, function () {
 
 
 /////////////////////////////////////////////////////
-// Uncomment this to add as sisbot to the registry //
+// Uncomment this to add a sisbot to the registry //
 /////////////////////////////////////////////////////
 
 //var Sisbot = require('./models/Sisbot');
