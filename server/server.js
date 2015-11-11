@@ -150,20 +150,59 @@ io.on('connection', function (socket) {
             bot.sid = sisbot.sid; //make sure SID is up-to-date
             bot.playlists = sisbot.playlists;
             bot.save(); //commit changes
-            var tasklist = {};
-            for (var i=0;i<bot.playlists.length;i++){
-                var myPl = bot.playlists[i];
-                tasklist[myPl]=(getPlaylistFunction(myPl));
-            }
-            console.log(tasklist);
-            async.parallel(tasklist,function(err,val){
-                if (err) console.log(err);
-                console.log('tasklist done');
-                for (var pl in val) {
-                    if (!val[pl])
-                    io.sockets.connected[socket.id].emit('getPlaylist',pl);
+            //console.log(sisbot.paths);
+            function getPaths(callback){
+                console.log('checking paths');
+                var pathTasklist = {};
+                for (var i=0;i<sisbot.paths.length;i++){
+                    var myPath = sisbot.paths[i];
+                    //console.log(myPath);
+                    pathTasklist[myPath]=(getPathFunction(myPath,sisbot.serial));
                 }
+
+                async.parallel(pathTasklist, function (err,getPath) {
+                    if (err)callback(err);
+                    console.log('pathTasklist done');
+                    for (var path in getPath){
+                        if (getPath[path]) {
+                            console.log('get path', path);
+                            io.sockets.connected[socket.id].emit('getPath', path);
+                        }
+                    }
+                    callback(null);
+                });
+            }
+
+            function getPls(callback) {
+                console.log('checking playlists');
+                var plTasklist = {};
+                for (i=0;i<bot.playlists.length;i++){
+                    var myPl = bot.playlists[i];
+                    plTasklist[myPl]=(getPlaylistFunction(myPl,sisbot.serial));
+                }
+                async.parallel(plTasklist,function(err,getPl){
+                    if (err) callback(err);
+                    console.log('plTasklist done');
+                    for (var pl in getPl) {
+                        if (getPl[pl]) {
+                            console.log('get pl',pl);
+                            io.sockets.connected[socket.id].emit('getPlaylist', pl);
+                        }
+                    }
+                    callback(null);
+                });
+            }
+
+            async.series([getPaths,getPls],function(err){
+                if (err) console.log(err);
+                console.log('paths and pls done');
             });
+
+
+
+
+
+
         })
     });
 
@@ -176,27 +215,79 @@ io.on('connection', function (socket) {
         });
     });
 
+    //TODO Sanitize playlist inputs
     socket.on('getPlaylist', function (playlist) {
         console.log('Received playlist:',playlist);
+        playlist.public = true;
+        playlist.sisbots = [socket.handshake.query.serial];
+
+
+
         Playlist.create(playlist, function (err) {
             if (err) console.log(err);
         });
     });
+
+    //TODO Sanitize path inputs
+    socket.on('getPath', function (pathObj) {
+        pathObj.path = '';
+        //console.log(socket);
+        //pathObj.sisbots = [socket.handshake.query.serial];
+        console.log('Received path',pathObj.name);
+        Path.create(pathObj, function (err,newpath) {
+            if (err) console.log(err);
+            //console.log('path added:',newpath);
+        })
+    });
 });
 
-function getPlaylistFunction(playlist){
+//This will return a function that will determine whether or not the server should request and add the playlist from the connecting sisbot
+function getPlaylistFunction(playlist,serial){
     return function(callback){
-        Playlist.findOne({name:playlist}, function (err,pl) {
-            console.log('searching for playlist',playlist);
-            if (!pl){
-                console.log('pl not found');
-            } else {
-                console.log('pl found');
+        Playlist.find({name:playlist}, function (err,pls) {
+            //console.log('searching for playlist', playlist);
+            var getPl = true;
+            if (pls.length ==0) return callback(err,true); //if there are no playlists with the name, get the playlist
+            for (var i=0;i<pls.length;i++) {
+                var pl = pls[i];
+                if (pl.sisbots && pl.sisbots.indexOf(serial)>=0) {
+                    //console.log('sisbot has already added playlist',playlist);
+                    getPl = false;
+                    break;
+                }
+                if (pl.public) {
+                    console.log('public pl with name',playlist,'exists.');
+                    getPl = false;
+                    break;
+                }
             }
-            callback(err,pl);
+            callback(err,getPl);
         });
         //console.log('search for pl:',playlist);
         //callback(null, "something1");
+    }
+}
+
+//This will return a function that will determine whether or not the server should request and add the path from the connecting sisbot
+function getPathFunction(pathName,serial){
+    return function(callback){
+        var getPath = true;
+        Path.findOne({name: pathName}, function (err, path) {
+            if (err) return callback(err,path);
+            if(path) getPath = false;
+            //console.log("searching for path",path);
+            //var getPath = true;
+            //for (var i=0;i<paths.length;i++) {
+            //    var myPath = paths[i];
+            //    if (myPath.sisbots && myPath.sisbots.indexOf(serial)>=0) {
+            //        console.log('sisbot has already added path', myPath.name);
+            //        getPath = false;
+            //        break;
+            //    }
+            //}
+
+            callback(err,getPath);
+        });
     }
 }
 
