@@ -29,7 +29,8 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 
 
-var connString = 'mongodb://localhost:27017/sisyphus';
+var connString = 'mongodb://sisadmin:BoulderHillRoll@ds053894.mongolab.com:53894/sisyphus';
+//var connString = 'mongodb://localhost:27017/sisyphus';
 mongoose.connect(connString);
 
 
