@@ -221,11 +221,34 @@ io.on('connection', function (socket) {
         playlist.public = true;
         playlist.sisbots = [socket.handshake.query.serial];
 
-
-
-        Playlist.create(playlist, function (err) {
-            if (err) console.log(err);
+        var pathIdTasks = [];
+        for (var i=0;i<playlist.paths.length;i++){
+            //Path.findOne({name: playlist.paths[i].name}, function (err, path) {
+            //    if (err)console.log(err);
+            //    if(!path)return false;
+            //    //playlist.paths[i].pathid = path._id;
+            //    console.log(i);
+            //    console.log(playlist.paths);
+            //});
+            pathIdTasks.push(getPathIdFunction(playlist.paths[i].name));
+        }
+        async.parallel(pathIdTasks, function (err, pathIds) {
+            for (i=0;i<pathIds.length;i++){
+                var path = pathIds[i];
+                if(!path)console.log(playlist.paths[i].name,'missing');// playlist.paths[i].pathid="home";
+                else {
+                    //if (!path) //console.log('path',playlist.paths[i],' not found');
+                    //else {
+                    console.log(playlist.paths[i].name,'adding path id');
+                    playlist.paths[i].pathid = path._id;
+                    //}
+                }
+            }
+            Playlist.create(playlist, function (err) {
+                if (err) console.log(err);
+            });
         });
+
     });
 
     //TODO Sanitize path inputs
@@ -275,6 +298,9 @@ function getPathFunction(pathName,serial){
         Path.findOne({name: pathName}, function (err, path) {
             if (err) return callback(err,path);
             if(path) getPath = false;
+            //else console.log('did not find path',pathName);
+            //console.log('found path',pathName);
+            //console.log(path);
             //console.log("searching for path",path);
             //var getPath = true;
             //for (var i=0;i<paths.length;i++) {
@@ -291,6 +317,16 @@ function getPathFunction(pathName,serial){
     }
 }
 
+function getPathIdFunction(pathname){
+    return function(callback){
+        Path.findOne({name:pathname}, function (err,path) {
+            if(path)console.log('found path',pathname);
+            else console.log('path missing',pathname);
+            //console.log(path);
+            callback(err,path);
+        })
+    }
+}
 
 var server = http.listen(process.env.PORT || 3000, function () {
     console.log('listening on port:',server.address().port);
