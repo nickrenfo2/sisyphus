@@ -340,7 +340,7 @@ var server = http.listen(process.env.PORT || 3000, function () {
 //var Sisbot = require('./models/Sisbot');
 //
 //var mySis = new Sisbot();
-//mySis.serial = 'sisbot1';
+//mySis.serial = '456ABE';
 //mySis.sid = '12345';
 //mySis.state = {};
 //

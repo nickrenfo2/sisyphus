@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Sisyphus Control</title>
 
     <script src="vendor/angular/angular.min.js"></script>
@@ -25,90 +26,130 @@
     <link rel="stylesheet" href="vendor/coverflow/dist/coverflow.css">
     <link rel="stylesheet" href="vendor/angularjs-slider/rzslider.min.css">
     <link rel="stylesheet" href ="vendor/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    would like to get this to work but currently it does not:-->
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.ttf">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff2">
     <link rel="stylesheet" href="views/styles.css">
-</head>
+    </head>
 
 
-<body ng-controller="MainController as main">
-
-    <br/>
-    <div class="awakePlaylistContainer">
-        <!-- Awake -->
+    <body ng-controller="MainController as main">
+        <h1 class="titleText">Sisyphus Control</h1>
+        <br/>
+        <div class="awakePlaylistContainer">
+            <!-- Awake -->
         <div class="awake">
             <rzslider
-                id="awakeSlider"
+                class="awakeSlider"
                 rz-slider-model="main.awakeSlider.value"
                 rz-slider-floor="main.awakeSlider.floor"
                 rz-slider-ceil= "main.awakeSlider.ceil">
-            </rzslider>Off/On
+            </rzslider>
+            <span class="UItext offOn"> Off/On</span>
         </div>
         <!-- Playlist -->
         <div class="playlistDispContainer">
-        <p class="playlistP" ng-click="main.goToPlaylistPage()">{{main.playlist}}</p>
+        <p class="playlistP UIOutputBox" ng-click="main.goToPlaylistPage()">{{main.playlist}}</p>
         </div>
     </div>
 
 
     <!-- Path x out of y playlist -->
     <div class="xOfYContainer">
-        <p>{{main.pathXOfY}}</p>
+        <p class="xOfYPara UItext">{{main.pathXOfY}}</p>
     </div>
 
 
     <!-- Path progress -->
     <div class="progressContainer">
         <md-progress-linear
-            id="progressBar"
+            class="progressBar"
             md-mode="determinate"
             value="{{main.progress}}">
         </md-progress-linear>
     </div>
 
+    <!-- Coverflow is only shown on desktop-->
+    <div class="coverflowContainer">
+        <h1 class="coverflowObject">Coverflow goes here!</h1>
+    </div>
 
-    <!-- PlayPause -->
-    <div class="playPauseContainer">
-        <div class="playPauseButton" ng-click="main.playPauseClick()">
-            <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
-            <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
+    <!-- PlayPauseM is only shown on mobile-->
+    <div class="playPauseContainerM">
+        <div class="playPauseButtonM" ng-click="main.playPauseClick()">
+            <i class="fa fa-play fa-4x" ng-show="true"></i>
+            <i class="fa fa-pause fa-4x" ng-hide="true"></i>
         </div>
     </div>
 
     <!-- repeat playlist-->
     <div class="repeatContainer">
-        <input class="repeatBox" type="checkbox" ng-model="main.repeatVal"> Repeat Playlist
-    </div>
-
-    <!-- Speed -->
-    <div class="speedContainer">
-        Speed
-        <rzslider
-            id="speedSlider"
-            rz-slider-model="main.speedSlider.value"
-            rz-slider-floor="main.speedSlider.floor"
-            rz-slider-ceil= "main.speedSlider.ceil">
-        </rzslider>
+        <input class="repeatBox" type="checkbox" ng-model="main.repeatVal">
+        <span class="repeatText UItext">Repeat Playlist</span>
     </div>
 
 
-    <!-- Lights-->
-    <div class="lightsContainer">
-        Lights
-        <rzslider
-            id="lightsSlider"
-            rz-slider-model="main.lightsSlider.value"
-            rz-slider-floor="main.lightsSlider.floor"
-            rz-slider-ceil="main.lightsSlider.ceil">
-        </rzslider>
+
+    <div class="twoSliderContainer">
+
+        <!-- Speed -->
+        <div class="speedContainer">
+            <p class="sliderHeading speedHeading UItext">Speed</p>
+            <rzslider
+                class="speedSlider"
+                rz-slider-model="main.speedSlider.value"
+                rz-slider-floor="main.speedSlider.floor"
+                rz-slider-ceil= "main.speedSlider.ceil">
+            </rzslider>
+        </div>
+
+        <!-- PlayPauseD is only shown on desktop-->
+        <div class="playPauseContainerD">
+            <div class="playPauseButtonD" ng-click="main.playPauseClick()">
+                <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
+                <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
+            </div>
+        </div>
+
+        <!-- Lights-->
+        <div class="lightsContainer">
+            <p class="sliderHeading lightsHeading UItext">Brightness</p>
+            <rzslider
+                class="lightsSlider"
+                rz-slider-model="main.lightsSlider.value"
+                rz-slider-floor="main.lightsSlider.floor"
+                rz-slider-ceil="main.lightsSlider.ceil">
+            </rzslider>
+        </div>
     </div>
 
+    <div class="curSisbotLogOutContainer">
+        <div class="curSisbotContainer">
+            <!--<span >Current Sisyphys: </span><span class="UIOutputBox curSisBox">{{main.curSisbot}}</span>-->
+            <span class="UItext curSisText">Current sisbot: </span>
+            <span class="curSisbot-dropdown"></span>
+               <select class="curSisbot-dropdown-select" ng-model="main.curSisbot">
+                   <option selected disabled>Change Sisbot</option>
+                   <option ng-repeat="sisSerial in main.sisSerials">{{sisSerial}}</option>
+               </select>
+               <noscript><input type="submit" value="Submit"></noscript>
+            </span>
+
+        </div>
+            <div class="logOutContainer">
+        <button class="logoutB" ng-click="main.logout()">Log Out</button>
+            </div>
+    </div>
 
 
     <div class="development">
 
+        <br><br>
         <button ng-click="main.captureUIState()">capture state</button>
 
-        <button ng-click="main.logout()">Log Out</button>
 
         <button ng-click="main.changeState()">change state</button>
 

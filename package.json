@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
+    "font-awesome": "^4.4.0",
     "jquery": "^2.1.4",
     "jquery-mobile": "^1.4.1",
     "mongoose": "^4.2.4",

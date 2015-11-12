@@ -204,8 +204,8 @@ router.post('/sis/putState', function (req,res) {
     var newState = req.body;
     console.log('router: email: ',req.user.email);
     console.log('router: password: ',req.user.password);
-    console.log('router: sisSerials: ',req.user.sisSerials)
-    console.log('router: current sysbot: ', req.user.curSisbot);
+    console.log('router: sisSerials: ',req.user.sisSerials);
+    console.log('router: current sisbot: ', req.user.curSisbot);
     console.log('router: updating to newState:');
     console.log(newState);
     Sisbot.findOneAndUpdate({serial: req.user.curSisbot}, {$set: {state: newState}},
@@ -214,6 +214,42 @@ router.post('/sis/putState', function (req,res) {
             res.sendStatus(200);
             console.log("router: finished updating state");
         });
+});
+
+
+
+
+
+//retrieve user data
+router.get('/acct/getUser', function (req,res) {
+    console.log("router: /acct/getUser");
+    //Sisbot.findOne({serial: req.user.curSisbot},function (err, sisbot) {
+    //    if (err) console.log(err);
+        res.send(req.user);
+        console.log("router: /sis/getUser:returning user");
+        console.log(req.user);
+    //});
+});
+
+
+
+
+
+//update user data
+router.post('/acct/updateUser', function (req,res) {
+    console.log("router: /acct/updateUser:");
+    console.log(req.body);
+    //User.findOneAndUpdate({email: req.user.email},{$set:req.body }},
+    //    function (err, resp) {
+    //        console.log(resp);
+    //    });
+    User.findOneAndUpdate({email: req.user.email},{$set: req.body},
+        function (err) {
+            if (err) console.log(err);
+            res.sendStatus(200);
+            console.log("router: finished updating state");
+        })
+
 });
 
 

@@ -63,6 +63,10 @@ gulp.task('copy',function() {
         'jquery-mobile/dist/jquery.mobile.min.map',
         'jquery-flipster/dist/jquery.flipster.css',
         'jquery-flipster/dist/jquery.flipster.min.js',
+        'font-awesome/css/font-awesome.min.css',
+        'font-awesome/fonts/fontawesome-webfont.woff',
+        'font-awesome/fonts/fontawesome-webfont.woff2',
+        'font-awesome/fonts/fontawesome-webfont.ttf',
         //'angular-route/angular-route.min.js',
         //'angular-animate/angular-animate.min.js',
         'socket.io-client/socket.io.js'

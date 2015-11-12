@@ -38,7 +38,11 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         lights =    0,
         timestamp = 0,
         playlistLength = "0",
-        currentPathIndex = "0";
+        currentPathIndex = "0",
+        sisSerials = [],
+        curSisbot= 'curSisbot';
+
+        vm.main = {curSisbot:curSisbot};
 
     vm.showPlay=true; //default: when play is false, show the play button
 
@@ -93,7 +97,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             curPlaylist = state.curPlaylist;
             playlistLength = state.paths.length.toString();
             currentPathIndex = curPathInd.toString();
-            pathXOfY = "Path " + currentPathIndex + "/" + playlistLength;
+            pathXOfY = "Path " + currentPathIndex + " of " + playlistLength;
          //   console.log('currentPathIndex: ', currentPathIndex);
          //   console.log('playlistLength: ', playlistLength);
          //   console.log('pathXOfY');
@@ -147,15 +151,34 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
                 ceil: 10,
                 value: lights
             };
+
+            // list of available sisbots as a dropdown list //
         });
-    };
+    }
 
 
-    // Always run the getStateFromDb function when this page first starts
+    function getUserFromDb() {
+        console.log('clientApp: getting user data from db');;
+        $http({
+            method: "GET",
+            url: 'acct/getUser'
+        }).then(function (response) {
+            console.log('clientApp: retrieved user:', response);
+            console.log('clientApp: current user: ',response.data.email);
+            console.log('clientApp: current sisbot: ',response.data.curSisbot);
+            console.log('clientApp: current available sisbots: ',response.data.sisSerials);
+            sisSerials = response.data.sisSerials;
+            curSisbot = response.data.curSisbot;
+            vm.sisSerials = sisSerials;
+            vm.curSisbot = curSisbot;
+        })
+    }
+
+            // Always run the getStateFromDb function when this page first starts
     // to get the most current state of the Sisyphus
 
     getStateFromDb();
-
+    getUserFromDb();
 
     ////////////////////////////////////////
     // UI click on the playlist indicator //
@@ -175,7 +198,9 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     var controls=["main.awakeSlider.value",
                   "main.repeatVal",
                   "main.speedSlider.value",
-                  "main.lightsSlider.value"];
+                  "main.lightsSlider.value",
+                  "main.selected",
+                  "main.curSisbot"];
     //$scope.$watchGroup("main.speedSlider.value", function(oldValue, newValue){
     $scope.$watchGroup(controls, function(oldValue, newValue){
     //    console.log('.........................');
@@ -201,6 +226,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     function captureUIState(){
         console.log('clientAp: capturing UI state');
+        console.log('clientAp: curSisbot: ',vm.curSisbot);
         if(vm.awakeSlider.value===0){
             status = "sleep";
         } else if(play==true) {
@@ -245,7 +271,22 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         }).then(function(response) {
             console.log('clientApp: send state completed');
             console.log(response);
+        }).then(function(resp){
+            //update the curSisbot in the user
+            var curSisbotObject = {curSisbot: vm.curSisbot};
+            console.log('clientApp: update user:curSisbot');
+            console.log(curSisbotObject);
+            $http({
+                method: "POST",  //update the state
+                url:    "acct/updateUser",
+                data:  curSisbotObject
+            }).then(function(resp){
+                console.log(resp);
+            })
         });
+
+
+
     }
 
 
