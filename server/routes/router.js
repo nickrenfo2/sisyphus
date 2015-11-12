@@ -195,7 +195,6 @@ router.get('/sis/getState', function (req,res) {
 
 
 
-
 //update the state of a sisbot
 router.post('/sis/putState', function (req,res) {
     console.log("router: updating state: req.body:");
@@ -215,6 +214,16 @@ router.post('/sis/putState', function (req,res) {
             console.log("router: finished updating state");
         });
 });
+
+
+//pulls down all playlists from db
+router.get('/getPlaylists', function (req,res) {
+    console.log("in getPlaylists router");
+    Playlist.find({}, function(err, playlists){
+        res.json(playlists);
+    })
+});
+
 
 
 
@@ -263,10 +272,11 @@ router.get('/logout', function (req,res) {
     res.redirect('/test');
 });
 
+
+
 router.get('/test', function (req,res) {
     res.send('test');
 });
-
 
 
 module.exports = router;

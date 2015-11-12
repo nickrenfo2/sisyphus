@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="vendor/jquery-flipster/dist/jquery.flipster.css">
+    <link rel="stylesheet" href="views/playlist.css">
     <script src="vendor/angular/angular.min.js"></script>
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-flipster/dist/jquery.flipster.min.js"></script>
@@ -10,29 +11,40 @@
     <title></title>
 </head>
 <body ng-controller="PlaylistController as playlist">
-<form>
-    <select name='playlist-dropdown' onchange='this.form.submit()'>
-        <option selected>Milk</option>
-        <option>Coffee</option>
-        <option>Tea</option>
-        <option>Juice</option>
-    </select>
-    <noscript><input type="submit" value="Submit"></noscript>
-</form>
+    <!--<form>-->
+        <!--<label>Playlists</label><br><select class="playlist-dropdown" name="dropdown" ng-model="playlist.selected" ng-change='playlist.submit()'>-->
+            <!--<option ng-repeat="list in playlist.allPlaylists"selected>{{list.playlist}}</option>-->
+        <!--</select>-->
+        <!--<noscript><input type="submit" value="Submit"></noscript>-->
+    <!--</form>-->
 
-<div class="flipster">
-    <ul>
-        <li ng-repeat="path in playlist.playlist"><img src="{{path}}"><br><br><label>{{path}}</label></li>
-    </ul>
-</div>
+    <span class="playlist-dropdown">
+        <select class="playlist-dropdown-select" ng-model="playlist.selected" ng-change="playlist.submit()">
+            <option selected="selected">Choose Playlist</option>
+            <option ng-repeat="list in playlist.allPlaylists">{{list.playlist}}</option>
+        </select>
+        <noscript><input type="submit" value="Submit"></noscript>
+    </span>
 
-<div class="startHere">
-    <button class="startHere-button" ng-click="startHere()">Start from Here</button>
-</div>
+    <div class="playlist-exit">
+        <a class="playlist-exit-link" href="/index">Exit</a>
+    </div>
 
-<div class="startBeginning">
-    <button class="startBeginning-button" ng-click="startBeginning()">Start from Beginning</button>
-</div>
+    <div class="flipster">
+        <ul>
+            <li ng-repeat="path in playlist.pathlist track by $index" data-ind="{{$index}}"><img src="{{path}}"><br><br><label ng-show="">{{path}}</label></li>
+        </ul>
+    </div>
+
+    <div class="controls-container">
+        <div class="startHere">
+            <button class="startHere-button" ng-click="playlist.startHere()">Start from Here</button>
+        </div>
+        <div class="startBeginning">
+            <button class="startBeginning-button" ng-click="playlist.startBeginning()">Start from Beginning</button>
+        </div>
+    </div>
+
 
 </body>
 </html>
