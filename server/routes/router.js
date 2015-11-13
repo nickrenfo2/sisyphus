@@ -4,7 +4,7 @@ var router = express.Router();
 var User = require('../models/User');
 var Sisbot = require('../models/Sisbot');
 var passport = require('passport');
-//var User = require('../models/User');
+var Playlist = require('../models/Playlist');
 
 
 router.get('/', function (req,res) {

@@ -1,6 +1,78 @@
 /**
  * Created by johnvang on 11/5/15.
  */
+var app = angular.module('sisApp',[]);
+
+
+app.controller('PlaylistController',['$http', function ($http) {
+    var vm = this;
+    vm.allPlaylists = [];
+    vm.pathsInPlaylist = [];
+    vm.selectedPlaylist = [];
+    vm.pathlist = [];
+
+
+    //get call to server for all playlists
+    $http.get('/getPlaylists', {withCredentials: true}).then(function(response){
+        vm.allPlaylists = response.data;
+        console.log(vm.allPlaylists);
+    }, function(err){
+        console.log('you got an error' + err);
+    });
+
+    vm.selected = "Choose Playlist";
+    vm.submit = function(){
+        var selected = vm.selected;
+        console.log("selected: " + selected);
+        //this loop extracts the selected playlist (array of individual paths) from allPlaylists
+        //for(var i=0; i<vm.allPlaylists.length; i++){
+        //    if(vm.allPlaylists[i].name === selected){
+        //        console.log(vm.allPlaylists[i].paths);
+        //        vm.selectedPlaylist = vm.allPlaylists[i];
+        //    }
+        //}
+        ////vm.pathlist = vm.getPathList();
+        //console.log('pathlist:',vm.pathlist);
+        vm.pathlist = [
+            '/assets/images/noPic.png',
+            '/assets/images/apache1.png',
+            '/assets/images/circam2s.png',
+            '/assets/images/dces4p.png',
+            '/assets/images/foxwarp2.png',
+            '/assets/images/tri1b.png',
+            '/assets/images/22222.png',
+            '/assets/images/zowie1r.png'
+        ];
+    };
+
+    //takes in selectedPlaylists, extracts paths, converts paths into src url
+    vm.getPathList = function(){
+        console.log('in getPathList function');
+        console.log(vm.selectedPlaylist);
+        var newPathlist = [];
+        for(var i=0; i<vm.selectedPlaylist.paths.length; i++){
+            var path = '/assets/images/' + vm.selectedPlaylist.paths[i].name + '.png';
+            console.log(path);
+            newPathlist.push(path);
+        }
+        return newPathlist;
+    };
+
+
+
+
+    vm.startHere = function(){
+        console.log('in startHere function');
+
+    };
+
+    vm.startBeginning = function(){
+        console.log('in startBeginning function');
+    };
+
+}]);
+
+
 $(function(){
 
     $('.flipster').flipster({
@@ -17,7 +89,7 @@ $(function(){
         keyboard: true,
         scrollwheel: true,
         touch: true,
-        nav: true,
+        nav: false,
         buttons: false,
         buttonPrev: 'Previous',
         buttonNext: 'Next',
@@ -53,52 +125,6 @@ $(function(){
 });
 
 
-var app = angular.module('sisApp',[]);
-
-
-app.controller('PlaylistController',['$http', function ($http) {
-    var vm = this;
-
-    //get call to server for all playlists
-    //$http.get('/getPlaylists', {withCredentials: true}).then(function(response){
-    //    this.allPlaylists = response.data;
-    //}, function(err){
-    //    console.log(err);
-    //});
-
-    vm.allPlaylists = [
-        {id: "1234", playlist: "list1", paths: [{name: "path1-1"},{name: "path1-2"}, {name: "path1-3"}]},
-        {id: "2345", playlist: "list2", paths: [{name: "path2-1"},{name: "path2-2"}, {name: "path2-3"}]},
-        {id: "3456", playlist: "list3", paths: [{name: "path3-1"},{name: "path3-2"}, {name: "path3-3"}]}
-    ];
-
-    vm.selected = "Choose Playlist";
-    vm.submit = function(){
-        console.log(vm.selected);
-        };
-
-    vm.pathlist = [
-        '/assets/images/fuzzybunny.jpg',
-        '/assets/images/kiwibird.jpg',
-        '/assets/images/littleowl.jpg',
-        '/assets/images/puppies.jpg',
-        '/assets/images/silkies.jpg',
-        '/assets/images/puppy3.jpg',
-        '/assets/images/puppy2.jpg',
-        '/assets/images/bunnydots.jpg'
-    ];
-
-
-    vm.startHere = function(){
-        console.log('in startHere function');
-
-    };
-
-    vm.startBeginning = function(){
-        console.log('in startBeginning function');
-    };
-
-}]);
 
 
 
