@@ -1,5 +1,6 @@
 body {
-    background-image: url(../assets/images/pattern_07.jpg);
+    /*background-image: url(../assets/images/pattern_07.jpg);*/
+    background-color: #131313;
     background-repeat: no-repeat;
     background-size: cover;
 }

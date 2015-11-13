@@ -21,7 +21,7 @@
     <span class="playlist-dropdown">
         <select class="playlist-dropdown-select" ng-model="playlist.selected" ng-change="playlist.submit()">
             <option selected="selected">Choose Playlist</option>
-            <option ng-repeat="list in playlist.allPlaylists">{{list.playlist}}</option>
+            <option ng-repeat="list in playlist.allPlaylists">{{list.name}}</option>
         </select>
         <noscript><input type="submit" value="Submit"></noscript>
     </span>
@@ -29,13 +29,15 @@
     <div class="playlist-exit">
         <a class="playlist-exit-link" href="/index">Exit</a>
     </div>
-
-    <div class="flipster">
-        <ul>
-            <li ng-repeat="path in playlist.pathlist track by $index" data-ind="{{$index}}"><img src="{{path}}"><br><br><label ng-show="">{{path}}</label></li>
-        </ul>
-    </div>
-
+    <!--<div ng-if="playlist.pathlist.length > 0">-->
+        <div class="flipster">
+            <ul>
+                <!--<li ng-repeat="path in playlist.selectedPlaylist.paths track by $index" data-ind="{{$index}}">{{path.name}}<br><br><label>{{path.name}}</label></li>-->
+                <!--<li ng-repeat="path in playlist.selectedPlaylist.paths track by $index" data-ind="{{$index}}"><img src="/assets/images/{{path.name}}.png" onerror="src='/assets/images/noPic.png'"></li>-->
+                <li ng-repeat="path in playlist.pathlist track by $index" data-ind="{{$index}}"><img ng-src="{{path}}" onerror="src='/assets/images/noPic.png'"><br><br></li>
+            </ul>
+        </div>
+    <!--</div>-->
     <div class="controls-container">
         <div class="startHere">
             <button class="startHere-button" ng-click="playlist.startHere()">Start from Here</button>
