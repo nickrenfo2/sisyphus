@@ -1,7 +1,7 @@
 /**
  * Created by Nick on 11/4/15.
  */
-"use strict"
+"use strict";
 
 
 var socket = io();
@@ -27,32 +27,29 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     // before they are updated by db data or user input //
     //////////////////////////////////////////////////////
 
-    var awake =     0,
-        play =      false,
-        status =    "sleep",
-        playlist =  "playlist-default",
-        pathXOfY =  "pathXOfY-default",
-        progress =  55,
-        repeat =    false,
-        speed =     0,
-        lights =    0,
-        timestamp = 0,
-        playlistLength = "0",
+    var state = {};
+        state.status        = 'sleep';
+        state.curPlaylist   = 'curPlaylist-default';
+        state.curPathInd    = 0;
+        state.progress      = 0;
+        state.repeat        = false;
+        state.paths         = ['paths-default'];
+        state.speed         = 1;
+        state.lights        = 0;
+
+    var play             =  false,
+        pathXOfY         =  "pathXOfY-default",
+        playlistLength   = "0",
         currentPathIndex = "0",
-        sisSerials = [],
-        curSisbot= 'curSisbot';
+        sisSerials       = [],
+        curSisbot        = 'curSisbot',
+        pathTime         = 300,  //default to 5 minutes path drawing time
+        controls         =[];
 
-        vm.main = {curSisbot:curSisbot};
-
-    vm.showPlay=true; //default: when play is false, show the play button
-
-    var state =        {},
-        curPlaylist =  'curPlaylist-default',
-        curPathInd =   0,
-        curPathName =  'curPathName-default',
-        paths =        ['path0','path1','path2'];
-
-
+    vm.main = {curSisbot:curSisbot}; //sets the default for Select Sisbot UI
+    vm.onoffswitch = false;          //derived from status
+    vm.showPlay=true;                //by default play is false, so show the play button
+    vm.progress = state.progress;    //update to database value
 
     ///////////////////////////////////////////////////////
     // Get the stored state from db to populate controls //
@@ -68,64 +65,40 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         //    console.log(response);
             state = response.data.state;
 
-            // unpack status to get control values
+            // get state data to to the UI
             console.log('clientApp: state object');
             console.log(state);
 
-            //keep the state of things not used in interface
-            paths       = state.paths;
-            curPathName = state.curPathName;
-            curPlaylist = state.curPlaylist;
-            curPathName = state.curPathName;
-            curPathInd  = state.curPathInd;
-
-            // determine value of awake and  play from status data
+            // determine value of onoffswitch and  play & vm.showPlay(icon) from status data
             if (state.status == 'sleep') {
-                awake = 0;
+                vm.onoffswitch = false;
                 play = false;
                 vm.showPlay = true;
             } else if (state.status == 'play') {
                 play = true;
-                awake = 1;
                 vm.showPlay = false;
-            } else {
+                vm.onoffswitch = true;
+            } else { //state.status == 'pause'
                 play = false;
-                awake = 1;
                 vm.showPlay=true;
+                vm.onoffswitch = true;
             }
 
-            curPlaylist = state.curPlaylist;
-            playlistLength = state.paths.length.toString();
-            currentPathIndex = curPathInd.toString();
-            pathXOfY = "Path " + currentPathIndex + " of " + playlistLength;
-         //   console.log('currentPathIndex: ', currentPathIndex);
-         //   console.log('playlistLength: ', playlistLength);
-         //   console.log('pathXOfY');
-            repeat = state.repeat;
-            speed = state.speed;
-            lights = state.lights;
-
-
-            // Front Panel I/O //
-
-            // awake //
-            vm.awakeSlider = {
-                floor: 0,
-                ceil: 1,
-                value: awake
-            };
-
             // playlist //
-            vm.playlist = curPlaylist;
+            vm.curPlaylist = "Select playlist: "+state.curPlaylist;
 
             // path x of y //
+            playlistLength = state.paths.length.toString();
+            currentPathIndex = (state.curPathInd+1).toString();
+            pathXOfY = "Path " + currentPathIndex + " of " + playlistLength;
+
             vm.pathXOfY = pathXOfY;
 
             // path progress //
             // -md-progress-linear
-            vm.progress = progress;
+            //vm.progress = state.progress;
 
-            // play pause
+            // Play/Pause
             vm.playPauseClick = function () {
                 console.log('saw play/pause click');
                 console.log('play initial state: ', play);
@@ -136,23 +109,23 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             };
 
             // repeat //
-            vm.repeatVal = repeat;
+            vm.repeatVal = state.repeat;
 
             // speed slider //
             vm.speedSlider = {
-                floor: 0,
+                floor: 1,
                 ceil: 10,
-                value: speed
+                value: state.speed
             };
 
             // lights slider //
             vm.lightsSlider = {
                 floor: 0,
                 ceil: 10,
-                value: lights
+                value: state.lights
             };
 
-            // list of available sisbots as a dropdown list //
+            // list of available sisbots as a dropdown list is handled below in getUserFromDb //
         });
     }
 
@@ -174,11 +147,42 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         })
     }
 
-            // Always run the getStateFromDb function when this page first starts
+    // Always run the getStateFromDb function when this page first starts
     // to get the most current state of the Sisyphus
 
     getStateFromDb();
     getUserFromDb();
+
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Start progress update timer to update UI progress bar every 5 seconds //
+    ///////////////////////////////////////////////////////////////////////////
+
+    console.log('Starting progress update timer');
+    var numUpdates = pathTime/5;
+    var progInterval = 100/numUpdates;
+    var gatedProgInterval=0;
+    var progressKey=setInterval(function(){
+        if(state.status=="play") {
+            gatedProgInterval = progInterval;
+        } else {
+            gatedProgInterval = 0;
+        }
+        state.progress += gatedProgInterval; //keep the state info current
+        vm.progress = state.progress;        //update the UI
+        $scope.$apply();
+        //console.log('status: ',state.status);
+        //console.log('pathTime: ', pathTime, ' numUpdates: ', numUpdates, ' gatedProgInterval: ', gatedProgInterval);
+        console.log('updating progress: ', vm.progress);
+    },5000);
+
+
+
+
+
+
+
 
     ////////////////////////////////////////
     // UI click on the playlist indicator //
@@ -187,6 +191,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     vm.goToPlaylistPage = function(){
         console.log('saw Go To Playlist click');
+        //window.location.assign('/playlist');  //verify this address
     };
 
 
@@ -195,17 +200,13 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     // -update db  on control changes //
     ////////////////////////////////////
 
-    var controls=["main.awakeSlider.value",
-                  "main.repeatVal",
-                  "main.speedSlider.value",
-                  "main.lightsSlider.value",
-                  "main.selected",
-                  "main.curSisbot"];
-    //$scope.$watchGroup("main.speedSlider.value", function(oldValue, newValue){
+    controls=["main.onoffswitch",
+              "main.repeatVal",
+              "main.speedSlider.value",
+              "main.lightsSlider.value",
+              "main.selected",
+              "main.curSisbot"];
     $scope.$watchGroup(controls, function(oldValue, newValue){
-    //    console.log('.........................');
-    //    console.log('speed updated: ',oldValue);
-    //    console.log('.........................');
         captureUIState();
         }
     );
@@ -214,7 +215,9 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     // Capture state on UI switch during development //
     ///////////////////////////////////////////////////
 
-    vm.captureState=function(){
+    vm.captureUIState=function(){
+        console.log('saw capture state click');
+        console.log('******** new switch: ',vm.onoffswitch);
         captureUIState();
     };
 
@@ -227,45 +230,25 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     function captureUIState(){
         console.log('clientAp: capturing UI state');
         console.log('clientAp: curSisbot: ',vm.curSisbot);
-        if(vm.awakeSlider.value===0){
-            status = "sleep";
-        } else if(play==true) {
-            status = "play";
-        } else {
-            status = "pause";
-        }
-        //console.log('awake slider: ',vm.awakeSlider.value)
-        //console.log('play: ',play);
-        speed =  vm.speedSlider.value;
-        lights = vm.lightsSlider.value;
-        //var now = new Date();
-        //timestamp = now.getTime();
-
-        console.log('clientAp: Inputs to state');
-        console.log('status: ',      status);
-     //   console.log('curPlaylist: ', curPlaylist);
-     //   console.log('curPathInd: ',  curPathInd);
-     //   console.log('curPathName: ', curPathName);
-        console.log('repeat: ',      vm.repeatVal);
-     //   console.log('paths: ',       paths);
-     //   console.log('speed: ',       speed);
-     //   console.log('lights: ',      lights);
 
         //populate state object
-        state.status =      status;
-        state.curPlaylist = curPlaylist;
-        state.curPathInd =  curPathInd;
-        state.curPathName = curPathName;
-        state.repeat =      vm.repeatVal;
-        state.paths =       paths;
-        state.speed =       speed;
-        state.lights =      lights;
+        if(vm.onoffswitch == false){
+            state.status = "sleep";
+        } else if(play==true) {
+            state.status = "play";
+        } else {
+            state.status = "pause";
+        }
 
+        state.repeat        = vm.repeatVal;
+        state.speed         = vm.speedSlider.value;
+        state.lights        = vm.lightsSlider.value;
 
         console.log('clientApp: sending this state object for sisbot');
         console.log(state);
+        //update the state
         $http({
-            method: "POST",  //update the state
+            method: "POST",
             url:    "sis/putState",
             data:  state
         }).then(function(response) {
@@ -282,11 +265,10 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
                 data:  curSisbotObject
             }).then(function(resp){
                 console.log(resp);
+                //send new state to the sisbot
+                socket.emit('statechange, state');
             })
         });
-
-
-
     }
 
 
@@ -303,19 +285,71 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     ///////////////////////////////////////////
     // UI changeState button for development //
+    // - simulates a state change in the UI  //
     ///////////////////////////////////////////
 
     vm.changeState = function() {
         console.log('clientApp: saw change state click'); // get rid of all this when fully operational
-     //   var changes = {
-     //       status:'paused',
-     //       speed:10
-     //   };
-     //   socket.emit('statechange',changes);
+        var changes = {
+            status:'paused',
+            speed:10
+        };
+        socket.emit('statechange',changes);
     };
+
+
+    ////////////////////////////////////////////
+    // Path Complete received from the sisbot //
+    //  - update UI curPathInd, progress      //
+    ////////////////////////////////////////////
+
+    socket.on('pathcomplete',function() {
+        console.log('clientApp:pathcomplete received from sisbot');
+        console.log('clientApp:pathcomplete playlist length: ', state.paths.length);
+        console.log('clientApp:pathcomplete curPathInd: ', state.curPathInd);
+
+        // update current path index and progress
+
+        // if play and not done with playlist start next path
+        if (state.status == 'play') {
+            if (state.curPathInd < (state.paths.length - 1)) {
+                state.curPathInd++;
+                state.progress = 0;
+                console.log('clientApp:pathcomplete: increment curPathInd: ', state.curPathInd);
+            } else if (state.repeat == true) {
+                state.curPathInd = 0;
+                state.progress = 0;
+                console.log('clientApp:pathcomplete: zero curPathInd: ', state.curPathInd);
+            } else {
+                state.status = "pause";
+                state.progress = 100;
+                console.log('clientApp:pathcomplete: leave curPathInd alone: ', state.curPathInd);
+            }
+        }
+
+        //Update the database with new curPathInd and Progress
+        // - then update the UI from the database
+        console.log('clientApp:pathcomplete: updating db');
+        console.log(state);
+        $http({
+            method: "POST",
+            url:    "sis/putState",
+            data:  state
+        }).then(function(response) {
+            console.log('clientApp:pathcomplete send state completed');
+            console.log(response);
+
+        }).then(function(resp)
+        { console.log('clientApp:pathcomplete: update UI from db');
+          getStateFromDb();
+        });
+
+
+    });
 
 }]);
 
+// replace changes data with full state data/object
 
 
 

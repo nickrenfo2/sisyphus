@@ -1,49 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sisApp">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="vendor/jquery-flipster/dist/jquery.flipster.css">
     <link rel="stylesheet" href="views/playlist.css">
-    <script src="vendor/angular/angular.min.js"></script>
+    <!--<script src="vendor/angular/angular.min.js"></script>-->
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-flipster/dist/jquery.flipster.min.js"></script>
     <script src="assets/scripts/playlist.js"></script>
     <title></title>
 </head>
-<body ng-controller="PlaylistController as playlist">
-    <!--<form>-->
-        <!--<label>Playlists</label><br><select class="playlist-dropdown" name="dropdown" ng-model="playlist.selected" ng-change='playlist.submit()'>-->
-            <!--<option ng-repeat="list in playlist.allPlaylists"selected>{{list.playlist}}</option>-->
-        <!--</select>-->
-        <!--<noscript><input type="submit" value="Submit"></noscript>-->
-    <!--</form>-->
 
-    <span class="playlist-dropdown">
-        <select class="playlist-dropdown-select" ng-model="playlist.selected" ng-change="playlist.submit()">
+<body>
+    <form class="playlist-dropdown">
+        <select class="playlist-select">
             <option selected="selected">Choose Playlist</option>
-            <option ng-repeat="list in playlist.allPlaylists">{{list.name}}</option>
         </select>
         <noscript><input type="submit" value="Submit"></noscript>
-    </span>
+    </form>
 
     <div class="playlist-exit">
         <a class="playlist-exit-link" href="/index">Exit</a>
     </div>
-    <!--<div ng-if="playlist.pathlist.length > 0">-->
+    <div class="appendFlipster">
         <div class="flipster">
-            <ul>
-                <!--<li ng-repeat="path in playlist.selectedPlaylist.paths track by $index" data-ind="{{$index}}">{{path.name}}<br><br><label>{{path.name}}</label></li>-->
-                <!--<li ng-repeat="path in playlist.selectedPlaylist.paths track by $index" data-ind="{{$index}}"><img src="/assets/images/{{path.name}}.png" onerror="src='/assets/images/noPic.png'"></li>-->
-                <li ng-repeat="path in playlist.pathlist track by $index" data-ind="{{$index}}"><img ng-src="{{path}}" onerror="src='/assets/images/noPic.png'"><br><br></li>
+            <ul class="items">
+                <!--<li><img src="/assets/images/apache1.png" onerror="src='/assets/images/noPic.png'"/></li>-->
+                <!--<li><img src="/assets/images/circam2s.png" onerror="src='/assets/images/noPic.png'"/></li>-->
+                <!--<li><img src="/assets/images/dces4p.png" onerror="src='/assets/images/noPic.png'"/></li>-->
+                <!--<li><img src="/assets/images/foxwarp2.png" onerror="src='/assets/images/noPic.png'"/></li>-->
             </ul>
         </div>
-    <!--</div>-->
-    <div class="controls-container">
+    </div>
+    <div>
         <div class="startHere">
-            <button class="startHere-button" ng-click="playlist.startHere()">Start from Here</button>
+            <button class="startHere-button">Start from Here</button>
         </div>
         <div class="startBeginning">
-            <button class="startBeginning-button" ng-click="playlist.startBeginning()">Start from Beginning</button>
+            <button class="startBeginning-button">Start from Beginning</button>
         </div>
     </div>
 

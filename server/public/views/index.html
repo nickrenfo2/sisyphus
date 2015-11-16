@@ -27,8 +27,7 @@
     <link rel="stylesheet" href="vendor/coverflow/dist/coverflow.css">
     <link rel="stylesheet" href="vendor/angularjs-slider/rzslider.min.css">
     <link rel="stylesheet" href ="vendor/angular-material/angular-material.min.css">
-    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    would like to get this to work but currently it does not:-->
+    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.ttf">
     <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff">
@@ -38,10 +37,16 @@
 
 
     <body ng-controller="MainController as main">
-        <h1 class="titleText">Sisyphus Control</h1>
-        <br/>
-        <div class="awakePlaylistContainer">
+
+
+
+
+
+
+
+    <div class="awakePlaylistContainer">
             <!-- Awake -->
+<!--
         <div class="awake">
             <rzslider
                 class="awakeSlider"
@@ -51,38 +56,29 @@
             </rzslider>
             <span class="UItext offOn"> Off/On</span>
         </div>
+-->
+        <!-- trial new switch -->
+        <div class="switchContainer">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch"
+                       class="onoffswitch-checkbox" id="myonoffswitch"
+                       ng-model="main.onoffswitch">
+                       <label class="onoffswitch-label" for="myonoffswitch">
+                           <span class="onoffswitch-inner"></span>
+                           <span class="onoffswitch-switch"></span>
+                       </label>
+            </div>
+        </div>
         <!-- Playlist -->
         <div class="playlistDispContainer">
-        <p class="playlistP UIOutputBox" ng-click="main.goToPlaylistPage()">{{main.playlist}}</p>
+        <p class="playlistP" ng-click="main.goToPlaylistPage()">{{main.curPlaylist}}</p>
         </div>
     </div>
 
 
-    <!-- Path x out of y playlist -->
-    <div class="xOfYContainer">
-        <p class="xOfYPara UItext">{{main.pathXOfY}}</p>
-    </div>
-
-
-    <!-- Path progress -->
-    <div class="progressContainer">
-        <md-progress-linear
-            class="progressBar"
-            md-mode="determinate"
-            value="{{main.progress}}">
-        </md-progress-linear>
-    </div>
-
-    <!-- Coverflow is only shown on desktop-->
     <div class="coverflowContainer">
-        <h1 class="coverflowObject">Coverflow goes here!</h1>
-    </div>
-
-    <!-- PlayPauseM is only shown on mobile-->
-    <div class="playPauseContainerM">
-        <div class="playPauseButtonM" ng-click="main.playPauseClick()">
-            <i class="fa fa-play fa-4x" ng-show="true"></i>
-            <i class="fa fa-pause fa-4x" ng-hide="true"></i>
+        <div class="coverflowObject">
+            <img src="../assets/images/apache1.png">
         </div>
     </div>
 
@@ -93,6 +89,27 @@
     </div>
 
 
+    <!-- Path x out of y playlist -->
+    <div class="xOfYContainer">
+        <p class="xOfYPara UItext">{{main.pathXOfY}}</p>
+    </div>
+
+    <!-- Path progress -->
+    <div class="progressContainer">
+        <md-progress-linear
+                class="progressBar"
+                md-mode="determinate"
+                value="{{main.progress}}">
+        </md-progress-linear>
+    </div>
+
+    <!-- PlayPauseM is only shown on mobile-->
+    <div class="playPauseContainerM">
+        <div class="playPauseButtonM" ng-click="main.playPauseClick()">
+            <i class="fa fa-play fa-4x" ng-show="true"></i>
+            <i class="fa fa-pause fa-4x" ng-hide="true"></i>
+        </div>
+    </div>
 
     <div class="twoSliderContainer">
 
@@ -106,6 +123,7 @@
                 rz-slider-ceil= "main.speedSlider.ceil">
             </rzslider>
         </div>
+
 
         <!-- PlayPauseD is only shown on desktop-->
         <div class="playPauseContainerD">
@@ -130,7 +148,7 @@
     <div class="curSisbotLogOutContainer">
         <div class="curSisbotContainer">
             <!--<span >Current Sisyphys: </span><span class="UIOutputBox curSisBox">{{main.curSisbot}}</span>-->
-            <span class="UItext curSisText">Current sisbot: </span>
+            <span class="UItext curSisText">Select a Sisbot: </span>
             <span class="curSisbot-dropdown"></span>
                <select class="curSisbot-dropdown-select" ng-model="main.curSisbot">
                    <option selected disabled>Change Sisbot</option>
@@ -141,17 +159,14 @@
 
         </div>
             <div class="logOutContainer">
-        <button class="logoutB" ng-click="main.logout()">Log Out</button>
+        <button class="logoutButton" ng-click="main.logout()">Log Out</button>
             </div>
     </div>
 
 
     <div class="development">
 
-        <br><br>
         <button ng-click="main.captureUIState()">capture state</button>
-
-
         <button ng-click="main.changeState()">change state</button>
 
     </div>
