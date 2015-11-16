@@ -212,8 +212,22 @@ io.on('connection', function (socket) {
         console.log('state changed by user',usr.email,'for bot',usr.curSisbot);
         Sisbot.findOne({serial:usr.curSisbot}, function (err,bot) {
             //console.log(bot);
-            io.sockets.connected[bot.socketid].emit('statechange');
+            io.sockets.connected[bot.socketid].emit('statechange',changes);
         });
+    });
+    socket.on('pathcomplete', function(){
+        console.log('server: received pathcomplete from sisbot');
+        passportSocketIo.filterSocketsByUser(io, function(user){
+            return user.curSisbot===socket.handshake.query.serial;
+
+        }).forEach(function(socket){
+            socket.emit('pathcomplete');
+        });
+        //User.find({curSisbot:socket.handshake.query.serial}, function(err, users){
+        //   for(var i=0;i<users.length;i++){
+        //       io.sockets.connected[users[i].socketid].emit('pathcomplete');
+        //   }
+        //});
     });
 
     //TODO Sanitize playlist inputs

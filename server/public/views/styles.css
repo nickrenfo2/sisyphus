@@ -9,82 +9,91 @@
 */
 
 body {
-    background-color:lightskyblue;
+    background-color: white;
 }
 
-.titleText {
-    text-align: center;
-    font-family: "trebouchet", "verdana";
-    text-shadow: 2px 2px #eeeeee;
+/* proto.io on/off switch----------------------------------------------------------------------- */
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
-.UItext {
-    background-color: #dddddd;
-    border-radius: 4px;
+.onoffswitch-checkbox {
+    display: none;
 }
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.2s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 12px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Awake";
+    padding-left: 10px;
+    background-color: #32CC2D; color: #000000;
+}
+.onoffswitch-inner:after {
+    content: "Asleep";
+    padding-right: 10px;
+    background-color: #E61010; color: #000000;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    /*background: ;*/
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.2s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+/* end of on/off switch------------------------------------------------ */
 
 
 
+
+
+
+/*
 .awakePlaylistContainer {
     width: 100%;
     height: 10%;
+    border: 2px solid black;
+    background-color: red;
 }
-
 .awake {
     width: 50%;
     height: 100%;
     float: left;
     text-align: left;
 }
-
 .awakeSlider {
     width:60px;
     margin-left: 10px;
 }
-
 .awakeSlider:hover {
     cursor: pointer;
 }
-
-.playlistDispContainer {
-    width:40%;
-    height: 60%;
-    float:right;
-    margin-right: 5%;
-    text-align: center;
-}
-
 .playlistP {
     color: black;
-    background-color: white;
-    border: 1px solid black;
     overflow: scroll;
 }
 
-.playlistP:hover{
-    cursor: pointer;
-}
-
-.xOfYContainer {
-    width: 100%;
-    height: 5%;
-}
-
-.progressContainer {
-    width:100%;
-    height: 5%;
-}
-
-.progressBar {
-    width: 80%;
-    margin: 5% auto 5% auto;
-}
 
 .playPauseContainerM {
-/*
-     float: left;
+    float: left;
     border: 2px solid black;
-
-*/
     width: 20%;
     height: 20%;
     margin: 5% auto 5% auto;
@@ -94,12 +103,12 @@ body {
     /*
     border-radius: 4px;
     border: 2px solid black;
-     */
     height: 100px;
     width: 100px;
 
     margin: 5% auto 5% auto;
 }
+*/
 
 /*---------------------------*/
 
@@ -115,7 +124,7 @@ body {
     border-radius: 4px;
     margin: 0 auto 0 auto;
 }
-
+/*
 .repeatContainer {
     width: 100%;
     height: 5%;
@@ -140,12 +149,7 @@ body {
     width: 40%;
     float: right;
 }
-
-.UIOutputBox {
-    background-color: #eeeeee;
-}
-
-
+*/
 .playlist-dropdown {
     margin-top: 30px;
     margin-left: 30px;
@@ -156,8 +160,6 @@ body {
 }
 
 .playlist-dropdown select {
-    background-color: #A48238 ;
-    color: #fff;
     width: 80%;
     height: 2.2em;
     font-size: inherit;
@@ -166,173 +168,613 @@ body {
     border: 0;
     margin: 0;
     border-radius: 3px;
-    text-indent: 0.01px;
+    text-indent: 10px;
     text-overflow: '';
 }
 
 
 
-/**********/
-/* Mobile */
-/**********/
+/*******************/
+/* Mobile Portrait */
+/*******************/
 
-@media (max-width:599px) {
+@media (max-width:599px) and (orientation:portrait){
 
     body {
-        background: lightgray url("../assets/images/sisBackgroundSimplerMobile.jpg") no-repeat center;
-        background-size: cover;
-        font-size: 18px;
+        font-size: 12px;
+    }
+
+
+    .awakePlaylistContainer {
+        margin-top: 1px;
+        width: 100%;
+        height: 29px;
+        /*background-color: lightgray;*/
+    }
+    .switchContainer {
+        float: left;
+        width: 28%;
+        margin-left: 1px;
+    }
+    .onoffswitch {
+        /*margin-left: 5%;*/
+    }
+    .playlistDispContainer {
+        float: right;
+        width: 70%;
+        margin-right: 0;
+        height: 33px;
+        height: 90%;
+        /*        height: 100%;
+                clear: left;
+                margin-right: 5%;*/
+        text-align: center;
+    }
+    .playlistP {
+        height:75%;
+        border: 2px solid darkgray;
+        border-radius:17px;
+        padding-top: 8px;
+        padding-bottom: 2px;
+        margin-top: 0;
+        font-weight: bold;
+    }
+    /*.playlistDispContainer:hover{
+        cursor: pointer;
+    }*/
+
+
+    .coverflowContainer {
+        width: 100%;
+        height: 40%;
+        margin-top: 2%;
+        background-color: #111111;
+    }
+    .coverflowObject {
+        height: 90%;
+        width: 30%;
+        margin: 0 auto 0 auto;
+        padding-top: 2%;
+        padding-bottom: 1%;
+    }
+    img {
+        height:80%;
+    }
+
+
+    .repeatContainer {
+        width: 100%;
+        height: 3%;
+        padding-top: 2%;
+        margin: 0;
+        /*background-color: lightgray;*/
+    }
+    .repeatBox {
+        margin-left: 5%;
+        padding-top: 1px;
+    }
+
+
+    .xOfYContainer {
+        width: 100%;
+        height: 3%;
+        margin-top: 0;
+        margin-bottom:0;
+        /*background-color: lightgreen;*/
     }
 
     .xOfYPara {
         width: 120px;
-        text-align: center;
+        text-align: left;
+        padding-top: 0%;
+        margin-left: 5%;
+        margin-bottom: 0;
     }
 
-    /* Don't display coverflow on mobile */
-    .coverflowContainer {
-        display: none;
+    .progressContainer {
+        width:100%;
+        height: 3%;
+        margin-top: 0;
+        margin-bottom: 0;
+        /*background-color: lightcoral;*/
     }
 
-    .twoSliderContainer {
-        width: 100%
+    .progressBar {
+        width: 90%;
+        margin: 0% auto 0% auto;
     }
 
-    .speedHeading {
-        Width: 53px;
+
+    .playPauseContainerM {
+        width: 20%;
+        height: 8%;
+        margin: 1% auto 1% auto;
+        /*background-color: lightskyblue;*/
     }
 
-    .lightsHeading {
-        width: 85px;
-    }
-
-    /* Don't display the desktop play/pause button */
-    .playPauseContainerD {
-        display: none;
-    }
-
-    .speedContainer, .lightsContainer {
-        width: 100%;
-        height:13%;
-    }
-
-    .speedSlider, .lightsSlider {
-        margin-left: 10%;
-        width: 80%;
-    }
-
-    .sliderHeading {
-        margin-left: 10%;
-        margin-bottom: 2px;
-    }
-
-    .speedSlider:hover, .lightsSlider:hover {
-        cursor: pointer;
-    }
+    .playPauseButtonM {
+        height: 50px;
+        width: 50px;
+        margin: 1% auto 1% auto;
 }
 
-
-/**********************/
-/* Tablets or desktop */
-/**********************/
-
-@media (min-width:600px) {
-    body {
-        background: lightgray url("../assets/images/sisBackgroundSimpler.jpg") no-repeat center;
-        background-size: cover;
-        font-size: 18px;
-    }
-
-    .offOn {
-        width: 55px;
-    }
-
-    .xOfYPara {
-        width: 120px;
-        text-align: center;
-    }
-    /* Don't display the mobile play/pause button */
-    .playPauseContainerM {
-        display: none;
-    }
-
-    .coverflowObject {
-        width: 200px;
-        height: 200px;
-        border: 1px solid black;
-        background-color:mistyrose;
-        margin: 0 auto 0 auto;
-    }
-
-    .speedHeading {
-        Width: 53px;
-    }
-
-    .lightsHeading {
-        width: 85px;
-    }
 
     .twoSliderContainer {
         width: 100%;
         height: 20%;
-        margin-bottom: 20px;
+        margin-bottom: 0;
+        /*background-color: lightskyblue;*/
+    }
+    /* Don't display the desktop play/pause button
+    on the /tablet/desk view */
+    .playPauseContainerD {
+        display: none;
+    }
+    .speedHeading {
+        margin-left: 5%;
+        margin-bottom: 0px;
+        /*background-color: white;*/
+    }
+    .lightsHeading {
+        margin-left: 5%;
+        margin-bottom: 0px;
+        /*background-color: white;*/
+    }
+    .speedContainer {
+        width: 100%;
+        height:50%;
+        margin: 0;
+        /*background-color: red;*/
+    }
+    .lightsContainer {
+        width: 100%;
+        height: 50%;
+        margin: 0;
+        /*background-color: green;*/
+    }
+    /*   .sliderHeading {
+           margin-left: 10%;
+           margin-bottom: 2px;
+       }*/
+    .speedSlider {
+        margin-left: 5%;
+        width: 90%;
+        color: red;
+        /*background-color: lightcoral;*/
+    }
+    .lightsSlider {
+        margin-left: 5%;
+        width: 90%;
+        color: green;
+        /*background-color: lawngreen;*/
+    }
+    .speedSlider:hover, .lightsSlider:hover {
+        cursor: pointer;
     }
 
+
+    .curSisbotLogOutContainer {
+        width: 100%;
+        height: 7%;
+        margin-top: 6%;
+        /*background-color: #00d6b2;*/
+    }
+    .curSisbotContainer {
+        width: 45%;
+        height: 100%;
+        float: left;
+        margin-left: 5%;
+        /*background-color: mediumvioletred;*/
+    }
+    .logOutContainer {
+        width: 45%;
+        height: 100%;
+        float: right;
+        /*margin-right: 5%;*/
+        /*background-color: mediumseagreen;*/
+    }
+    .logoutButton {
+        width: 45%;
+        margin-left: 45%;/**/
+        margin-top: 16px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+} /* end mobile Portrait*/
+
+
+
+
+
+/********************/
+/* Mobile Landscape */
+/********************/
+
+
+@media (max-width:599px) and (orientation:landscape) {
+
+    body {
+    }
+
+
+    .awakePlaylistContainer {
+        margin-top: 1px;
+        width: 100%;
+        height: 24px;
+        /*background-color: lightgray;*/
+    }
+    .switchContainer {
+        float: left;
+        width: 44%;
+        margin-left: 5%;
+    }
+    .playlistDispContainer {
+        float: left;
+        width: 45%;
+        margin-right: 5%;
+        height: 32px;
+        /*        height: 100%;
+                clear: left;
+                margin-right: 5%;*/
+        text-align: center;
+    }
+    .playlistP {
+        border: 2px solid darkgray;
+        border-radius:17px;
+        padding: 5px;
+        margin-top: 0px;
+        font-weight: bold;
+    }
+    .playlistDispContainer:hover{
+        cursor: pointer;
+    }
+
+
+    .coverflowContainer {
+        width: 100%;
+        height: 40%;
+        margin-top: 2%;
+        background-color: #111111;
+    }
+    .coverflowObject {
+        height: 90%;
+        width: 30%;
+        margin: 0 auto 0 auto;
+        padding-top: 2%;
+        padding-bottom: 1%;
+    }
+    img {
+        height:100%;
+    }
+
+
+    .repeatContainer {
+        width: 100%;
+        height: 6%;
+        padding-top: 1px;
+        margin: 0;
+        background-color: lightgray;/**/
+    }
+    .repeatBox {
+        margin-left: 5%;
+        padding-top: 5px;
+    }
+
+
+    .xOfYContainer {
+        width: 100%;
+        height: 5%;
+        margin: 0;
+        background-color: lightgreen;/**/
+    }
+
+    .xOfYPara {
+        width: 120px;
+        height: 100%;
+        text-align: left;
+        padding-top: 0%;
+        margin-left: 5%;
+        margin-bottom: 1%;
+    }
+
+    .progressContainer {
+        width:100%;
+        height: 5%;
+        margin-top: 1%;
+        margin-bottom: 0;
+        background-color: lightcoral;/**/
+    }
+
+    .progressBar {
+        width: 90%;
+        margin: 0% auto 0% auto;
+    }
+
+
+
+    .playPauseContainerM {
+        width: 20%;
+        height: 8%;
+        margin: 1% auto 1% auto;
+        /*background-color: lightskyblue;*/
+    }
+
+    .playPauseButtonM {
+        height: 50px;
+        width: 50px;
+        margin: 1% auto 1% auto;
+    }
+
+
+    .twoSliderContainer {
+        width: 100%;
+        height: 20%;
+        margin-top: 10%;
+        margin-bottom: 0;
+        /*background-color: lightskyblue;*/
+    }
+    /* Don't display the desktop play/pause button
+    on the /tablet/desk view */
+    .playPauseContainerD {
+        display: none;
+    }
+    .speedHeading {
+        margin-left: 5%;
+        margin-bottom: 0px;
+        /*background-color: white;*/
+    }
+    .lightsHeading {
+        margin-left: 5%;
+        margin-bottom: 0px;
+        /*background-color: white;*/
+    }
+    .speedContainer {
+        width: 100%;
+        height:50%;
+        margin: 0;
+        /*background-color: red;*/
+    }
+    .lightsContainer {
+        width: 100%;
+        height: 50%;
+        margin: 0;
+        /*background-color: green;*/
+    }
+    /*   .sliderHeading {
+           margin-left: 10%;
+           margin-bottom: 2px;
+       }*/
+    .speedSlider {
+        margin-left: 5%;
+        width: 90%;
+        color: red;
+        /*background-color: lightcoral;*/
+    }
+    .lightsSlider {
+        margin-left: 5%;
+        width: 90%;
+        color: green;
+        /*background-color: lawngreen;*/
+    }
+    .speedSlider:hover, .lightsSlider:hover {
+        cursor: pointer;
+    }
+
+
+    .curSisbotLogOutContainer {
+        width: 100%;
+        height: 5%;
+        margin-top: 3%;
+    }
+    .curSisbotContainer {
+        width: 45%;
+        height: 100%;
+        float: left;
+        margin-left: 5%;
+        /*background-color: mediumvioletred;*/
+    }
+    .logOutContainer {
+        width: 45%;
+        height: 100%;
+        float: right;
+        /*background-color: mediumseagreen;*/
+    }
+    .logoutButton {
+        width: 30%;
+        margin-left: 60%;
+    }
+} /* end mobile landscape */
+
+
+
+
+
+
+
+
+
+
+/*********************/
+/* Tablet or desktop */
+/*********************/
+
+@media (min-width:600px) {
+
+    body {
+    }
+
+
+    .awakePlaylistContainer {
+        margin-top: 10px;
+        width: 100%;
+        height: 35px;
+        /*background-color: lightgray;*/
+    }
+    .switchContainer {
+        float: left;
+        width: 44%;
+        margin-left: 5%;
+    }
+    .playlistDispContainer {
+        float: left;
+        width: 45%;
+        margin-right: 5%;
+        height: 32px;
+/*        height: 100%;
+        clear: left;
+        margin-right: 5%;*/
+        text-align: center;
+    }
+    .playlistP {
+        border: 2px solid darkgray;
+        border-radius:17px;
+        padding: 5px;
+        margin-top: 0px;
+        font-weight: bold;
+    }
+    .playlistDispContainer:hover{
+        cursor: pointer;
+    }
+
+
+    .coverflowContainer {
+        width: 100%;
+        height: 45%;
+        margin-top: 2%;
+        background-color: #111111;
+    }
+    .coverflowObject {
+        height: 90%;
+        width: 30%;
+        margin: 0 auto 0 auto;
+        padding-top: 2%;
+        padding-bottom: 1%;
+    }
+    img {
+        height:100%;
+    }
+
+
+    .repeatContainer {
+        width: 100%;
+        height: 5%;
+        padding-top: 4%;
+        /*background-color: lightgray;*/
+    }
+    .repeatBox {
+        margin-left: 5%;
+        padding-top: 5px;
+    }
+
+
+    .xOfYContainer {
+        width: 100%;
+        height: 5%;
+        margin-top: 0;
+        margin-bottom:0;
+        /*background-color: lightgreen;*/
+    }
+
+    .xOfYPara {
+        width: 120px;
+        text-align: left;
+        padding-top: 2%;
+        margin-left: 5%;
+        margin-bottom: 1%;
+    }
+
+    .progressContainer {
+        width:100%;
+        height: 5%;
+        margin-top: 1%;
+        margin-bottom: 0;
+        /*background-color: lightcoral;*/
+    }
+
+    .progressBar {
+        width: 90%;
+        margin: 0% auto 0% auto;
+    }
+
+
+    /* ------------------------------------------------------------------- */
+    /* Don't display the mobile play/pause button on the /tablet/desk view */
+    .playPauseContainerM {
+        display: none;
+    }
+    /* ------------------------------------------------------------------- */
+
+
+
+    .twoSliderContainer {
+        width: 100%;
+        height: 10%;
+        margin-bottom: 0;
+        /*background-color: lightskyblue;*/
+    }
     .playPauseContainerD {
         width: 20%;
         height: 20%;
     }
-
     .playPauseButtonD:hover{
         cursor: pointer;
     }
-
+    .speedHeading {
+        margin-left: 12%;
+        margin-bottom: 5px;
+        /*background-color: white;*/
+    }
+    .lightsHeading {
+        margin-right: 12%;
+        margin-bottom: 5px;
+        /*background-color: white;*/
+    }
     .speedContainer, .lightsContainer {
         width: 40%;
         height:13%;
         float: left;
     }
-
-    .sliderHeading {
+ /*   .sliderHeading {
         margin-left: 10%;
         margin-bottom: 2px;
-    }
-
-    .speedSlider, .lightsSlider {
-        margin-left: 10%;
+    }*/
+    .speedSlider {
+        margin-left: 13%;
         width: 80%;
+        color: red;
+        /*background-color: lightcoral;*/
     }
-
+    .lightsSlider {
+        margin-right: 13%;
+        width: 80%;
+        color: green;
+        /*background-color: lawngreen;*/
+    }
     .speedSlider:hover, .lightsSlider:hover {
         cursor: pointer;
     }
-
-    .awakeSlider {
-        margin-left: 10%;
-    }
-
-    .xOfYPara, .repeatBox  {
-        margin-left: 5%;
-    }
-
     .curSisbotLogOutContainer {
+        width: 100%;
+        height: 5%;
+        margin-top: 3%;
     }
-
-    .curSisText {
-        margin-left: 10%;
-        margin-right: 5%;
+    .curSisbotContainer {
+        width: 45%;
+        height: 100%;
+        float: left;
+        margin-left: 5%;
+        /*background-color: mediumvioletred;*/
     }
-
-    .curSisBox {
-        margin-left: 5px;
+    .logOutContainer {
+        width: 45%;
+        height: 100%;
+        float: right;
+        /*background-color: mediumseagreen;*/
     }
-
-    .logoutB {
-        width: 20%;
-        margin-left: 40%;
+    .logoutButton {
+        width: 30%;
+        margin-left: 60%;
     }
-
-
 } /* end tablet or desktop */
 
 
@@ -342,6 +784,8 @@ body {
 
 
 .development {
-    margin-top:100px;
+    margin-top:0px;
     text-align: center;
 }
+
+
