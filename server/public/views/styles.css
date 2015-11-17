@@ -754,63 +754,8 @@ body {
     text-align: center;
 }
 
-.playlist > .pathWrapper {
-    float:left;
-    width:15%;
-    min-width:64px;
-    max-width:240px;
-}
-
-.playlist > .pathWrapper {
-    position: relative;
-
-}
-
-.playlist > .pathWrapper > .path > img{
+.manualWrapper {
+    margin:auto;
     width:100%;
-    /*float:left*/
-}
-
-.pathWrapper > .path {
-    width:100%;
-    position: relative;
-}
-
-.pathWrapper .path .pathPos {
-    /*float:left;*/
-    position: absolute;
-    width:3px;
-    height:100%;
-}
-
-.pathWrapper  .pathPos.pathStartPos {
-    /*float:left;*/
-    left:0;
-}
-
-.pathWrapper  .pathPos.pathEndPos {
-    /*float:right;*/
-    right:0;
-}
-
-.pathWrapper  .pathPos > div {
-    float:left;
-    height:2px;
-    width:100%;
-    background-color:blue;
-}
-
-
-.start1 {
-    position: relative;
-    top:10%;
-}
-
-.start0 {
-    position: relative;
-    top:90%;
-}
-
-.pathWrapper.well {
-    padding-top:0;
+    max-width:600px;
 }

@@ -227,7 +227,28 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     //    captureUIState();
     //};
 
+    ////////////////////////////////
+    //Send a jog command to sisbot//
+    ////////////////////////////////
 
+    vm.jog = function (dir) {
+        console.log('sending jog');
+        vm.jogging = setInterval(sendJog,40,dir);
+        //while (vm.jogging){
+        //    console.log('jog');
+        //    socket.emit('jog',{axis:'theta',dir:dir});
+        //}
+    };
+
+    vm.stop = function(){
+        console.log('stop jogging');
+        clearInterval(vm.jogging);
+    };
+
+    function sendJog(dir){
+        console.log('jog');
+        socket.emit('jog',{axis:'theta',dir:dir});
+    }
     //////////////////////////////////////////////////
     // Capture the state of the user interface (UI) //
     // and send it to the database                  //
@@ -256,7 +277,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         console.log(state);
 
         // send new state to the sisbot
-        socket.emit('statechange, state');
+        socket.emit('statechange',state);
 
         // update the state in the Sisbot db
         $http({
@@ -357,18 +378,19 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         // Update the database with new curPathInd and Progress
         console.log('clientApp:pathcomplete: updating db');
         console.log(state);
-        $http({
-            method: "POST",
-            url: "sis/putState",
-            data: state
-        }).then(function (response) {
-            console.log('clientApp:pathcomplete send state completed');
-            console.log(response);
-        //refresh UI
-        }).then(function (resp) {
-            console.log('clientApp:pathcomplete: update UI from db');
-            getStateFromDb();
-        });
+        //$http({
+        //    method: "POST",
+        //    url: "sis/putState",
+        //    data: state
+        //}).then(function (response) {
+        //    console.log('clientApp:pathcomplete send state completed');
+        //    console.log(response);
+        ////refresh UI
+        //}).then(function (resp) {
+        //    console.log('clientApp:pathcomplete: update UI from db');
+        //    getStateFromDb();
+        //});
+        socket.emit('statechange',state);
     };
     //});  // normal close
 

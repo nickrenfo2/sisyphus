@@ -115,13 +115,11 @@ function onAuthorizeFail(data,message,error,accept){
                     sid:'0000',
                     state:{
                         status:'sleep',
-                        curPlaylistTitle:"",
-                        curPlaylist:"",
+                        curPlaylist:"default",
                         curPathInd:0,
-                        playlists:[""],
                         repeat:true,
-                        paths:[""],
-                        speed:100,
+                        paths:["home","e100"],
+                        speed:5,
                         lights:5
                     },
                     socketid:""
@@ -199,22 +197,28 @@ io.on('connection', function (socket) {
                 console.log('paths and pls done');
             });
 
-
-
-
-
-
         })
     });
 
-    socket.on('statechange', function (changes) { //generic state change event
+
+    socket.on('statechange', function (state) { //generic state change event
         var usr = socket.request.user;
         console.log('state changed by user',usr.email,'for bot',usr.curSisbot);
-        Sisbot.findOne({serial:usr.curSisbot}, function (err,bot) {
-            //console.log(bot);
-            io.sockets.connected[bot.socketid].emit('statechange',changes);
-        });
+
+        //Sisbot.findOneAndUpdate({serial: usr.curSisbot}, {$set: {state: state}},
+        //    function (err) {
+        //        if (err) console.log(err);
+        //        res.sendStatus(200);
+        //        //console.log("router: finished updating state");
+        //    });
+        sendEventToSisbot(socket.request.user.curSisbot,'statechange',state);
     });
+
+    socket.on('jog', function (dir) {
+        //console.log('jog recieved');
+        sendEventToSisbot(socket.request.user.curSisbot,'jog',dir);
+    });
+
     socket.on('pathcomplete', function(){
         console.log('server: received pathcomplete from sisbot');
         passportSocketIo.filterSocketsByUser(io, function(user){
@@ -341,6 +345,13 @@ function getPathIdFunction(pathname){
             callback(err,path);
         })
     }
+}
+
+function sendEventToSisbot(serial,event,data){
+    Sisbot.findOne({serial:serial}, function (err,bot) {
+        //console.log(bot);
+        io.sockets.connected[bot.socketid].emit(event,data);
+    });
 }
 
 var server = http.listen(process.env.PORT || 3000, function () {

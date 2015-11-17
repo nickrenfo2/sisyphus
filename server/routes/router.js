@@ -26,8 +26,8 @@ router.get('/playlist', function (req, res) {
 });
 
 router.post('/acct/login', function (req,res,next) {
-    console.log('login credentials:');
-    console.log(req.body);
+    //console.log('login credentials:');
+    //console.log(req.body);
 
     //passport.authenticate('local', {
     //    successRedirect: '/',
@@ -58,64 +58,10 @@ router.post('/acct/login', function (req,res,next) {
 
 
 router.post('/acct/register', function (req,res) {
-    console.log("registering user:",req.body);
+    //console.log("registering user:",req.body);
     //Create a new user
     var serial = req.body.serial;
     var sid = req.body.sid;
-    //User.create({
-    //    email:req.body.email,
-    //    password:req.body.password,
-    //    sisSerials:['test'] //initialize serials
-    //}, function (err,usr) {
-    //    if(err){
-    //        //something broke, account not created
-    //        console.log('error:',err);
-    //        return res.send({accountStatus: "fail", serialStatus: "fail"})
-    //    }
-    //    console.log(usr);
-    //    //Check to see if sisbot exists
-    //    Sisbot.findOne({serial:serial}, function (err,sisbot) {
-    //        //If sisbot doesn't exist...
-    //        if (!sisbot){
-    //            //Sisbot.create({
-    //            //    serial:serial,
-    //            //    sid:sid,
-    //            //    state:{}
-    //            //}, function (err,sis) {
-    //            //    if (err) {
-    //            //        //if something broke while creating the sisbot
-    //            //        console.log('error creating sisbot:', err);
-    //            //        return res.send({accountStatus: "success", serialStatus: "fail"})
-    //            //    }
-    //            //    else {
-    //            //        //sisbot created successfully, set the account to be able to control the new sisbot
-    //            //        usr.sisSerials = [sis.serial];
-    //            //        usr.save();
-    //            //        req.login(usr, function (err) {
-    //            //            if (err) {console.log('error logging in:',err)}
-    //            //            else console.log('logged in successfully');
-    //            //        });
-    //            //        //});
-    //            //        return res.send({accountStatus: "success", serialStatus: "success"})
-    //            //    }
-    //            //});
-    //            return res.send({accountSuccess:false,serialSuccess:false,message:'No sisbot with provided serial number was found'});
-    //        } else { //if sisbot already exists
-    //            if (sid == sisbot.sid) { //make sure user has correct sid
-    //                console.log('serial and sid match');
-    //                usr.sisSerials = [serial];
-    //                usr.save(function (err,usr) { //allow user to control sisbot
-    //                    if (err) console.log('error updating user:',err); //something broke
-    //                });
-    //                return res.send({accountStatus: "success", serialStatus: "success"})
-    //            } else { //user does not have correct sid for this serial, thus do not allow them to control it
-    //                console.log('serial and sid do not match');
-    //                return res.send({accountStatus: "success", serialStatus: "fail"})
-    //            }
-    //        }
-    //    });
-    //})
-
     Sisbot.findOne({serial:serial}, function (err,sisbot) {
         var returnMsg = {
             accountSuccess:false,
@@ -184,12 +130,12 @@ router.post('/acct/register', function (req,res) {
 
 //retrieve the state of a sisbot
 router.get('/sis/getState', function (req,res) {
-    console.log("router: /sis/getState");
+    //console.log("router: /sis/getState");
     Sisbot.findOne({serial: req.user.curSisbot},function (err, sisbot) {
             if (err) console.log(err);
             res.send(sisbot);
-            console.log("router: /sys/getState:returning sisbot");
-            console.log(sisbot);
+            //console.log("router: /sys/getState:returning sisbot");
+            //console.log(sisbot);
         });
 });
 
@@ -197,28 +143,28 @@ router.get('/sis/getState', function (req,res) {
 
 //update the state of a sisbot
 router.post('/sis/putState', function (req,res) {
-    console.log("router: updating state: req.body:");
-    console.log(req.body);
-
+    //console.log("router: updating state: req.body:");
+    //console.log(req.body);
+    //
     var newState = req.body;
-    console.log('router: email: ',req.user.email);
-    console.log('router: password: ',req.user.password);
-    console.log('router: sisSerials: ',req.user.sisSerials);
-    console.log('router: current sisbot: ', req.user.curSisbot);
-    console.log('router: updating to newState:');
-    console.log(newState);
+    //console.log('router: email: ',req.user.email);
+    //console.log('router: password: ',req.user.password);
+    //console.log('router: sisSerials: ',req.user.sisSerials);
+    //console.log('router: current sisbot: ', req.user.curSisbot);
+    //console.log('router: updating to newState:');
+    //console.log(newState);
     Sisbot.findOneAndUpdate({serial: req.user.curSisbot}, {$set: {state: newState}},
         function (err) {
             if (err) console.log(err);
             res.sendStatus(200);
-            console.log("router: finished updating state");
+            //console.log("router: finished updating state");
         });
 });
 
 
 //pulls down all playlists from db
 router.get('/getPlaylists', function (req,res) {
-    console.log("in getPlaylists router");
+    //console.log("in getPlaylists router");
     Playlist.find({}, function(err, playlists){
         res.json(playlists);
     })
@@ -231,12 +177,12 @@ router.get('/getPlaylists', function (req,res) {
 
 //retrieve user data
 router.get('/acct/getUser', function (req,res) {
-    console.log("router: /acct/getUser");
+    //console.log("router: /acct/getUser");
     //Sisbot.findOne({serial: req.user.curSisbot},function (err, sisbot) {
     //    if (err) console.log(err);
         res.send(req.user);
-        console.log("router: /sis/getUser:returning user");
-        console.log(req.user);
+        //console.log("router: /sis/getUser:returning user");
+        //console.log(req.user);
     //});
 });
 
@@ -246,8 +192,8 @@ router.get('/acct/getUser', function (req,res) {
 
 //update user data
 router.post('/acct/updateUser', function (req,res) {
-    console.log("router: /acct/updateUser:");
-    console.log(req.body);
+    //console.log("router: /acct/updateUser:");
+    //console.log(req.body);
     //User.findOneAndUpdate({email: req.user.email},{$set:req.body }},
     //    function (err, resp) {
     //        console.log(resp);
@@ -256,7 +202,7 @@ router.post('/acct/updateUser', function (req,res) {
         function (err) {
             if (err) console.log(err);
             res.sendStatus(200);
-            console.log("router: finished updating state");
+            //console.log("router: finished updating state");
         })
 
 });
@@ -270,6 +216,10 @@ router.get('/logout', function (req,res) {
     req.logout();
     //res.sendFile(path.join(__dirname,"../public/views/login.html"));
     res.redirect('/test');
+});
+
+router.get('/manual', function (req, res) {
+    res.sendFile(path.join(__dirname,"../public/views/manual.html"));
 });
 
 
