@@ -1,11 +1,56 @@
+body {
+    /*background-image: url(../assets/images/pattern_07.jpg);*/
+    background-color: #131313;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-/**/
+.playlist-dropdown {
+    margin-top: 30px;
+    margin-left: 30px;
+    width: 30%;
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.playlist-dropdown select {
+    background-color: #A48238;
+    color: #fff;
+    width: 12em;
+    height: 1.5em;
+    font-size: inherit;
+    padding: .5em;
+    padding-right: 2.5em;
+    border: 0;
+    margin: 0;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    text-overflow: '';
+}
+
+.playlist-exit {
+    display: inline-block;
+    width: 30%;
+    float: right;
+    margin-top: 21px;
+    margin-right: 30px;
+    text-align: right;
+}
+
+.playlist-exit-link {
+    font-family: Calibri;
+    font-size: 28px;
+    text-decoration: none;
+    color: dimgrey;
+    text-align: right;
+}
+
 .flipster {
     /*margin-top: 10%;*/
     /*margin-bottom: 50%;*/
-    /*width: 60%;*/
-    height: 90%;
-    /*font-family: Calibri;*/
+    width: 60%;
+    font-family: Calibri;
     font-size: 18px;
     text-align: center;
     color: white;
@@ -16,11 +61,85 @@
     max-width: 80%;
 }
 
+.startHere, .startBeginning {
+    text-align: center
+}
+
+.startHere-button, .startBeginning-button {
+    box-shadow:inset 0px 1px 0px 0px #90949E;
+    background-color:#5C6580;
+    border-radius:2px;
+    border:1px solid #2E3E6F;
+    margin: 10px auto;
+    display:inline-block;
+    width: 15em;
+    height: 2.2em;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Trebuchet MS;
+    font-size:20px;
+    /*font-weight:bold;*/
+    /*padding:24px 76px;*/
+    text-decoration:none;
+    text-shadow:0px 1px 0px #9793A1;
+}
+.startHere-button:hover, .startBeginning-button:hover {
+    background-color:#2E3E6F;
+}
+.startHere-button:active, .startBeginning-button:active {
+    position:relative;
+    top:1px;
+}
 
 @media only screen
     and (min-device-width : 320px)
     and (max-device-width : 568px) {
 /*@media (max-width: 599px) {*/
+    body {
+        background-image: url(../assets/images/pattern_07.jpg);
+        background-position: center;
+    }
+
+    .playlist-dropdown {
+        margin-top: 30px;
+        margin-left: 30px;
+        width: 30%;
+        position: relative;
+        display: inline-block;
+        font-size: 24px;
+    }
+
+    .playlist-dropdown select {
+        background-color: #A48238;
+        color: #fff;
+        width: 80%;
+        height: 2.2em;
+        font-size: inherit;
+        padding: .5em;
+        padding-right: 2.5em;
+        border: 0;
+        margin: 0;
+        border-radius: 3px;
+        text-indent: 0.01px;
+        text-overflow: '';
+    }
+
+    .playlist-exit {
+        display: inline-block;
+        width: 60%;
+        text-align: right;
+        float: right;
+        margin-top: 40px;
+    }
+
+    .playlist-exit-link {
+        font-family: Calibri;
+        font-size: 32px;
+        text-decoration: none;
+        color: dimgrey;
+        text-align: right;
+    }
+
     .flipster {
         margin-top: 15%;
         margin-bottom: 35%;
@@ -39,6 +158,36 @@
         margin-bottom: 20%;
     }
 
+    .startHere, .startBeginning {
+        /*margin-top: 50px;*/
+        margin-bottom: 50px;
+        text-align: center
+    }
+
+    .startHere-button, .startBeginning-button {
+        box-shadow:inset 0px 1px 0px 0px #90949E;
+        background-color:#5C6580;
+        border-radius:2px;
+        border:1px solid #2E3E6F;
+        display:inline-block;
+        width: 80%;
+        height: 150px;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Trebuchet MS;
+        font-size:40px;
+        /*font-weight:bold;*/
+        /*padding:24px 76px;*/
+        text-decoration:none;
+        text-shadow:0px 1px 0px #9793A1;
+    }
+    .startHere-button:hover, .startBeginning-button:hover {
+        background-color:#2E3E6F;
+    }
+    .startHere-button:active, .startBeginning-button:active {
+        position:relative;
+        top:1px;
+    }
 }
 
 
