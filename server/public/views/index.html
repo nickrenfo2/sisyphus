@@ -15,10 +15,15 @@
     <!--Angular Material / Progress bar-->
     <script src="vendor/angular-animate/angular-animate.min.js"></script>
     <script src="vendor/angular-aria/angular-aria.min.js"></script>
-    <script src="vendor/angular-material/angular-material.min.js"></script>
+    <script src="vendor/angular-material/angular-material.min.js"></script><!---->
     <!--Sliders-->
     <script src="vendor/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="vendor/angularjs-slider/rzslider.min.js"></script>
+    <!-- Flipster -->
+    <link rel="stylesheet" href="vendor/jquery-flipster/dist/jquery.flipster.css">
+    <link rel="stylesheet" href="views/playlist.css">
+    <script src="vendor/jquery-flipster/dist/jquery.flipster.min.js"></script>
+
     <!--App-->
     <script src="assets/scripts/app.js"></script>
 
@@ -27,7 +32,7 @@
     <link rel="stylesheet" href="vendor/coverflow/dist/coverflow.css">
     <link rel="stylesheet" href="vendor/angularjs-slider/rzslider.min.css">
     <link rel="stylesheet" href ="vendor/angular-material/angular-material.min.css">
-    <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.ttf">
     <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff">
@@ -57,7 +62,7 @@
             <span class="UItext offOn"> Off/On</span>
         </div>
 -->
-        <!-- trial new switch -->
+        <!-- trial new switch
         <div class="switchContainer">
             <div class="onoffswitch">
                 <input type="checkbox" name="onoffswitch"
@@ -69,18 +74,36 @@
                        </label>
             </div>
         </div>
+        -->
+
+        <!--angular material switch-->
+        <div class="switchContainer">
+            <div class="onoffswitch">
+                <md-switch ng-model="main.onoffswitch" aria-label="Switch 1" class="md-block">
+                    On {{ main.cb1 }}
+                </md-switch>
+            </div>
+        </div>
+
+
+
         <!-- Playlist -->
         <div class="playlistDispContainer">
         <p class="playlistP" ng-click="main.goToPlaylistPage()">{{main.curPlaylist}}</p>
-        </div>
-    </div>
+        <!--    <a class="playlistP" href="/playlist">{{main.curPlaylist}}</a>-->
+                </div>
+            </div>
 
 
-    <div class="coverflowContainer">
-        <div class="coverflowObject">
-            <img src="../assets/images/apache1.png">
+        <!-- Now Playing -->
+        <div class="coverflowContainer">
+            <div class="coverflowObject">
+                <img class="nowPlayingImage" ng-src="../assets/images/{{main.nowPlaying}}"><!---->
+                <p class="nowPlayingCaption">{{main.nowPlaying}}</p>
+            </div>
         </div>
-    </div>
+
+
 
     <!-- repeat playlist-->
     <div class="repeatContainer">
@@ -91,7 +114,7 @@
 
     <!-- Path x out of y playlist -->
     <div class="xOfYContainer">
-        <p class="xOfYPara UItext">{{main.pathXOfY}}</p>
+        <p class="xOfYPara">{{main.pathXOfY}}</p>
     </div>
 
     <!-- Path progress -->
@@ -106,8 +129,8 @@
     <!-- PlayPauseM is only shown on mobile-->
     <div class="playPauseContainerM">
         <div class="playPauseButtonM" ng-click="main.playPauseClick()">
-            <i class="fa fa-play fa-4x" ng-show="true"></i>
-            <i class="fa fa-pause fa-4x" ng-hide="true"></i>
+            <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
+            <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
         </div>
     </div>
 

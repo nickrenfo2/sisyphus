@@ -12,7 +12,7 @@ body {
     background-color: white;
 }
 
-/* proto.io on/off switch----------------------------------------------------------------------- */
+/* proto.io on/off switch-----------------------------------------------------------------------
 .onoffswitch {
     position: relative; width: 90px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
@@ -46,7 +46,7 @@ body {
 }
 .onoffswitch-switch {
     display: block; width: 18px; margin: 6px;
-    /*background: ;*/
+    background:
     position: absolute; top: 0; bottom: 0;
     right: 56px;
     border: 2px solid #999999; border-radius: 20px;
@@ -58,11 +58,23 @@ body {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
 }
+*/
 /* end of on/off switch------------------------------------------------ */
 
 
-
-
+/* angular materials switch */
+.onoffswitch{
+    width: 90px;
+    height: 30px;
+    border-radius: 17px;
+    border: 2px solid darkgray;
+}
+.md-block {
+    padding-top: 3px;
+    padding-bottom: 0px;
+    margin-top: 0;
+    font-weight: bold;
+}
 
 
 /*
@@ -186,7 +198,7 @@ body {
 
 
     .awakePlaylistContainer {
-        margin-top: 1px;
+        margin-top: 1%;
         width: 100%;
         height: 29px;
         /*background-color: lightgray;*/
@@ -203,7 +215,6 @@ body {
         float: right;
         width: 70%;
         margin-right: 0;
-        height: 33px;
         height: 90%;
         /*        height: 100%;
                 clear: left;
@@ -219,28 +230,29 @@ body {
         margin-top: 0;
         font-weight: bold;
     }
-    /*.playlistDispContainer:hover{
-        cursor: pointer;
-    }*/
+
 
 
     .coverflowContainer {
         width: 100%;
         height: 40%;
-        margin-top: 2%;
+        margin-top:2%;
         background-color: #111111;
     }
     .coverflowObject {
-        height: 90%;
-        width: 30%;
+        height: 100%;
+        width:60%;
         margin: 0 auto 0 auto;
         padding-top: 2%;
-        padding-bottom: 1%;
+        text-align: center;
     }
-    img {
-        height:80%;
+    .nowPlayingImage {
+        height: 80%;
     }
-
+    .nowPlayingCaption {
+        color: white;
+        text-align: center;
+    }
 
     .repeatContainer {
         width: 100%;
@@ -288,7 +300,7 @@ body {
     .playPauseContainerM {
         width: 20%;
         height: 8%;
-        margin: 1% auto 1% auto;
+        margin: 0% auto 0% auto;
         /*background-color: lightskyblue;*/
     }
 
@@ -303,7 +315,7 @@ body {
         width: 100%;
         height: 20%;
         margin-bottom: 0;
-        /*background-color: lightskyblue;*/
+        /*background-color: lawngreen;*/
     }
     /* Don't display the desktop play/pause button
     on the /tablet/desk view */
@@ -370,15 +382,14 @@ body {
         width: 45%;
         height: 100%;
         float: right;
-        /*margin-right: 5%;*/
-        /*background-color: mediumseagreen;*/
     }
     .logoutButton {
-        width: 45%;
-        margin-left: 45%;/**/
+        width: 70%;
+        margin-right: 40%;
         margin-top: 16px;
         padding-top: 2px;
         padding-bottom: 2px;
+        margin-left: 20%;
     }
 } /* end mobile Portrait*/
 
@@ -413,9 +424,6 @@ body {
         width: 45%;
         margin-right: 5%;
         height: 32px;
-        /*        height: 100%;
-                clear: left;
-                margin-right: 5%;*/
         text-align: center;
     }
     .playlistP {
@@ -437,23 +445,26 @@ body {
         background-color: #111111;
     }
     .coverflowObject {
-        height: 90%;
-        width: 30%;
+        height: 80%;
+        width: 20%;
         margin: 0 auto 0 auto;
-        padding-top: 2%;
+        padding-top: 0%;
         padding-bottom: 1%;
     }
-    img {
+    .nowPlayingImage {
         height:100%;
+        margin: 2% auto 0 auto;
     }
-
+    .nowPlayingCaption {
+        margin-top: 0;
+        color: white;
+    }
 
     .repeatContainer {
         width: 100%;
         height: 6%;
         padding-top: 1px;
         margin: 0;
-        background-color: lightgray;/**/
     }
     .repeatBox {
         margin-left: 5%;
@@ -465,15 +476,15 @@ body {
         width: 100%;
         height: 5%;
         margin: 0;
-        background-color: lightgreen;/**/
     }
 
     .xOfYPara {
         width: 120px;
         height: 100%;
         text-align: left;
-        padding-top: 0%;
+        padding-top: 0;
         margin-left: 5%;
+        margin-top: 1%;
         margin-bottom: 1%;
     }
 
@@ -482,9 +493,8 @@ body {
         height: 5%;
         margin-top: 1%;
         margin-bottom: 0;
-        background-color: lightcoral;/**/
+        /*background-color: lightcoral;*/
     }
-
     .progressBar {
         width: 90%;
         margin: 0% auto 0% auto;
@@ -493,78 +503,48 @@ body {
 
 
     .playPauseContainerM {
-        width: 20%;
-        height: 8%;
-        margin: 1% auto 1% auto;
-        /*background-color: lightskyblue;*/
-    }
-
-    .playPauseButtonM {
-        height: 50px;
-        width: 50px;
-        margin: 1% auto 1% auto;
-    }
-
-
-    .twoSliderContainer {
-        width: 100%;
-        height: 20%;
-        margin-top: 10%;
-        margin-bottom: 0;
-        /*background-color: lightskyblue;*/
-    }
-    /* Don't display the desktop play/pause button
-    on the /tablet/desk view */
-    .playPauseContainerD {
         display: none;
     }
+    .twoSliderContainer {
+        width: 100%;
+        height: 10%;
+        margin-bottom: 0;
+    }
+    .playPauseContainerD {
+        width: 20%;
+        height: 20%;
+    }
     .speedHeading {
-        margin-left: 5%;
-        margin-bottom: 0px;
-        /*background-color: white;*/
+        margin-left: 12%;
+        margin-bottom: 5px;
     }
     .lightsHeading {
-        margin-left: 5%;
-        margin-bottom: 0px;
-        /*background-color: white;*/
+        margin-right: 12%;
+        margin-bottom: 5px;
     }
     .speedContainer {
-        width: 100%;
-        height:50%;
-        margin: 0;
-        /*background-color: red;*/
+        width: 40%;
+        height:13%;
+        float: left;
     }
     .lightsContainer {
-        width: 100%;
-        height: 50%;
-        margin: 0;
-        /*background-color: green;*/
+        width: 40%;
+        height:13%;
+        float: right;
     }
-    /*   .sliderHeading {
-           margin-left: 10%;
-           margin-bottom: 2px;
-       }*/
     .speedSlider {
-        margin-left: 5%;
-        width: 90%;
-        color: red;
-        /*background-color: lightcoral;*/
+        margin-left: 13%;
+        width: 80%;
     }
     .lightsSlider {
-        margin-left: 5%;
-        width: 90%;
-        color: green;
-        /*background-color: lawngreen;*/
+        margin-right: 0%;
+        width: 87%;
     }
-    .speedSlider:hover, .lightsSlider:hover {
-        cursor: pointer;
-    }
-
 
     .curSisbotLogOutContainer {
         width: 100%;
         height: 5%;
-        margin-top: 3%;
+        margin-top: 15%;
     }
     .curSisbotContainer {
         width: 45%;
@@ -580,8 +560,8 @@ body {
         /*background-color: mediumseagreen;*/
     }
     .logoutButton {
-        width: 30%;
-        margin-left: 60%;
+        width: 50%;
+        margin-left: 40%;
     }
 } /* end mobile landscape */
 
@@ -644,14 +624,18 @@ body {
         background-color: #111111;
     }
     .coverflowObject {
-        height: 90%;
-        width: 30%;
-        margin: 0 auto 0 auto;
-        padding-top: 2%;
-        padding-bottom: 1%;
+        height: 88%;
+        text-align: center;
+        padding-top: 1%
     }
-    img {
+    .nowPlayingImage {
         height:100%;
+        text-align: center;
+    }
+    .nowPlayingCaption {
+        margin-top: 0;
+        color: white;
+        text-align: center;
     }
 
 
@@ -696,21 +680,14 @@ body {
         margin: 0% auto 0% auto;
     }
 
-
-    /* ------------------------------------------------------------------- */
-    /* Don't display the mobile play/pause button on the /tablet/desk view */
     .playPauseContainerM {
         display: none;
     }
-    /* ------------------------------------------------------------------- */
-
-
 
     .twoSliderContainer {
         width: 100%;
         height: 10%;
         margin-bottom: 0;
-        /*background-color: lightskyblue;*/
     }
     .playPauseContainerD {
         width: 20%;
@@ -722,33 +699,24 @@ body {
     .speedHeading {
         margin-left: 12%;
         margin-bottom: 5px;
-        /*background-color: white;*/
     }
     .lightsHeading {
         margin-right: 12%;
         margin-bottom: 5px;
-        /*background-color: white;*/
     }
     .speedContainer, .lightsContainer {
         width: 40%;
         height:13%;
         float: left;
     }
- /*   .sliderHeading {
-        margin-left: 10%;
-        margin-bottom: 2px;
-    }*/
     .speedSlider {
         margin-left: 13%;
-        width: 80%;
+        width: 87%;
         color: red;
-        /*background-color: lightcoral;*/
     }
     .lightsSlider {
-        margin-right: 13%;
-        width: 80%;
-        color: green;
-        /*background-color: lawngreen;*/
+        margin-right: 10%;
+        width: 87%;
     }
     .speedSlider:hover, .lightsSlider:hover {
         cursor: pointer;
@@ -763,16 +731,14 @@ body {
         height: 100%;
         float: left;
         margin-left: 5%;
-        /*background-color: mediumvioletred;*/
     }
     .logOutContainer {
-        width: 45%;
+        width: 48%;
         height: 100%;
         float: right;
-        /*background-color: mediumseagreen;*/
     }
     .logoutButton {
-        width: 30%;
+        width: 29%;
         margin-left: 60%;
     }
 } /* end tablet or desktop */

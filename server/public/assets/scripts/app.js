@@ -11,7 +11,7 @@ socket.on('connect', function () {
 
 
 var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngMaterial']);  //normally want this
-//var app = angular.module('sisApp',[]);  //necessary if logged out
+// var app = angular.module('sisApp',[]);  //necessary if logged out
 
 
 
@@ -29,22 +29,27 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     var state = {};
         state.status        = 'sleep';
-        state.curPlaylist   = 'curPlaylist-default';
+        state.curPlaylist   = 'Playlist -none selected';
         state.curPathInd    = 0;
         state.progress      = 0;
         state.repeat        = false;
-        state.paths         = ['paths-default'];
+        state.paths         = ['Paths -none selected '];
         state.speed         = 1;
         state.lights        = 0;
 
-    var play             =  false,
-        pathXOfY         =  "pathXOfY-default",
-        playlistLength   = "0",
-        currentPathIndex = "0",
-        sisSerials       = [],
-        curSisbot        = 'curSisbot',
-        pathTime         = 300,  //default to 5 minutes path drawing time
-        controls         =[];
+    var play              =  false,
+        pathXOfY          =  "No playlist selected",
+        playlistLength    = "0",
+        currentPathIndex  = "0",
+        sisSerials        = [],
+        curSisbot         = 'None selected',
+        pathTime          = 300, //default to 5 minutes path drawing time
+        controls          = [],  //array used to hold the UI watch list
+        updateInterval    = 1,   //seconds per update
+        numUpdates        = 0,   // number of updates for this path
+        progInterval      = 0,   // percent the progress bar will increase per update
+        gatedProgInterval = 0,   //percent increase gated with the play state
+        progressKey       = 0;   // timer key
 
     vm.main = {curSisbot:curSisbot}; //sets the default for Select Sisbot UI
     vm.onoffswitch = false;          //derived from status
@@ -61,11 +66,11 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             method: "GET",
             url: 'sis/getState'
         }).then(function (response) {
-        //    console.log('clientApp: response:');
-        //    console.log(response);
+            //    console.log('clientApp: response:');
+            //    console.log(response);
             state = response.data.state;
 
-            // get state data to to the UI
+            // get Sisbot state data to to the UI
             console.log('clientApp: state object');
             console.log(state);
 
@@ -80,12 +85,19 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
                 vm.onoffswitch = true;
             } else { //state.status == 'pause'
                 play = false;
-                vm.showPlay=true;
+                vm.showPlay = true;
                 vm.onoffswitch = true;
             }
 
             // playlist //
-            vm.curPlaylist = "Select playlist: "+state.curPlaylist;
+            vm.curPlaylist = "Select playlist: " + state.curPlaylist;
+
+            // now playing //
+            console.log(state.paths, ' .. ',state.curPathInd, ' .. ', state.paths[state.curPathInd]);
+            vm.nowPlaying = state.paths[state.curPathInd];
+
+            // repeat playlist//
+            vm.repeatVal = state.repeat;
 
             // path x of y //
             playlistLength = state.paths.length.toString();
@@ -95,8 +107,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             vm.pathXOfY = pathXOfY;
 
             // path progress //
-            // -md-progress-linear
-            //vm.progress = state.progress;
+            // -handled by the
 
             // Play/Pause
             vm.playPauseClick = function () {
@@ -107,9 +118,6 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
                 console.log('play new state: ', play);
                 captureUIState(); //because this is not in the watch list
             };
-
-            // repeat //
-            vm.repeatVal = state.repeat;
 
             // speed slider //
             vm.speedSlider = {
@@ -154,16 +162,16 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     getUserFromDb();
 
 
-
     ///////////////////////////////////////////////////////////////////////////
-    // Start progress update timer to update UI progress bar every 5 seconds //
+    // Start progress update timer to update UI progress bar every 1 seconds //
     ///////////////////////////////////////////////////////////////////////////
 
     console.log('Starting progress update timer');
-    var numUpdates = pathTime/5;
-    var progInterval = 100/numUpdates;
-    var gatedProgInterval=0;
-    var progressKey=setInterval(function(){
+    updateInterval = 1; //seconds per update. Change this to control progress bar behavior.
+    numUpdates = pathTime/updateInterval;
+    progInterval = 100/numUpdates;
+    gatedProgInterval=0;
+    progressKey=setInterval(function(){
         if(state.status=="play") {
             gatedProgInterval = progInterval;
         } else {
@@ -172,10 +180,8 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         state.progress += gatedProgInterval; //keep the state info current
         vm.progress = state.progress;        //update the UI
         $scope.$apply();
-        //console.log('status: ',state.status);
-        //console.log('pathTime: ', pathTime, ' numUpdates: ', numUpdates, ' gatedProgInterval: ', gatedProgInterval);
         console.log('updating progress: ', vm.progress);
-    },5000);
+    },updateInterval*1000);
 
 
 
@@ -191,7 +197,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     vm.goToPlaylistPage = function(){
         console.log('saw Go To Playlist click');
-        //window.location.assign('/playlist');  //verify this address
+        window.location.assign('/playlist');  //verify this address
     };
 
 
@@ -211,15 +217,15 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         }
     );
 
-    ///////////////////////////////////////////////////
-    // Capture state on UI switch during development //
-    ///////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
+    // Capture state on UI button click during development //
+    /////////////////////////////////////////////////////////
 
-    vm.captureUIState=function(){
-        console.log('saw capture state click');
-        console.log('******** new switch: ',vm.onoffswitch);
-        captureUIState();
-    };
+    //vm.captureUIState=function(){
+    //    console.log('saw capture state click');
+    //    console.log('******** new switch: ',vm.onoffswitch);
+    //    captureUIState();
+    //};
 
 
     //////////////////////////////////////////////////
@@ -231,7 +237,9 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         console.log('clientAp: capturing UI state');
         console.log('clientAp: curSisbot: ',vm.curSisbot);
 
-        //populate state object
+        // update the state object from UI inputs
+
+        // determine the status from the on/off and play/pause switches
         if(vm.onoffswitch == false){
             state.status = "sleep";
         } else if(play==true) {
@@ -244,9 +252,13 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         state.speed         = vm.speedSlider.value;
         state.lights        = vm.lightsSlider.value;
 
-        console.log('clientApp: sending this state object for sisbot');
+        console.log('clientApp: updating the sisbot and sending this state object for sisbot');
         console.log(state);
-        //update the state
+
+        // send new state to the sisbot
+        socket.emit('statechange, state');
+
+        // update the state in the Sisbot db
         $http({
             method: "POST",
             url:    "sis/putState",
@@ -255,7 +267,8 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             console.log('clientApp: send state completed');
             console.log(response);
         }).then(function(resp){
-            //update the curSisbot in the user
+
+            // update the curSisbot in the User db
             var curSisbotObject = {curSisbot: vm.curSisbot};
             console.log('clientApp: update user:curSisbot');
             console.log(curSisbotObject);
@@ -265,8 +278,6 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
                 data:  curSisbotObject
             }).then(function(resp){
                 console.log(resp);
-                //send new state to the sisbot
-                socket.emit('statechange, state');
             })
         });
     }
@@ -276,8 +287,12 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     // UI logout button //
     //////////////////////
 
+    // shut down progress timer and log out
     vm.logout = function(){
-        console.log('clientApp: saw log out click but am not going to log out')
+        console.log('clientApp: saw log out click');
+        console.log('shutting down progress update clock')
+        clearInterval(progressKey);
+        //log out and redirect
         $http.get('/logout').then(function () {
             window.location.href = '/';
         });
@@ -286,10 +301,12 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     ///////////////////////////////////////////
     // UI changeState button for development //
     // - simulates a state change in the UI  //
+    // **remove for normal operation
     ///////////////////////////////////////////
 
+    // send a test statechange message to sisbot
     vm.changeState = function() {
-        console.log('clientApp: saw change state click'); // get rid of all this when fully operational
+        console.log('clientApp: saw change state click');
         var changes = {
             status:'paused',
             speed:10
@@ -303,23 +320,33 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     //  - update UI curPathInd, progress      //
     ////////////////////////////////////////////
 
-    socket.on('pathcomplete',function() {
+    // for development only, execute this function un click of the capture state button
+    // **remove or comment out for normal operation
+    vm.captureUIState=function() {
+        console.log('saw capture state click which is now a fake pathcomplete message');
+    ////////////////////////////////////////////////////////////////////////////////////
+
+        // **for normal operation, remove above code and uncomment the line below
+        //socket.on('pathcomplete',function() {
         console.log('clientApp:pathcomplete received from sisbot');
         console.log('clientApp:pathcomplete playlist length: ', state.paths.length);
         console.log('clientApp:pathcomplete curPathInd: ', state.curPathInd);
 
         // update current path index and progress
 
-        // if play and not done with playlist start next path
+        // Pathcomplete should only happen in play mode. Otherwise disregard.
         if (state.status == 'play') {
+            // if not done with playlist start next path
             if (state.curPathInd < (state.paths.length - 1)) {
                 state.curPathInd++;
                 state.progress = 0;
                 console.log('clientApp:pathcomplete: increment curPathInd: ', state.curPathInd);
+            // if repeating, set to the first path
             } else if (state.repeat == true) {
                 state.curPathInd = 0;
                 state.progress = 0;
                 console.log('clientApp:pathcomplete: zero curPathInd: ', state.curPathInd);
+            // otherwise playlist is done, change status to pause and set progress to 100%.
             } else {
                 state.status = "pause";
                 state.progress = 100;
@@ -327,29 +354,25 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
             }
         }
 
-        //Update the database with new curPathInd and Progress
-        // - then update the UI from the database
+        // Update the database with new curPathInd and Progress
         console.log('clientApp:pathcomplete: updating db');
         console.log(state);
         $http({
             method: "POST",
-            url:    "sis/putState",
-            data:  state
-        }).then(function(response) {
+            url: "sis/putState",
+            data: state
+        }).then(function (response) {
             console.log('clientApp:pathcomplete send state completed');
             console.log(response);
-
-        }).then(function(resp)
-        { console.log('clientApp:pathcomplete: update UI from db');
-          getStateFromDb();
+        //refresh UI
+        }).then(function (resp) {
+            console.log('clientApp:pathcomplete: update UI from db');
+            getStateFromDb();
         });
-
-
-    });
+    };
+    //});  // normal close
 
 }]);
-
-// replace changes data with full state data/object
 
 
 
