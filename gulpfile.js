@@ -67,6 +67,8 @@ gulp.task('copy',function() {
         'font-awesome/fonts/fontawesome-webfont.woff',
         'font-awesome/fonts/fontawesome-webfont.woff2',
         'font-awesome/fonts/fontawesome-webfont.ttf',
+        'bootstrap/dist/js/bootstrap.min.js',
+        'bootstrap/dist/css/bootstrap.min.css',
         //'angular-route/angular-route.min.js',
         //'angular-animate/angular-animate.min.js',
         'socket.io-client/socket.io.js'

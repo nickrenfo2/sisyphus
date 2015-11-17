@@ -131,7 +131,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
 
     function getUserFromDb() {
-        console.log('clientApp: getting user data from db');;
+        console.log('clientApp: getting user data from db');
         $http({
             method: "GET",
             url: 'acct/getUser'
