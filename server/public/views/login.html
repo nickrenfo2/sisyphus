@@ -12,15 +12,20 @@
     <script src="vendor/angular-material/angular-material.min.js"></script>
     <script src="vendor/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="assets/scripts/app.js"></script>
-    <link rel="stylesheet" href="views/styles.css">
+    <link rel="stylesheet" href="views/login.css">
 </head>
 <body ng-controller="LoginController as log">
     <h1>Please log in below</h1>
     {{log.itworks}}
     <!--<form ng-submit="log.login()">-->
-    <form>
-        <label for="username">Email:</label> <input type="text" id="username" name="username" ng-model="log.acct.email"><br/>
-        <label for="password">Password:</label> <input type="password" id="password" name="username" ng-model="log.acct.password"><br/>
+    <form >
+        <div class="login-header">
+            <h2 class="login-text">Sign In</h2>
+        </div>
+        <div class="login-body">
+            <input class="login-email" type="text" placeholder="Email" name="username" ng-model="log.acct.email"><br/>
+            <input class="login-password" type="password" placeholder="Password" name="username" ng-model="log.acct.password"><br/>
+        </div>
         <div ng-hide="log.registering">
             <input type="submit" ng-click="log.login()">
             <div id="register" ng-click="log.registering = true">Register</div>

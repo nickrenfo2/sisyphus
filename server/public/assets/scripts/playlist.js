@@ -7,13 +7,15 @@ $(function(){
     var selectedPlaylist = [];
     var pathlist = [];
     var currentItem = "";
-    var stateUpdates = {};
-        stateUpdates.curPlaylist = {};
-        stateUpdates.curPathInd = "0";
-        stateUpdates.paths = [];
+    var updatedState = {};
 
-    var myFlipster = $('.flipster').flipster();
+    //var myFlipster = $('.flipster').flipster();
 
+
+    $.get("/sis/getState", {withCredentials:true}, function(data){
+        updatedState = data;
+        console.log(updatedState);
+    });
 
     //get call to server for all playlists
     $.get("/getPlaylists", {withCredentials:true}, function(data){
@@ -55,7 +57,7 @@ $(function(){
     //gets index of current path displayed on coverflow
     function getnewItem(newItem){
         currentItem = $(newItem).find("img").attr("id");
-        stateUpdates.curPathInd = currentItem;
+        updatedState.curPathInd = currentItem;
         console.log(currentItem);
     }
 
@@ -69,7 +71,7 @@ $(function(){
             if(selected === allPlaylists[i].name){
                 //console.log(allPlaylists[i].paths);
                 selectedPlaylist = allPlaylists[i];
-                stateUpdates.curPlaylist = allPlaylists[i];
+                updatedState.curPlaylist = allPlaylists[i];
                 console.log(selectedPlaylist);
             }
         }
@@ -83,11 +85,11 @@ $(function(){
     getPathList = function(){
         //console.log(selectedPlaylist);
         var newPathlist = [];
-        stateUpdates.paths = [];
+        updatedState.paths = [];
         for(var i=0; i<selectedPlaylist.paths.length; i++){
             var path = '/assets/images/' + selectedPlaylist.paths[i].name + '.png';
             newPathlist.push(path);
-            stateUpdates.paths.push(selectedPlaylist.paths[i].name);
+            updatedState.paths.push(selectedPlaylist.paths[i].name);
         }
         return newPathlist;
     };
@@ -105,36 +107,22 @@ $(function(){
     }
 
     $(".startHere-button").click(function(){
-
-        console.log(stateUpdates);
+        console.log(updatedState);
+        $.post("/sis/putState", updatedState, function(data, status){
+            console.log(data);
+            console.log(status);
+        });
     });
 
     $(".startBeginning-button").click(function(){
-        stateUpdates.curPathInd = "0";
-        myFlipster.flipster('jump', 0);
-        console.log(stateUpdates);
+        updatedState.curPathInd = "0";
+        //myFlipster.flipster('jump', 0);
+        console.log(updatedState);
+        $.post("/sis/putState", updatedState, function(data, status){
+            console.log(data);
+            console.log(status);
+        });
     });
-
-
-    //vm.selected = "Choose Playlist";
-    //vm.submit = function(){
-    //    var selected = vm.selected;
-    //    console.log("selected: " + selected);
-    //    //this loop extracts the selected playlist (array of individual paths) from allPlaylists
-    //    for(var i=0; i<vm.allPlaylists.length; i++){
-    //        if(vm.allPlaylists[i].name === selected){
-    //            console.log(vm.allPlaylists[i].paths);
-    //            selectedPlaylist = vm.allPlaylists[i];
-    //        }
-    //    }
-    //    getPaths(selectedPlaylist);
-    //    //vm.pathlist = vm.getPathList();
-    //    //console.log('pathlist:',vm.pathlist);
-    //};
-
-
-
-
 
 
 //Flipster Control Methods
@@ -151,90 +139,4 @@ $(function(){
 //
 
 });
-
-
-//var app = angular.module('sisApp',[]);
-//
-//
-//app.controller('PlaylistController',['$http', function ($http) {
-//    var vm = this;
-//    vm.allPlaylists = [];
-//    vm.pathsInPlaylist = [];
-//    vm.selectedPlaylist = [];
-//    vm.pathlist = [];
-//
-//
-//    //get call to server for all playlists
-//    $http.get('/getPlaylists', {withCredentials: true}).then(function(response){
-//        vm.allPlaylists = response.data;
-//        console.log(vm.allPlaylists);
-//    }, function(err){
-//        console.log('you got an error' + err);
-//    });
-//
-//    vm.selected = "Choose Playlist";
-//    vm.submit = function(){
-//        var selected = vm.selected;
-//        console.log("selected: " + selected);
-//        //this loop extracts the selected playlist (array of individual paths) from allPlaylists
-//        for(var i=0; i<vm.allPlaylists.length; i++){
-//            if(vm.allPlaylists[i].name === selected){
-//                console.log(vm.allPlaylists[i].paths);
-//                selectedPlaylist = vm.allPlaylists[i];
-//            }
-//        }
-//        getPaths(selectedPlaylist);
-//        //vm.pathlist = vm.getPathList();
-//        //console.log('pathlist:',vm.pathlist);
-//    };
-//
-//
-//    function getPaths(selectedPlaylist){
-//        console.log(selectedPlaylist);
-//        for(var i=0; i<selectedPlaylist.paths.length; i++){
-//            var $path = "<li><img src='/assets/images/" + selectedPlaylist.paths[i].name + ".png'><li>";
-//            console.log($path);
-//            $(".items").append($path);
-//        }
-//    }
-//    //takes in selectedPlaylists, extracts paths, converts paths into src url
-//    //vm.getPathList = function(){
-//    //    console.log('in getPathList function');
-//    //    console.log(vm.selectedPlaylist);
-//    //    var newPathlist = [];
-//    //    for(var i=0; i<vm.selectedPlaylist.paths.length; i++){
-//    //        var path = '/assets/images/' + vm.selectedPlaylist.paths[i].name + '.png';
-//    //        console.log(path);
-//    //        newPathlist.push(path);
-//    //    }
-//    //    return newPathlist;
-//    //};
-//
-//
-//
-//    //vm.pathlist = [
-//    //    '/assets/images/noPic.png',
-//    //    '/assets/images/apache1.png',
-//    //    '/assets/images/circam2s.png',
-//    //    '/assets/images/dces4p.png',
-//    //    '/assets/images/foxwarp2.png',
-//    //    '/assets/images/tri1b.png',
-//    //    '/assets/images/22222.png',
-//    //    '/assets/images/zowie1r.png'
-//    //];
-//
-//    vm.startHere = function(){
-//        console.log('in startHere function');
-//
-//    };
-//
-//    vm.startBeginning = function(){
-//        console.log('in startBeginning function');
-//    };
-//
-//}]);
-//
-
-
-
 

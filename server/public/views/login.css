@@ -1,0 +1,52 @@
+body {
+    /*background-image: url(../assets/images/pattern_07.jpg);*/
+    /*background-color: #131313;*/
+    background-color: ghostwhite;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+    color: #131313;
+
+}
+
+.login-header {
+    height: 3em;
+    width: 14em;
+    margin: 10px auto 0px auto;
+    box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;
+    background-color: #85827C;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid #484852;
+    text-align: center;
+    padding-bottom: 1em;
+    font-size: 16px;
+}
+
+/*.login-text {*/
+    /*vertical-align: middle;*/
+    /**/
+/*}*/
+
+.login-body {
+    height: 8em;
+    width: 14em;
+    margin: 0px auto 0px auto;
+    box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;
+    background-color: #85827C;
+    border-radius: 0px 0px 5px 5px;
+    border-right: 1px solid #484852;
+    border-bottom: 1px solid #484852;
+    border-left: 1px solid #484852;
+    text-align: center;
+}
+
+.login-email {
+     height: 2em;
+     width: 13em;
+     margin: 2em auto 1.5em auto;
+ }
+
+.login-password {
+    height: 2em;
+    width: 13em;
+}
