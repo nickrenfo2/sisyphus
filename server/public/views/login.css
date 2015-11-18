@@ -1,52 +1,85 @@
 body {
-    /*background-image: url(../assets/images/pattern_07.jpg);*/
+    /*background-image: url(../assets/images/sisyphus2-2.jpg);*/
     /*background-color: #131313;*/
-    background-color: ghostwhite;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: black;
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
     font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-    color: #131313;
-
+    color: #555;
 }
+
+
+.background-img {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    z-index: -1;
+}
+
 
 .login-header {
-    height: 3em;
-    width: 14em;
-    margin: 10px auto 0px auto;
-    box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;
-    background-color: #85827C;
-    border-radius: 5px 5px 0px 0px;
-    border: 1px solid #484852;
-    text-align: center;
-    padding-bottom: 1em;
-    font-size: 16px;
+    font-family: Palatino Linotype;
+    font-weight: bolder;
+    font-size: 2em;
+    color: white;
+    margin-left: 1em;
 }
 
-/*.login-text {*/
-    /*vertical-align: middle;*/
-    /**/
-/*}*/
+
+.login-text, .reg-text {
+    text-align: left;
+}
+
 
 .login-body {
-    height: 8em;
-    width: 14em;
-    margin: 0px auto 0px auto;
-    box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;
-    background-color: #85827C;
-    border-radius: 0px 0px 5px 5px;
-    border-right: 1px solid #484852;
-    border-bottom: 1px solid #484852;
-    border-left: 1px solid #484852;
+    /*height: 8em;*/
+    width: 10em;
+    /*padding: 0em 2em 1em 2em;*/
+    padding: .2em 2em 1em 2em;
+    overflow: auto;
+    margin: -1.5em auto 0px auto;
+    /*box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;*/
+    background-color: #D4D7DB;
+    border: 12px solid #626972;
+    border-radius: 10px;
     text-align: center;
+    opacity: .8;
 }
 
-.login-email {
-     height: 2em;
-     width: 13em;
-     margin: 2em auto 1.5em auto;
+
+.login-email, .login-password, .reg-password-confirm, .reg-sis-serial, .reg-sis-id {
+    height: 2em;
+    width: 100%;
+    display: block;
+    font-size: 12px;
+    box-shadow: inset .5px .5px .5px 0px #555;
+     /*margin: 2em auto 1.5em auto;*/
  }
 
-.login-password {
-    height: 2em;
-    width: 13em;
+
+.register, .reg-already {
+    margin: 1em;
 }
+
+.login-button, .reg-button {
+    background-color:#A2D045;
+    border-radius:5px;
+    border:1px solid #7E9B46;
+    display:inline-block;
+    cursor:pointer;
+    color:#555;
+    font-family:Trebuchet MS;
+    font-size:14px;
+    padding:5px 16px;
+    text-decoration:none;
+}
+.login-button:hover, .reg-button:hover {
+    background-color:#7E9B46;
+}
+.login-button:active, .reg-button:active {
+    position:relative;
+    top:1px;
+}
+
+
+

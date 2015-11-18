@@ -9,12 +9,10 @@ $(function(){
     var currentItem = "";
     var updatedState = {};
 
-    //var myFlipster = $('.flipster').flipster();
-
-
     $.get("/sis/getState", {withCredentials:true}, function(data){
-        updatedState = data;
-        console.log(updatedState);
+        updateObj = data;
+        //console.log(updateObj);
+        //console.log(updateObj.state);
     });
 
     //get call to server for all playlists
@@ -34,7 +32,7 @@ $(function(){
             itemContainer: 'ul',
             itemSelector: 'li',
             start: 0,
-            fadeIn: 400,
+            fadeIn: 50,
             loop: true,
             autoplay: false,
             pauseOnHover: true,
@@ -57,7 +55,7 @@ $(function(){
     //gets index of current path displayed on coverflow
     function getnewItem(newItem){
         currentItem = $(newItem).find("img").attr("id");
-        updatedState.curPathInd = currentItem;
+        updateObj.state.curPathInd = currentItem;
         console.log(currentItem);
     }
 
@@ -71,7 +69,7 @@ $(function(){
             if(selected === allPlaylists[i].name){
                 //console.log(allPlaylists[i].paths);
                 selectedPlaylist = allPlaylists[i];
-                updatedState.curPlaylist = allPlaylists[i];
+                updateObj.state.curPlaylist = allPlaylists[i].name;
                 console.log(selectedPlaylist);
             }
         }
@@ -85,12 +83,14 @@ $(function(){
     getPathList = function(){
         //console.log(selectedPlaylist);
         var newPathlist = [];
-        updatedState.paths = [];
+        var pathNames = [];
         for(var i=0; i<selectedPlaylist.paths.length; i++){
             var path = '/assets/images/' + selectedPlaylist.paths[i].name + '.png';
             newPathlist.push(path);
-            updatedState.paths.push(selectedPlaylist.paths[i].name);
+            pathNames.push(selectedPlaylist.paths[i].name);
         }
+        updateObj.state.paths = pathNames;
+        //console.log(updateObj.state.paths);
         return newPathlist;
     };
 
@@ -107,18 +107,18 @@ $(function(){
     }
 
     $(".startHere-button").click(function(){
-        console.log(updatedState);
-        $.post("/sis/putState", updatedState, function(data, status){
+        console.log(updateObj);
+        console.log(updateObj.state);
+        $.post("/sis/putState", updateObj.state, function(data, status){
             console.log(data);
             console.log(status);
         });
     });
 
     $(".startBeginning-button").click(function(){
-        updatedState.curPathInd = "0";
-        //myFlipster.flipster('jump', 0);
-        console.log(updatedState);
-        $.post("/sis/putState", updatedState, function(data, status){
+        updateObj.state.curPathInd = "0";
+        console.log(updateObj);
+        $.post("/sis/putState", updateObj.state, function(data, status){
             console.log(data);
             console.log(status);
         });

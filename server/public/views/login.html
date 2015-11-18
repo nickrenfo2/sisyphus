@@ -15,28 +15,32 @@
     <link rel="stylesheet" href="views/login.css">
 </head>
 <body ng-controller="LoginController as log">
-    <h1>Please log in below</h1>
-    {{log.itworks}}
-    <!--<form ng-submit="log.login()">-->
-    <form >
-        <div class="login-header">
-            <h2 class="login-text">Sign In</h2>
-        </div>
-        <div class="login-body">
-            <input class="login-email" type="text" placeholder="Email" name="username" ng-model="log.acct.email"><br/>
-            <input class="login-password" type="password" placeholder="Password" name="username" ng-model="log.acct.password"><br/>
-        </div>
-        <div ng-hide="log.registering">
-            <input type="submit" ng-click="log.login()">
-            <div id="register" ng-click="log.registering = true">Register</div>
-        </div>
-        <div ng-show="log.registering">
-            <label for="confirmPass">Password Confirm:</label> <input type="password" id="confirmPass" name="confirm" ng-model="log.acct.confirm"><br/>
-            <label for="sisSerial">Serial Number:</label><input type="text" id="sisSerial" name="serial" ng-model="log.acct.serial"><br/>
-            <label for="sisId">SID:</label><input type="text" id="sisId" name="sisId" ng-model="log.acct.sid"><br/>
-            <button id="register-button" ng-click="log.register()">Register</button>
-            <div id="alreadyRegistered" ng-click="log.registering = false">Already have an account?</div>
-        </div>
-    </form>
+    <div class="login-header">
+        <h1>Sisyphus.</h1>
+    </div>
+    <div>
+        <img class="background-img" src="/assets/images/sisyphus2-2.png"/>
+    </div>
+    <div class="login-body">
+        <form >
+            <div ng-hide="log.registering">
+                <h2 class="login-text">Sign In</h2>
+                <input class="login-email" type="text" placeholder="Email" name="username" ng-model="log.acct.email"><br/>
+                <input class="login-password" type="password" placeholder="Password" name="username" ng-model="log.acct.password"><br/>
+                <button type="submit" class="login-button" ng-click="log.login()">Login</button>
+                <div class="register" ng-click="log.registering = true">Register</div>
+            </div>
+            <div ng-show="log.registering">
+                <h2 class="reg-text">Register</h2>
+                <input class="login-email" type="text" placeholder="Email" name="username" ng-model="log.acct.email"><br/>
+                <input class="login-password" type="password" placeholder="Password" name="username" ng-model="log.acct.password"><br/>
+                <input class="reg-password-confirm" type="password" placeholder="Confirm Password" id="confirmPass" name="confirm" ng-model="log.acct.confirm"><br/>
+                <input class="reg-sis-serial" type="text" placeholder="Sisyphus Serial No." id="sisSerial" name="serial" ng-model="log.acct.serial"><br/>
+                <input class="reg-sis-id" type="text" placeholder="Sisyphus ID" id="sisId" name="sisId" ng-model="log.acct.sid"><br/>
+                <button class="reg-button" ng-click="log.register()">Register</button>
+                <div class="reg-already" ng-click="log.registering = false">Already have an account?</div>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
