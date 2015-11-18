@@ -231,13 +231,9 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     //Send a jog command to sisbot//
     ////////////////////////////////
 
-    vm.jog = function (dir) {
+    vm.jog = function (axis,dir) {
         console.log('sending jog');
-        vm.jogging = setInterval(sendJog,40,dir);
-        //while (vm.jogging){
-        //    console.log('jog');
-        //    socket.emit('jog',{axis:'theta',dir:dir});
-        //}
+        vm.jogging = setInterval(sendJog,40,axis,dir);
     };
 
     vm.stop = function(){
@@ -245,10 +241,20 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
         clearInterval(vm.jogging);
     };
 
-    function sendJog(dir){
+    function sendJog(axis,dir){
         console.log('jog');
-        socket.emit('jog',{axis:'theta',dir:dir});
+        socket.emit('jog',{axis:axis,dir:dir});
     }
+
+    /////////////////////////
+    //Have sisbot find home//
+    /////////////////////////
+
+    vm.goHome = function(){
+        socket.emit('goHome');
+    };
+
+
     //////////////////////////////////////////////////
     // Capture the state of the user interface (UI) //
     // and send it to the database                  //

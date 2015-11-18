@@ -281,6 +281,24 @@ io.on('connection', function (socket) {
             //console.log('path added:',newpath);
         })
     });
+
+    socket.on('goHome', function () {
+        //console.log('go home');
+        sendEventToSisbot(socket.request.user.curSisbot,'goHome');
+    });
+
+    socket.on('disconnect', function () {
+        var serial = socket.handshake.query.serial;
+        if (serial){ //Disconnection is from a sisbot
+            Sisbot.findOne({serial:serial}, function (err,bot) {
+                bot.socketid = '';
+                bot.save();
+            });
+        } else { //Disconnection is from a user
+
+        }
+    });
+
 });
 
 //This will return a function that will determine whether or not the server should request and add the playlist from the connecting sisbot
@@ -350,7 +368,11 @@ function getPathIdFunction(pathname){
 function sendEventToSisbot(serial,event,data){
     Sisbot.findOne({serial:serial}, function (err,bot) {
         //console.log(bot);
-        io.sockets.connected[bot.socketid].emit(event,data);
+        if(bot.socketid) {
+            io.sockets.connected[bot.socketid].emit(event, data);
+        } else {
+            console.log('Sisbot',serial,'not connected');
+        }
     });
 }
 
