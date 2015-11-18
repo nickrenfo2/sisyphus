@@ -42,7 +42,7 @@
 
 
     <body ng-controller="MainController as main">
-
+<!--    md-theme="blueTheme"-->
 
 
 
@@ -98,19 +98,27 @@
         <!-- Now Playing -->
         <div class="coverflowContainer">
             <div class="coverflowObject">
-                <img class="nowPlayingImage" ng-src="../assets/images/{{main.nowPlaying}}"><!---->
+                <img class="nowPlayingImage" ng-src="../assets/images/{{main.nowPlaying}}.png"><!---->
                 <p class="nowPlayingCaption">{{main.nowPlaying}}</p>
             </div>
         </div>
 
 
+    <div class="repeatManualContainer">
+        <!-- repeat playlist-->
+        <div class="repeatContainer">
+            <div class="repeatDiv">
+                <input class="repeatBox" type="checkbox" ng-model="main.repeatVal">
+                <span class="repeatText UItext">Repeat Playlist</span>
+            </div>
+        </div>
 
-    <!-- repeat playlist-->
-    <div class="repeatContainer">
-        <input class="repeatBox" type="checkbox" ng-model="main.repeatVal">
-        <span class="repeatText UItext">Repeat Playlist</span>
+        <!-- manual Control-->
+        <div class="manualContainer">
+            <button class="manualButton borderRad" ng-click="main.manualMovement()">Manual Movement</button>
+        </div>
+
     </div>
-
 
     <!-- Path x out of y playlist -->
     <div class="xOfYContainer">
@@ -182,7 +190,7 @@
 
         </div>
             <div class="logOutContainer">
-        <button class="logoutButton" ng-click="main.logout()">Log Out</button>
+        <button class="logoutButton borderRad" ng-click="main.logout()">Log Out</button>
             </div>
     </div>
 

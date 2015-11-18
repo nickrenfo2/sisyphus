@@ -11,6 +11,17 @@ socket.on('connect', function () {
 
 
 var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngMaterial']);  //normally want this
+
+//var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngAria', 'ngAnimate', 'ngMaterial'],function($mdThemingProvider) {
+//    var blueTheme = $mdThemingProvider.theme('blueTheme', 'default');
+//    var bluePalette = $mdThemingProvider.extendPalette('blue', {
+//        '500': '#03A9F4'
+//    });
+//    $mdThemingProvider.definePalette('bluePalette', bluePalette);
+//    blueTheme.primaryPalette('bluePalette');
+//});  //normally want this
+
+
 // var app = angular.module('sisApp',[]);  //necessary if logged out
 
 
@@ -197,7 +208,17 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     vm.goToPlaylistPage = function(){
         console.log('saw Go To Playlist click');
-        window.location.assign('/playlist');  //verify this address
+        window.location.assign('/playlist');
+    };
+
+
+    ///////////////////////////////////////
+    // UI click to go to the Manual page //
+    ///////////////////////////////////////
+
+    vm.manualMovement = function(){
+        console.log('saw Manual Movement click');
+        window.location.asssign("/manual");
     };
 
 

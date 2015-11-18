@@ -12,54 +12,31 @@ body {
     background-color: white;
 }
 
-/* proto.io on/off switch-----------------------------------------------------------------------
-.onoffswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+.manualButton, .logoutButton {
+    box-shadow:inset 0px 1px 0px 0px #90949E;
+    background-color:#5C6580;
+    border-radius:2px;
+    border:1px solid #2E3E6F;
+    margin: 10px auto;
+    display:inline-block;
+    width: 15em;
+    height: 2.2em;
+    cursor:pointer;
+    color:#ffffff;
+    /*font-family:Trebuchet MS;*/
+    font-size:14px;
+    /*font-weight:bold;*/
+    /*padding:24px 76px;*/
+    text-decoration:none;
+    text-shadow:0px 1px 0px #9793A1;
 }
-.onoffswitch-checkbox {
-    display: none;
+.manualButton:hover, .logoutButton:hover {
+    background-color:#2E3E6F;
 }
-.onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
+.manualButton:active, .logoutButton:active {
+    position:relative;
+    top:1px;
 }
-.onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.2s ease-in 0s;
-}
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 12px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-}
-.onoffswitch-inner:before {
-    content: "Awake";
-    padding-left: 10px;
-    background-color: #32CC2D; color: #000000;
-}
-.onoffswitch-inner:after {
-    content: "Asleep";
-    padding-right: 10px;
-    background-color: #E61010; color: #000000;
-    text-align: right;
-}
-.onoffswitch-switch {
-    display: block; width: 18px; margin: 6px;
-    background:
-    position: absolute; top: 0; bottom: 0;
-    right: 56px;
-    border: 2px solid #999999; border-radius: 20px;
-    transition: all 0.2s ease-in 0s;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
-}
-*/
-/* end of on/off switch------------------------------------------------ */
 
 
 /* angular materials switch */
@@ -75,6 +52,28 @@ body {
     margin-top: 0;
     font-weight: bold;
 }
+/*
+md-switch.md-blueTheme-theme.md-checked .md-thumb {
+    background-color: rgb(50, 183, 9) !important;
+}
+md-switch.md-blueTheme-theme.md-checked .md-ink-ripple {
+    color: rgb(255,64,129)!important;
+}
+md-switch.md-blueTheme-theme.md-checked .md-bar {
+    background-color: rgba(125,125,125,0.5)!important;
+}
+*/
+
+md-switch.md-checked .md-thumb {
+    background-color: rgb(50, 183, 9) !important;
+}
+md-switch.md-checked .md-ink-ripple {
+    color: rgb(255,64,129)!important;
+}
+md-switch.md-checked .md-bar {
+    background-color: rgba(125,125,125,0.5)!important;
+}
+
 
 
 /*
@@ -237,7 +236,7 @@ body {
         width: 100%;
         height: 40%;
         margin-top:2%;
-        background-color: #111111;
+        background-color: #131313;
     }
     .coverflowObject {
         height: 100%;
@@ -254,17 +253,35 @@ body {
         text-align: center;
     }
 
-    .repeatContainer {
+    .repeatManualContainer {
         width: 100%;
         height: 3%;
+    }
+    .repeatContainer {
+        width: 50%;
+        height: 100%;
         padding-top: 2%;
         margin: 0;
+        float: left;
         /*background-color: lightgray;*/
     }
     .repeatBox {
-        margin-left: 5%;
+        margin-left: 10%;
         padding-top: 1px;
     }
+    .manualContainer {
+        width: 49%;
+        height: 100%;
+        float: left;
+        /*background-color: lightsalmon;*/
+    }
+    .manualButton {
+        width: 145px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-top: 3%;
+    }
+
 
 
     .xOfYContainer {
@@ -293,7 +310,7 @@ body {
 
     .progressBar {
         width: 90%;
-        margin: 0% auto 0% auto;
+        margin: 0 auto 0 auto;
     }
 
 
@@ -442,7 +459,7 @@ body {
         width: 100%;
         height: 40%;
         margin-top: 2%;
-        background-color: #111111;
+        background-color: #131313;
     }
     .coverflowObject {
         height: 80%;
@@ -453,22 +470,43 @@ body {
     }
     .nowPlayingImage {
         height:100%;
-        margin: 2% auto 0 auto;
+        margin-top: 2%;
+        text-align: center;
     }
     .nowPlayingCaption {
         margin-top: 0;
         color: white;
+        text-align: center;
     }
 
-    .repeatContainer {
+    .repeatManualContainer {
         width: 100%;
         height: 6%;
+    }
+    .repeatContainer {
+        width: 50%;
+        height: 100%;
         padding-top: 1px;
         margin: 0;
+        float: left;
     }
     .repeatBox {
-        margin-left: 5%;
+        margin-left: 10%;
         padding-top: 5px;
+    }
+    .manualContainer {
+        width: 49%;
+        height: 100%;
+        float: right;
+        /*background-color: lightsalmon;*/
+    }
+    .manualButton {
+        width: 200px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-left: 18%;
+        margin-top: 1%;
+        left: 50%;
     }
 
 
@@ -583,7 +621,9 @@ body {
     body {
     }
 
-
+    .borderRad {
+        border-radius: 4px;
+    }
     .awakePlaylistContainer {
         margin-top: 10px;
         width: 100%;
@@ -621,7 +661,7 @@ body {
         width: 100%;
         height: 45%;
         margin-top: 2%;
-        background-color: #111111;
+        background-color: #131313;
     }
     .coverflowObject {
         height: 88%;
@@ -638,16 +678,35 @@ body {
         text-align: center;
     }
 
-
-    .repeatContainer {
+    .repeatManualContainer {
         width: 100%;
-        height: 5%;
-        padding-top: 4%;
+        height: 10%;
+    }
+    .repeatContainer {
+        width: 50%;
+        height: 100%;
+        float: left;
         /*background-color: lightgray;*/
     }
+    .repeatDiv {
+        margin-top: 7%;
+    }
     .repeatBox {
-        margin-left: 5%;
-        padding-top: 5px;
+        margin-left: 10%;
+    }
+    .manualContainer {
+        width: 50%;
+        height: 100%;
+        float: left;
+        /*background-color: lightsalmon;*/
+    }
+    .manualButton {
+        width: 200px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        float:right;
+        margin-right: 10%;
+        margin-top: 7%;
     }
 
 
@@ -712,7 +771,6 @@ body {
     .speedSlider {
         margin-left: 13%;
         width: 87%;
-        color: red;
     }
     .lightsSlider {
         margin-right: 10%;
@@ -754,8 +812,3 @@ body {
     text-align: center;
 }
 
-.manualWrapper {
-    margin:auto;
-    width:100%;
-    max-width:600px;
-}
