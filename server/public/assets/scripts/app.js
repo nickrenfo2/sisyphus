@@ -163,6 +163,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
 
         function displayUIdata(){
             console.log('clientApp: displaying state on UI');
+            console.log(state);
         // determine value of onoffswitch and  play & vm.showPlay(icon) from status data
         if (state.status == 'sleep') {
             vm.onoffswitch = false;
@@ -206,7 +207,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
             play = !play;
             vm.showPlay = (play == false);
             //console.log('play new state: ', play);
-            captureUIState(); //because this is not in the watch list
+            //captureUIState(); //because this is not in the watch list
         };
 
         // speed slider //
@@ -221,7 +222,11 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
             floor: 0,
             ceil: 10,
             value: state.lights
+
         };
+
+
+            $scope.$apply();
     }
 
 
@@ -294,10 +299,14 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
               "main.lightsSlider.value",
               //"main.selected",
               "main.curSisbot"];
-    $scope.$watchGroup(controls, function(oldValue, newValue){
+    //$scope.$watchGroup(controls, function(oldValue, newValue){
+    //    captureUIState();
+    //    }
+    //);
+
+    vm.sendState = function(){
         captureUIState();
-        }
-    );
+    };
 
     /////////////////////////////////////////////////////////
     // Capture state on UI button click during development //
@@ -438,6 +447,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     socket.on('statechange',function(newState) {
         console.log('clientApp:statechange received from sisbot');
         state = newState;
+        console.log(state);
         displayUIdata();
     });
 

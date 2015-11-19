@@ -213,7 +213,7 @@ io.on('connection', function (socket) {
         //    });
         sendEventToSisbot(socket.request.user.curSisbot,'statechange',state); //Send event to sisbot
         passportSocketIo.filterSocketsByUser(io, function(user){ //Send event to all users currently commanding this sisbot
-            return user.curSisbot===socket.handshake.query.serial;
+            return user.curSisbot===usr.curSisbot;
 
         }).forEach(function(socket){
             socket.emit('statechange',state);
