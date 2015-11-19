@@ -130,19 +130,14 @@
         <p class="xOfYPara">{{main.pathXOfY}}</p>
     </div>
 
-<!-- Progress within the path
-<div class="progressContainer">
-    <md-progress-linear
-            class="progressBar"
-            md-mode="determinate"
-            value="{{main.progress}}">
-    </md-progress-linear>
-</div>-->
 
-<!-- Progress within the path -->
+<!-- Progress within the playlist -->
 <div class="progressContainer">
-    <div class="innerProgBar" ng-repeat="path in main.paths track by $index">
-        <div class="progBarUnit">{{main.path}}</div>
+    <div class="progBar">
+        <div class="innerProgBar">
+            <div class="progBarUnit " ng-class="main.getProgClass($index)" ng-repeat="path in main.paths track by $index">{{main.path}}
+            </div>
+        </div>
     </div>
 </div>
 
@@ -213,7 +208,7 @@
     <div class="development">
 
         <button ng-click="main.simulatePathComplete()">Simulate PathComplete</button>
-        <button ng-click="main.simulateStateChange()">Simulate PathComplete</button>
+        <button ng-click="main.simulateStateChange()">Simulate StateChange</button>
         <button ng-click="main.goHome()">Go Home</button>
         <button ng-mousedown="main.jog('theta','pos')" ng-mouseup="main.stop()" ng-mouseleave="main.stop()">Jog+</button>
         <!--<button ng-mousedown="main.jog('neg')" ng-mouseup="main.stop()" ng-mouseleave="main.stop()">Jog-</button>-->

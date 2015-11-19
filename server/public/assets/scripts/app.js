@@ -247,7 +247,16 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     //},updateInterval*1000);
 
 
-
+    vm.getProgClass = function(index){
+        console.log('prog index: ',index);
+        if(index < (state.curPathInd)){
+            return "completedBar";
+        } else if(index == (state.curPathInd)){
+            return "currentBar";
+        } else {
+            return "tbdBar"
+        }
+    };
 
 
 
