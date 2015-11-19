@@ -98,10 +98,11 @@
         <!-- Now Playing -->
         <div class="coverflowContainer">
             <div class="coverflowObject">
-                <img class="nowPlayingImage" ng-src="../assets/images/{{main.nowPlaying}}.png"><!---->
+                <img class="nowPlayingImage" ng-src="../assets/images/{{main.nowPlaying}}.png"  onerror="this.src = '../assets/images/noPic.png'";>>
                 <p class="nowPlayingCaption">{{main.nowPlaying}}</p>
             </div>
         </div>
+<!--<img src="../assets/images/apache11.png"if (this.src!='error.jpg') -->
 
 
     <div class="repeatManualContainer">
@@ -125,14 +126,22 @@
         <p class="xOfYPara">{{main.pathXOfY}}</p>
     </div>
 
-    <!-- Path progress -->
-    <div class="progressContainer">
-        <md-progress-linear
-                class="progressBar"
-                md-mode="determinate"
-                value="{{main.progress}}">
-        </md-progress-linear>
-    </div>
+<!-- Progress within the path -->
+<div class="progressContainer">
+    <md-progress-linear
+            class="progressBar"
+            md-mode="determinate"
+            value="{{main.progress}}">
+    </md-progress-linear>
+</div>
+
+<!-- Progress within the path
+<div class="progressContainer">
+    <div class="progBar" ng-repeat="bar in progressBars track by $index"
+</div>
+-->
+
+
 
     <!-- PlayPauseM is only shown on mobile-->
     <div class="playPauseContainerM">

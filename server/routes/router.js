@@ -152,7 +152,10 @@ router.post('/sis/putState', function (req,res) {
     //console.log('router: sisSerials: ',req.user.sisSerials);
     //console.log('router: current sisbot: ', req.user.curSisbot);
     //console.log('router: updating to newState:');
-    //console.log(newState);
+    console.log('router: newstate: ',newState);
+
+    console.log('router:newstate:paths', newState.paths);
+
     Sisbot.findOneAndUpdate({serial: req.user.curSisbot}, {$set: {state: newState}},
         function (err) {
             if (err) console.log(err);

@@ -8,6 +8,7 @@ $(function(){
     var pathlist = [];
     var currentItem = "";
     var updatedState = {};
+    var updateObj = {};//dr added
 
     $.get("/sis/getState", {withCredentials:true}, function(data){
         updateObj = data;
@@ -70,7 +71,7 @@ $(function(){
                 //console.log(allPlaylists[i].paths);
                 selectedPlaylist = allPlaylists[i];
                 updateObj.state.curPlaylist = allPlaylists[i].name;
-                console.log(selectedPlaylist);
+                console.log('selectedPlaylist: ',selectedPlaylist);
             }
         }
         pathlist = getPathList();
@@ -84,13 +85,13 @@ $(function(){
         //console.log(selectedPlaylist);
         var newPathlist = [];
         var pathNames = [];
+        //console.log("playlist:empty Pathnames array: ",pathNames);
         for(var i=0; i<selectedPlaylist.paths.length; i++){
             var path = '/assets/images/' + selectedPlaylist.paths[i].name + '.png';
             newPathlist.push(path);
             pathNames.push(selectedPlaylist.paths[i].name);
         }
-        updateObj.state.paths = pathNames;
-        //console.log(updateObj.state.paths);
+        //updateObj.state.paths = pathNames;
         return newPathlist;
     };
 
@@ -106,9 +107,9 @@ $(function(){
         genCoverflow();
     }
 
+
+
     $(".startHere-button").click(function(){
-        console.log(updateObj);
-        console.log(updateObj.state);
         $.post("/sis/putState", updateObj.state, function(data, status){
             console.log(data);
             console.log(status);
