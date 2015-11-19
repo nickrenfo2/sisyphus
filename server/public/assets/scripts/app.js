@@ -196,7 +196,8 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
         // path progress //
         // -handled by the timer function below
-        var progressBars = [];
+        //var progressBars = [];
+        vm.paths=state.paths;
 
         // Play/Pause
         vm.playPauseClick = function () {
@@ -420,6 +421,26 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     };
 
 
+    /////////////////////////////////////////////////////////////
+    // Received a statechange message from another controller. //
+    // Update this database UI.                                //
+    /////////////////////////////////////////////////////////////
+
+    socket.on('statechange',function(newState) {
+        console.log('clientApp:statechange received from sisbot');
+        state = newState;
+        displayUIdata();
+    });
+
+    vm.simulateStateChange = function(){
+        console.log('clientApp:simulated statechange received from sisbot');
+        state = newState;
+        displayUIdata();
+    };
+
+
+
+
     ////////////////////////////////////////////
     // Path Complete received from the sisbot //
     //  - update UI curPathInd, progress      //
@@ -427,7 +448,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
 
     // for development only, execute this function un click of the capture state button
     // **remove or comment out for normal operation
-    vm.captureUIState=function() {
+    vm.simulatePathComplete=function() {
         console.log('saw capture state click which is now a fake pathcomplete message');
     ////////////////////////////////////////////////////////////////////////////////////
 
