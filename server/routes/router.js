@@ -143,10 +143,12 @@ router.get('/sis/getState', function (req,res) {
 
 //update the state of a sisbot
 router.post('/sis/putState', function (req,res) {
-    //console.log("router: updating state: req.body:");
-    //console.log(req.body);
-    //
+    console.log("router: updating state: req.body:");
+    console.log(req.body);
+
     var newState = req.body;
+    console.log(newState.curPlaylist);
+    console.log(newState.paths);
     //console.log('router: email: ',req.user.email);
     //console.log('router: password: ',req.user.password);
     //console.log('router: sisSerials: ',req.user.sisSerials);
@@ -160,7 +162,7 @@ router.post('/sis/putState', function (req,res) {
         function (err) {
             if (err) console.log(err);
             res.sendStatus(200);
-            //console.log("router: finished updating state");
+            console.log("router: finished updating state");
         });
 });
 

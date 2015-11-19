@@ -582,15 +582,23 @@ app.controller('LoginController',['$http',function ($http) {
 
     vm.register = function(){
         console.log('register...');
-        console.log(vm.acct);
-        $http.post('/acct/register',vm.acct).then(function (resp) {
-            //if(resp.data.accountSuccess)
-            //    console.log('account created');
-            //if(resp.data.sisbotSuccess)
-            //    console.log('sisbot added');
-            console.log(resp.data.message);
-            if(resp.data.loggedIn) window.location.href="/";
-        });
+        if(vm.acct.password === vm.acct.confirm){
+            $http.post('/acct/register',vm.acct).then(function (resp) {
+                //if(resp.data.accountSuccess)
+                //    console.log('account created');
+                //if(resp.data.sisbotSuccess)
+                //    console.log('sisbot added');
+                console.log(resp.data.message);
+                if(resp.data.loggedIn) window.location.href="/";
+            });
+        }
+        else {
+            vm.acct.password = "";
+            vm.acct.confirm = "";
+            $(".login-password").addClass("nomatch");
+            $(".reg-password-confirm").addClass("nomatch");
+            vm.nomatch = true;
+        }
     };
 
 }]);

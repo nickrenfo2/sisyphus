@@ -8,12 +8,12 @@ $(function(){
     var pathlist = [];
     var currentItem = "";
     var updatedState = {};
-    var updateObj = {};//dr added
 
     $.get("/sis/getState", {withCredentials:true}, function(data){
         updateObj = data;
         //console.log(updateObj);
-        //console.log(updateObj.state);
+        //console.log(updateObj.state.curPlaylist);
+        curPlaylist = updateObj.state.curPlaylist;
     });
 
     //get call to server for all playlists
@@ -22,9 +22,14 @@ $(function(){
         //console.log(allPlaylists);
         for (var i=0; i<allPlaylists.length; i++){
             var playlist = allPlaylists[i].name;
-            var menuItem = "<option value='" + playlist + "'>" + playlist + "</option>";
+            var menuItem = "<option value=\"" + playlist + "\">" + playlist + "</option>";
             $(".playlist-select").append(menuItem);
         }
+        $("select").val(curPlaylist);
+    }).done(function(){
+        console.log('in getPlaylists dot done');
+        $(".flipster").remove();
+        getPaths();
     });
 
     //this function calls the flipster function and it's config
@@ -64,6 +69,11 @@ $(function(){
     //gets the list of paths from the selected playlist in dropdown menu
     $('.playlist-select').change(function() {
         $(".flipster").remove();
+        getPaths();
+    });
+
+    function getPaths(){
+        console.log('in getPaths');
         var selected = $(".playlist-select option:selected").text();
         //console.log(selected);
         for (var i=0; i<allPlaylists.length; i++){
@@ -71,32 +81,33 @@ $(function(){
                 //console.log(allPlaylists[i].paths);
                 selectedPlaylist = allPlaylists[i];
                 updateObj.state.curPlaylist = allPlaylists[i].name;
-                console.log('selectedPlaylist: ',selectedPlaylist);
+                //console.log(selectedPlaylist);
             }
         }
-        pathlist = getPathList();
+        pathlist = getPathSource();
         //console.log(pathlist);
-        getPaths();
-    });
+        displayPaths();
+    }
 
 
     //returns array of local img source urls for paths
-    getPathList = function(){
+    function getPathSource(){
         //console.log(selectedPlaylist);
         var newPathlist = [];
-        var pathNames = [];
-        //console.log("playlist:empty Pathnames array: ",pathNames);
+        //var pathNames = [];
         for(var i=0; i<selectedPlaylist.paths.length; i++){
             var path = '/assets/images/' + selectedPlaylist.paths[i].name + '.png';
             newPathlist.push(path);
-            pathNames.push(selectedPlaylist.paths[i].name);
+            //pathNames.push(selectedPlaylist.paths[i].name);
         }
         //updateObj.state.paths = pathNames;
+        //console.log(updateObj.state.paths);
         return newPathlist;
-    };
+    }
 
     //appends path img src urls to DOM
-    function getPaths(){
+    function displayPaths(){
+        console.log('in display paths');
         $(".appendFlipster").append("<div class='flipster'></div>");
         var tempUl = $('<ul/>').addClass('items').appendTo('.flipster');
         for(var i=0; i<pathlist.length; i++){
@@ -107,22 +118,26 @@ $(function(){
         genCoverflow();
     }
 
-
-
     $(".startHere-button").click(function(){
+        console.log(updateObj);
+        console.log(updateObj.state);
+        console.log(updateObj.state.paths);
         $.post("/sis/putState", updateObj.state, function(data, status){
             console.log(data);
             console.log(status);
-        });
+            window.location.assign('/');
+        })
     });
 
     $(".startBeginning-button").click(function(){
         updateObj.state.curPathInd = "0";
         console.log(updateObj);
+        console.log(updateObj.state.paths);
         $.post("/sis/putState", updateObj.state, function(data, status){
             console.log(data);
             console.log(status);
-        });
+            window.location.assign('/');
+        })
     });
 
 

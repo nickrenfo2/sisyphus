@@ -16,6 +16,10 @@ body {
     z-index: -1;
 }
 
+.background-img-2 {
+    display: none;
+}
+
 
 .login-header {
     font-family: Palatino Linotype;
@@ -54,6 +58,7 @@ body {
     font-size: 12px;
     box-shadow: inset .5px .5px .5px 0px #555;
      /*margin: 2em auto 1.5em auto;*/
+    padding-left: 4px;
  }
 
 
@@ -81,5 +86,105 @@ body {
     top:1px;
 }
 
+.nomatch {
+    box-shadow: 0px 0px 12px red;
+}
 
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
 
+    body {
+        background-color: black;
+        font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+        color: #555;
+    }
+
+    .background-img {
+        /*display: none;*/
+        width: 100%;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        z-index: -1;
+        opacity: .8;
+    }
+
+    .login-header {
+        font-family: Palatino Linotype;
+        font-weight: bolder;
+        font-size: 4.5em;
+        color: white;
+        margin-left: 1em;
+    }
+
+    .login-text, .reg-text {
+        text-align: left;
+        font-size: 4.5em;
+        margin-left: .5em;
+    }
+
+    .login-body {
+        /*height: 8em;*/
+        width: 36em;
+        /*padding: 0em 2em 1em 2em;*/
+        padding: .5em 2em 1em 2em;
+        overflow: auto;
+        margin: 1em auto 0px auto;
+        /*box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;*/
+        background-color: #D4D7DB;
+        border: 24px solid #626972;
+        border-radius: 20px;
+        text-align: center;
+    }
+
+    .login-email, .login-password, .reg-password-confirm, .reg-sis-serial, .reg-sis-id {
+        height: 1.7em;
+        width: 90%;
+        display: block;
+        font-size: 48px;
+        box-shadow: inset 1px 1px 1px 0px #555;
+        margin: .3em auto;
+        padding-left: .4em;
+    }
+
+    .register, .reg-already {
+        margin: .5em;
+        font-size: 48px;
+    }
+
+    .login-button, .reg-button {
+        height: 1.8em;
+        width: 5em;
+        background-color: #A2D045;
+        border-radius: 5px;
+        border: 1px solid #7E9B46;
+        display: inline-block;
+        cursor: pointer;
+        color: #555;
+        font-family: Trebuchet MS;
+        font-size: 48px;
+        padding: 5px 16px;
+        margin: .5em auto;
+
+        text-decoration: none;
+    }
+
+    .login-button:hover, .reg-button:hover {
+        background-color: #7E9B46;
+    }
+
+    .login-button:active, .reg-button:active {
+        position: relative;
+        top: 1px;
+    }
+
+    .nomatch {
+        box-shadow: 0px 0px 16px red;
+    }
+
+    .nomatch-text {
+        color: red;
+    }
+}
