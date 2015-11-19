@@ -7,7 +7,9 @@
 
    Switching between mobile & desktop at 600px width
 */
-
+body, html {
+    height:100%;
+}
 body {
     background-color: white;
 }
@@ -808,7 +810,53 @@ md-switch.md-checked .md-bar {
 
 
 .development {
-    margin-top:0px;
+    margin-top:0;
     text-align: center;
 }
 
+.manualWrapper.well {
+    position: relative;
+    top:20%;
+    width:100%;
+    /*padding:0;*/
+    max-width:106px;
+    margin:auto;
+    height:135px;
+
+}
+
+.manual .left, .manual .right {
+    padding:0;
+    width:24px;
+}
+
+.manual .mid {
+    width:48px;
+    padding: 0 12px;
+}
+
+.manual .left div{
+    float:right;
+}
+
+.manual .mid div {
+    text-align:center;
+    /*width:60px;*/
+    /*padding:0 15px;*/
+}
+
+.manual .right div {
+    float:left;
+}
+
+.manual .left div, .manual .right div {
+    margin-top:30px;
+    /*width:30px;*/
+}
+
+.turn, .move {
+    width:24px;
+    /*float:left;*/
+    height:30px;
+    font-size:24px;
+}

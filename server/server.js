@@ -211,7 +211,13 @@ io.on('connection', function (socket) {
         //        res.sendStatus(200);
         //        //console.log("router: finished updating state");
         //    });
-        sendEventToSisbot(socket.request.user.curSisbot,'statechange',state);
+        sendEventToSisbot(socket.request.user.curSisbot,'statechange',state); //Send event to sisbot
+        passportSocketIo.filterSocketsByUser(io, function(user){ //Send event to all users currently commanding this sisbot
+            return user.curSisbot===socket.handshake.query.serial;
+
+        }).forEach(function(socket){
+            socket.emit('statechange',state);
+        });
     });
 
     socket.on('jog', function (dir) {

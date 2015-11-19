@@ -327,6 +327,7 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     };
 
 
+
     //////////////////////////////////////////////////
     // Capture the state of the user interface (UI) //
     // and send it to the database                  //

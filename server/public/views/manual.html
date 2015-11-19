@@ -5,13 +5,33 @@
     <title>Sisyphus - Manual Movement</title>
     <script src="vendor/angular/angular.min.js"></script>
     <script src="vendor/jquery/dist/jquery.min.js"></script>
-    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--<script src="vendor/jquery-mobile/dist/jquery.mobile.min.js"></script>-->
     <script src="vendor/socket.io-client/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.ttf">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff">
+    <link rel="stylesheet" href="/vendor/font-awesome/fonts/fontawesome-webfont.woff2">
+
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="views/styles.css">
 </head>
 <body ng-controller="ManualController as man">
     <div class="manualWrapper well">
-
+        <div class="manual row">
+            <div class="col-xs-4 left">
+                <div id="turnCW" class="turn"><i class="fa fa-rotate-right"></i></div>
+            </div>
+            <div class="col-xs-4 mid">
+                <div id="moveOut" class="move"><i class="fa fa-upload"></i> </div>
+                <div id="goHome" class="move"><i class="fa fa-bullseye"></i></div>
+                <div id="moveIn" class="move"><i class="fa fa-download"></i> </div>
+            </div>
+            <div class="col-xs-4 right">
+                <div id="turnCCW" class="turn"><i class="fa fa-rotate-left"></i></div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
