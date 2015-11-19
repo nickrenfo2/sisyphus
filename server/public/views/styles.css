@@ -840,24 +840,27 @@ md-switch.md-checked .md-bar {
     text-align: center;
 }
 
-.manualWrapper.well {
+.manualWrapper {
     position: relative;
     top:20%;
-    width:100%;
+    width:192px;
     /*padding:0;*/
-    max-width:106px;
+    /*max-width:106px;*/
     margin:auto;
-    height:135px;
 
+}
+
+.manual.row {
+    margin:0;
 }
 
 .manual .left, .manual .right {
     padding:0;
-    width:24px;
+    width:48px;
 }
 
 .manual .mid {
-    width:48px;
+    width:96px;
     padding: 0 12px;
 }
 
@@ -867,6 +870,7 @@ md-switch.md-checked .md-bar {
 
 .manual .mid div {
     text-align:center;
+    margin:auto;
     /*width:60px;*/
     /*padding:0 15px;*/
 }
@@ -876,13 +880,13 @@ md-switch.md-checked .md-bar {
 }
 
 .manual .left div, .manual .right div {
-    margin-top:30px;
+    margin-top:60px;
     /*width:30px;*/
 }
 
 .turn, .move {
-    width:24px;
+    width:48px;
     /*float:left;*/
-    height:30px;
-    font-size:24px;
+    height:60px;
+    font-size:48px;
 }

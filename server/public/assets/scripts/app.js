@@ -27,7 +27,7 @@ var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngMaterial']);  
 
 
 
-app.controller('MainController',['$http', '$scope', function ($http, $scope) {
+app.controller('MainController',['$http', '$scope','$mdDialog', function ($http, $scope,$mdDialog) {
     var vm = this;
     vm.message="Hello Sisyphus World";
     console.log('MainController running');
@@ -277,10 +277,10 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     // UI click to go to the Manual page //
     ///////////////////////////////////////
 
-    vm.manualMovement = function(){
-        console.log('saw Manual Movement click');
-        window.location.asssign("/manual");
-    };
+    //vm.manualMovement = function(){
+    //    console.log('saw Manual Movement click');
+    //    window.location.asssign("/manual");
+    //};
 
 
     ////////////////////////////////////
@@ -508,6 +508,45 @@ app.controller('MainController',['$http', '$scope', function ($http, $scope) {
     };
     //});  // normal close
 
+
+    var manualHtmlString =
+        '<div class="manualWrapper" ng-controller="ManualController as man">' +
+            '<div class="manual row">' +
+                '<div class="col-xs-4 left">' +
+                    '<div id="turnCW" class="turn">' + '<i class="fa fa-rotate-right"></i></div>' +
+                '</div>' +
+                '<div class="col-xs-4 mid">' +
+                    '<div id="moveOut" class="move"><i class="fa fa-upload"></i></div>' +
+                    '<div id="goHome" class="move" ng-click="man.test()"><i class="fa fa-bullseye"></i></div>' +
+                    '<div id="moveIn" class="move"><i class="fa fa-download"></i></div>' +
+                '</div>' +
+                '<div class="col-xs-4 right">' +
+                    '<div id="turnCCW" class="turn"><i class="fa fa-rotate-left"></i></div>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+
+    //Angular 2 version of dialog?
+    function showAlert() {
+        console.log('show alert');
+        console.log($mdDialog);
+        var alert = $mdDialog.alert({
+            title: 'Attention',
+            //content: 'This is an example of how easy dialogs can be!',
+            content: manualHtmlString,
+            ok: 'Close'
+        });
+        $mdDialog
+            .show( alert )
+            .finally(function() {
+                alert = undefined;
+            });
+    }
+
+    vm.manualMovement = showAlert;
+
+
+
 }]);
 
 
@@ -543,5 +582,15 @@ app.controller('LoginController',['$http',function ($http) {
             if(resp.data.loggedIn) window.location.href="/";
         });
     };
+
+}]);
+
+app.controller('ManualController', [function() {
+    var vm = this;
+
+
+    vm.goHome = function(){
+        socket.emit('goHome');
+    }
 
 }]);
