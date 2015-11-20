@@ -553,8 +553,6 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
 
     vm.manualMovement = showAlert;
 
-
-
 }]);
 
 

@@ -87,7 +87,13 @@ body {
 }
 
 .nomatch {
-    box-shadow: 0px 0px 12px red;
+    box-shadow: inset 0px 0px 4px red;
+}
+
+.nomatch-text {
+    margin-top: -.5em;
+    font-size: .8em;
+    color: red;
 }
 
 @media only screen
@@ -114,14 +120,14 @@ and (orientation : portrait) {
     .login-header {
         font-family: Palatino Linotype;
         font-weight: bolder;
-        font-size: 4.5em;
+        font-size: 4em;
         color: white;
         margin-left: 1em;
     }
 
     .login-text, .reg-text {
         text-align: left;
-        font-size: 4.5em;
+        font-size: 4em;
         margin-left: .5em;
     }
 
@@ -131,7 +137,7 @@ and (orientation : portrait) {
         /*padding: 0em 2em 1em 2em;*/
         padding: .5em 2em 1em 2em;
         overflow: auto;
-        margin: 1em auto 0px auto;
+        margin: .5em auto 0px auto;
         /*box-shadow:inset 2px 2px 0px 0px #90949E, inset 0px 0px 2px 2px slategray;*/
         background-color: #D4D7DB;
         border: 24px solid #626972;
@@ -141,9 +147,9 @@ and (orientation : portrait) {
 
     .login-email, .login-password, .reg-password-confirm, .reg-sis-serial, .reg-sis-id {
         height: 1.7em;
-        width: 90%;
+        width: 85%;
         display: block;
-        font-size: 48px;
+        font-size: 40px;
         box-shadow: inset 1px 1px 1px 0px #555;
         margin: .3em auto;
         padding-left: .4em;
@@ -155,7 +161,7 @@ and (orientation : portrait) {
     }
 
     .login-button, .reg-button {
-        height: 1.8em;
+        height: 1.6em;
         width: 5em;
         background-color: #A2D045;
         border-radius: 5px;
@@ -167,12 +173,16 @@ and (orientation : portrait) {
         font-size: 48px;
         padding: 5px 16px;
         margin: .5em auto;
-
         text-decoration: none;
     }
 
     .login-button:hover, .reg-button:hover {
         background-color: #7E9B46;
+    }
+
+    .nomatch-text {
+        font-size: 36px;
+        color: red;
     }
 
     .login-button:active, .reg-button:active {
@@ -181,10 +191,7 @@ and (orientation : portrait) {
     }
 
     .nomatch {
-        box-shadow: 0px 0px 16px red;
+        box-shadow: inset 0px 0px 8px red;
     }
 
-    .nomatch-text {
-        color: red;
-    }
 }

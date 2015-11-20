@@ -36,10 +36,10 @@
                 <h2 class="reg-text">Register</h2>
                 <input class="login-email" type="text" placeholder="Email" name="username" ng-model="log.acct.email"><br/>
                 <input class="login-password" type="password" placeholder="Password" name="username" ng-model="log.acct.password"><br/>
-                <input class="reg-password-confirm" type="password" placeholder="Confirm Password" name="confirm" ng-model="log.acct.confirm"><br/>
+                <input class="reg-password-confirm" type="password" placeholder="Password Confirm" name="confirm" ng-model="log.acct.confirm"><br/>
                 <input class="reg-sis-serial" type="text" placeholder="Sisyphus Serial No." name="serial" ng-model="log.acct.serial"><br/>
                 <input class="reg-sis-id" type="text" placeholder="Sisyphus ID" name="sisId" ng-model="log.acct.sid"><br/>
-                <p class="nomatch-text" ng-show="log.nomatch = false">Password and password confirm do not match.</p>
+                <p class="nomatch-text" ng-show="log.nomatch">Error. Password and password confirm do not match.</p>
                 <button class="reg-button" ng-click="log.register()">Register</button>
                 <div class="reg-already" ng-click="log.registering = false">Already have an account?</div>
             </div>
