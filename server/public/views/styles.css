@@ -15,7 +15,7 @@ body {
 }
 
 .manualButton, .logoutButton {
-    box-shadow:inset 0px 1px 0px 0px #90949E;
+    box-shadow:inset 0 1px 0 0 #90949E;
     background-color:#5C6580;
     border-radius:2px;
     border:1px solid #2E3E6F;
@@ -30,7 +30,9 @@ body {
     /*font-weight:bold;*/
     /*padding:24px 76px;*/
     text-decoration:none;
-    text-shadow:0px 1px 0px #9793A1;
+    text-shadow:0 1px 0 #9793A1;
+    outline:none;
+
 }
 .manualButton:hover, .logoutButton:hover {
     background-color:#2E3E6F;
@@ -50,21 +52,10 @@ body {
 }
 .md-block {
     padding-top: 3px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     margin-top: 0;
     font-weight: bold;
 }
-/*
-md-switch.md-blueTheme-theme.md-checked .md-thumb {
-    background-color: rgb(50, 183, 9) !important;
-}
-md-switch.md-blueTheme-theme.md-checked .md-ink-ripple {
-    color: rgb(255,64,129)!important;
-}
-md-switch.md-blueTheme-theme.md-checked .md-bar {
-    background-color: rgba(125,125,125,0.5)!important;
-}
-*/
 
 md-switch.md-checked .md-thumb {
     background-color: rgb(50, 183, 9) !important;
@@ -104,91 +95,20 @@ md-switch.md-checked .md-bar {
     background-color: #e0e0e0;
 }
 
-/*
-.awakePlaylistContainer {
-    width: 100%;
-    height: 10%;
-    border: 2px solid black;
-    background-color: red;
-}
-.awake {
-    width: 50%;
-    height: 100%;
-    float: left;
-    text-align: left;
-}
-.awakeSlider {
-    width:60px;
-    margin-left: 10px;
-}
-.awakeSlider:hover {
-    cursor: pointer;
-}
-.playlistP {
-    color: black;
-    overflow: scroll;
-}
-
-
-.playPauseContainerM {
-    float: left;
-    border: 2px solid black;
-    width: 20%;
-    height: 20%;
-    margin: 5% auto 5% auto;
-}
-
-.playPauseButtonM {
-    /*
-    border-radius: 4px;
-    border: 2px solid black;
-    height: 100px;
-    width: 100px;
-
-    margin: 5% auto 5% auto;
-}
-*/
-
-/*---------------------------*/
 
 .playPauseContainerD {
     width: 20%;
     height: 20%;
     float: left;
+    outline:none;
 }
-
 .playPauseButtonD {
     height: 70px;
     width: 65px;
     border-radius: 4px;
     margin: 0 auto 0 auto;
+    outline:none;
 }
-/*
-.repeatContainer {
-    width: 100%;
-    height: 5%;
-}
-
-.repeatBox:hover {
-    cursor: pointer;
-}
-
-.logoutB {
-    border-radius: 4px;
-}
-
-.curSisbotLogoutContainer {
-    width: 100%;
-}
-.curSisbotContainer {
-    width: 40%;
-    float: left;
-}
-.logOutContainer {
-    width: 40%;
-    float: right;
-}
-*/
 .playlist-dropdown {
     margin-top: 30px;
     margin-left: 30px;
@@ -211,7 +131,9 @@ md-switch.md-checked .md-bar {
     text-overflow: '';
 }
 
-
+.logoutButton {
+    height: 50%;
+}
 
 /*******************/
 /* Mobile Portrait */
@@ -223,12 +145,10 @@ md-switch.md-checked .md-bar {
         font-size: 12px;
     }
 
-
     .awakePlaylistContainer {
         margin-top: 1%;
         width: 100%;
         height: 29px;
-        /*background-color: lightgray;*/
     }
     .switchContainer {
         float: left;
@@ -236,20 +156,16 @@ md-switch.md-checked .md-bar {
         margin-left: 1px;
     }
     .onoffswitch {
-        /*margin-left: 5%;*/
     }
     .playlistDispContainer {
         float: right;
         width: 70%;
         margin-right: 0;
         height: 90%;
-        /*        height: 100%;
-                clear: left;
-                margin-right: 5%;*/
         text-align: center;
     }
     .playlistP {
-        height:75%;
+        height:116%;
         border: 2px solid darkgray;
         border-radius:17px;
         padding-top: 8px;
@@ -257,8 +173,6 @@ md-switch.md-checked .md-bar {
         margin-top: 0;
         font-weight: bold;
     }
-
-
 
     .coverflowContainer {
         width: 100%;
@@ -283,33 +197,52 @@ md-switch.md-checked .md-bar {
 
     .repeatManualContainer {
         width: 100%;
-        height: 3%;
+        height: 5%;
     }
     .repeatContainer {
-        width: 50%;
+        width: 45%;
         height: 100%;
         padding-top: 2%;
         margin: 0;
         float: left;
-        /*background-color: lightgray;*/
+        margin-left: 5%
     }
     .repeatBox {
         margin-left: 10%;
         padding-top: 1px;
     }
     .manualContainer {
-        width: 49%;
+        width: 45%;
         height: 100%;
         float: left;
-        /*background-color: lightsalmon;*/
     }
     .manualButton {
         width: 145px;
         padding-top: 2px;
         padding-bottom: 2px;
         margin-top: 3%;
+        height: 130%;
     }
 
+/*
+    .manualButton, .logoutButton {
+        box-shadow:inset 0 1px 0 0 #90949E;
+        background-color:#5C6580;
+        border-radius:2px;
+        border:1px solid #2E3E6F;
+        margin: 10px auto;
+        display:inline-block;
+        width: 15em;
+        height: 2.2em;
+        cursor:pointer;
+        color:#ffffff;
+        font-size:14px;
+        text-decoration:none;
+        text-shadow:0 1px 0 #9793A1;
+        outline:none;
+
+    }
+*/
 
 
     .xOfYContainer {
@@ -317,13 +250,12 @@ md-switch.md-checked .md-bar {
         height: 3%;
         margin-top: 0;
         margin-bottom:0;
-        /*background-color: lightgreen;*/
     }
 
     .xOfYPara {
         width: 120px;
         text-align: left;
-        padding-top: 0%;
+        padding-top: 0;
         margin-left: 5%;
         margin-bottom: 0;
     }
@@ -333,7 +265,6 @@ md-switch.md-checked .md-bar {
         height: 3%;
         margin-top: 0;
         margin-bottom: 0;
-        /*background-color: lightcoral;*/
     }
 
     .progressBar {
@@ -345,22 +276,21 @@ md-switch.md-checked .md-bar {
     .playPauseContainerM {
         width: 20%;
         height: 8%;
-        margin: 0% auto 0% auto;
-        /*background-color: lightskyblue;*/
+        margin: 0 auto 0 auto;
+        outline:none;
     }
 
     .playPauseButtonM {
         height: 50px;
         width: 50px;
         margin: 1% auto 1% auto;
+        outline:none;
 }
-
 
     .twoSliderContainer {
         width: 100%;
         height: 20%;
         margin-bottom: 0;
-        /*background-color: lawngreen;*/
     }
     /* Don't display the desktop play/pause button
     on the /tablet/desk view */
@@ -370,40 +300,29 @@ md-switch.md-checked .md-bar {
     .speedHeading {
         margin-left: 5%;
         margin-bottom: 0px;
-        /*background-color: white;*/
     }
     .lightsHeading {
         margin-left: 5%;
         margin-bottom: 0px;
-        /*background-color: white;*/
     }
     .speedContainer {
         width: 100%;
         height:50%;
         margin: 0;
-        /*background-color: red;*/
     }
     .lightsContainer {
         width: 100%;
         height: 50%;
         margin: 0;
-        /*background-color: green;*/
     }
-    /*   .sliderHeading {
-           margin-left: 10%;
-           margin-bottom: 2px;
-       }*/
+
     .speedSlider {
         margin-left: 5%;
         width: 90%;
-        color: red;
-        /*background-color: lightcoral;*/
     }
     .lightsSlider {
         margin-left: 5%;
         width: 90%;
-        color: green;
-        /*background-color: lawngreen;*/
     }
     .speedSlider:hover, .lightsSlider:hover {
         cursor: pointer;
@@ -414,14 +333,12 @@ md-switch.md-checked .md-bar {
         width: 100%;
         height: 7%;
         margin-top: 6%;
-        /*background-color: #00d6b2;*/
     }
     .curSisbotContainer {
         width: 45%;
         height: 100%;
         float: left;
         margin-left: 5%;
-        /*background-color: mediumvioletred;*/
     }
     .logOutContainer {
         width: 45%;
@@ -435,6 +352,7 @@ md-switch.md-checked .md-bar {
         padding-top: 2px;
         padding-bottom: 2px;
         margin-left: 20%;
+        height: 100%;
     }
 } /* end mobile Portrait*/
 
@@ -457,7 +375,6 @@ md-switch.md-checked .md-bar {
         margin-top: 1px;
         width: 100%;
         height: 24px;
-        /*background-color: lightgray;*/
     }
     .switchContainer {
         float: left;
@@ -475,7 +392,7 @@ md-switch.md-checked .md-bar {
         border: 2px solid darkgray;
         border-radius:17px;
         padding: 5px;
-        margin-top: 0px;
+        margin-top: 0;
         font-weight: bold;
     }
     .playlistDispContainer:hover{
@@ -493,7 +410,7 @@ md-switch.md-checked .md-bar {
         height: 80%;
         width: 20%;
         margin: 0 auto 0 auto;
-        padding-top: 0%;
+        padding-top: 0;
         padding-bottom: 1%;
     }
     .nowPlayingImage {
@@ -526,12 +443,11 @@ md-switch.md-checked .md-bar {
         width: 49%;
         height: 100%;
         float: right;
-        /*background-color: lightsalmon;*/
     }
     .manualButton {
         width: 200px;
-        padding-top: 0px;
-        padding-bottom: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
         margin-left: 18%;
         margin-top: 1%;
         left: 50%;
@@ -559,11 +475,10 @@ md-switch.md-checked .md-bar {
         height: 5%;
         margin-top: 1%;
         margin-bottom: 0;
-        /*background-color: lightcoral;*/
     }
     .progressBar {
         width: 90%;
-        margin: 0% auto 0% auto;
+        margin:  auto 0 auto;
     }
 
 
@@ -575,10 +490,12 @@ md-switch.md-checked .md-bar {
         width: 100%;
         height: 10%;
         margin-bottom: 0;
+        outline:none;
     }
     .playPauseContainerD {
         width: 20%;
         height: 20%;
+        outline:none;
     }
     .speedHeading {
         margin-left: 12%;
@@ -617,13 +534,11 @@ md-switch.md-checked .md-bar {
         height: 100%;
         float: left;
         margin-left: 5%;
-        /*background-color: mediumvioletred;*/
     }
     .logOutContainer {
         width: 45%;
         height: 100%;
         float: right;
-        /*background-color: mediumseagreen;*/
     }
     .logoutButton {
         width: 50%;
@@ -656,7 +571,6 @@ md-switch.md-checked .md-bar {
         margin-top: 10px;
         width: 100%;
         height: 35px;
-        /*background-color: lightgray;*/
     }
     .switchContainer {
         float: left;
@@ -668,16 +582,13 @@ md-switch.md-checked .md-bar {
         width: 45%;
         margin-right: 5%;
         height: 32px;
-/*        height: 100%;
-        clear: left;
-        margin-right: 5%;*/
         text-align: center;
     }
     .playlistP {
         border: 2px solid darkgray;
         border-radius:17px;
         padding: 5px;
-        margin-top: 0px;
+        margin-top: 0;
         font-weight: bold;
     }
     .playlistDispContainer:hover{
@@ -714,10 +625,10 @@ md-switch.md-checked .md-bar {
         width: 50%;
         height: 100%;
         float: left;
-        /*background-color: lightgray;*/
     }
     .repeatDiv {
         margin-top: 7%;
+        margin-left: 10%;
     }
     .repeatBox {
         margin-left: 10%;
@@ -726,7 +637,6 @@ md-switch.md-checked .md-bar {
         width: 50%;
         height: 100%;
         float: left;
-        /*background-color: lightsalmon;*/
     }
     .manualButton {
         width: 200px;
@@ -743,7 +653,6 @@ md-switch.md-checked .md-bar {
         height: 5%;
         margin-top: 0;
         margin-bottom:0;
-        /*background-color: lightgreen;*/
     }
 
     .xOfYPara {
@@ -759,7 +668,6 @@ md-switch.md-checked .md-bar {
         height: 5%;
         margin-top: 1%;
         margin-bottom: 0;
-        /*background-color: lightcoral;*/
     }
 
     .progressBar {
@@ -779,6 +687,7 @@ md-switch.md-checked .md-bar {
     .playPauseContainerD {
         width: 20%;
         height: 20%;
+        outline:none;
     }
     .playPauseButtonD:hover{
         cursor: pointer;
@@ -824,7 +733,9 @@ md-switch.md-checked .md-bar {
         float: right;
     }
     .logoutButton {
+        margin-top: 0;
         width: 29%;
+        height:100%;
         margin-left: 60%;
     }
 } /* end tablet or desktop */
@@ -844,8 +755,6 @@ md-switch.md-checked .md-bar {
     position: relative;
     top:20%;
     width:192px;
-    /*padding:0;*/
-    /*max-width:106px;*/
     margin:auto;
 
 }
@@ -889,4 +798,6 @@ md-switch.md-checked .md-bar {
     /*float:left;*/
     height:60px;
     font-size:48px;
+    outline:none;
+
 }

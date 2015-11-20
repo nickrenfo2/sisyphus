@@ -253,7 +253,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
 
 
     vm.getProgClass = function(index){
-        console.log('prog index: ',index);
+        //console.log('prog index: ',index);
         if(index < (state.curPathInd)){
             return "completedBar";
         } else if(index == (state.curPathInd)){
@@ -468,14 +468,12 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     // for development only, execute this function un click of the capture state button
     // **remove or comment out for normal operation
     vm.simulatePathComplete=function() {
-        console.log('saw capture state click which is now a fake pathcomplete message');
+        console.log('saw click on simulated pathcomplete message');
     ////////////////////////////////////////////////////////////////////////////////////
 
         // **for normal operation, remove above code and uncomment the line below
         //socket.on('pathcomplete',function() {
         console.log('clientApp:pathcomplete received from sisbot');
-        //console.log('clientApp:pathcomplete playlist length: ', state.paths.length);
-        //console.log('clientApp:pathcomplete curPathInd: ', state.curPathInd);
 
         // update current path index and progress
 
@@ -584,10 +582,6 @@ app.controller('LoginController',['$http',function ($http) {
         console.log('register...');
         if(vm.acct.password === vm.acct.confirm){
             $http.post('/acct/register',vm.acct).then(function (resp) {
-                //if(resp.data.accountSuccess)
-                //    console.log('account created');
-                //if(resp.data.sisbotSuccess)
-                //    console.log('sisbot added');
                 console.log(resp.data.message);
                 if(resp.data.loggedIn) window.location.href="/";
             });
