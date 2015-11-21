@@ -112,7 +112,7 @@ $(function(){
         var tempUl = $('<ul/>').addClass('items').appendTo('.flipster');
         for(var i=0; i<pathlist.length; i++){
             var $path =  "<li><img id=\"" + i + "\" src=\"" + pathlist[i] + "\" onerror=\"src='/assets/images/noPic.png'\"/></li>";
-            //console.log($path);
+            console.log($path);
             tempUl.append($path);
         }
         genCoverflow();
