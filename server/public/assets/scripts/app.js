@@ -539,7 +539,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         console.log('show alert');
         console.log($mdDialog);
         var alert = $mdDialog.alert({
-            title: 'Attention',
+            title: 'Manual Jog',
             //content: 'This is an example of how easy dialogs can be!',
             content: manualHtmlString,
             ok: 'Close'
