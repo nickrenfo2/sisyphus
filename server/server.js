@@ -29,8 +29,8 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 
 
-var connString = 'mongodb://sisadmin:BoulderHillRoll@ds053894.mongolab.com:53894/sisyphus';
-//var connString = 'mongodb://localhost:27017/sisyphus';
+//var connString = 'mongodb://sisadmin:BoulderHillRoll@ds053894.mongolab.com:53894/sisyphus';
+var connString = 'mongodb://localhost:27017/sisyphus';
 mongoose.connect(connString);
 
 
@@ -375,6 +375,7 @@ function sendEventToSisbot(serial,event,data){
     Sisbot.findOne({serial:serial}, function (err,bot) {
         //console.log(bot);
         if(bot.socketid) {
+            //console.log('socket id:',bot.socketid);
             io.sockets.connected[bot.socketid].emit(event, data);
         } else {
             console.log('Sisbot',serial,'not connected');

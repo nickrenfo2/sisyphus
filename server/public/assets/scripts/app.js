@@ -10,6 +10,10 @@ socket.on('connect', function () {
 });
 
 
+socket.on('statechange', function (state) {
+    
+});
+
 var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngMaterial']);  //normally want this
 
 //var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngAria', 'ngAnimate', 'ngMaterial'],function($mdThemingProvider) {
@@ -318,24 +322,6 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     //    captureUIState();
     //};
 
-    ////////////////////////////////
-    //Send a jog command to sisbot//
-    ////////////////////////////////
-
-    vm.jog = function (axis,dir) {
-        console.log('sending jog');
-        vm.jogging = setInterval(sendJog,40,axis,dir);
-    };
-
-    vm.stop = function(){
-        console.log('stop jogging');
-        clearInterval(vm.jogging);
-    };
-
-    function sendJog(axis,dir){
-        console.log('jog');
-        socket.emit('jog',{axis:axis,dir:dir});
-    }
 
     /////////////////////////
     //Have sisbot find home//
@@ -521,15 +507,15 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         '<div class="manualWrapper" ng-controller="ManualController as man">' +
             '<div class="manual row">' +
                 '<div class="col-xs-4 left">' +
-                    '<div id="turnCW" class="turn">' + '<i class="fa fa-rotate-right"></i></div>' +
+                    '<div id="turnCW" class="turn" ng-mousedown="man.jog(\'theta\',\'pos\')" ng-mouseleave="man.stop();" ng-mouseup="man.stop();">' + '<i class="fa fa-rotate-right"></i></div>' +
                 '</div>' +
                 '<div class="col-xs-4 mid">' +
-                    '<div id="moveOut" class="move"><i class="fa fa-upload"></i></div>' +
-                    '<div id="goHome" class="move" ng-click="man.test()"><i class="fa fa-bullseye"></i></div>' +
-                    '<div id="moveIn" class="move"><i class="fa fa-download"></i></div>' +
+                    '<div id="moveOut" class="move" ng-mousedown="man.jog(\'rho\',\'pos\')" ng-mouseleave="man.stop();" ng-mouseup="man.stop();"><i class="fa fa-upload"></i></div>' +
+                    '<div id="goHome" class="move" ng-mousedown="man.goHome()"><i class="fa fa-bullseye"></i></div>' +
+                    '<div id="moveIn" class="move" ng-mousedown="man.jog(\'rho\',\'neg\')" ng-mouseleave="man.stop();" ng-mouseup="man.stop();"><i class="fa fa-download"></i></div>' +
                 '</div>' +
                 '<div class="col-xs-4 right">' +
-                    '<div id="turnCCW" class="turn"><i class="fa fa-rotate-left"></i></div>' +
+                    '<div id="turnCCW" class="turn" ng-mousedown="man.jog(\'theta\',\'neg\')" ng-mouseleave="man.stop();" ng-mouseup="man.stop();"><i class="fa fa-rotate-left"></i></div>' +
                 '</div>' +
             '</div>' +
         '</div>';
@@ -597,6 +583,32 @@ app.controller('LoginController',['$http',function ($http) {
 
 app.controller('ManualController', [function() {
     var vm = this;
+
+
+    vm.test = function(){
+        console.log('test');
+    };
+
+
+    ////////////////////////////////
+    //Send a jog command to sisbot//
+    ////////////////////////////////
+
+    vm.jog = function (axis,dir) {
+        console.log('sending jog');
+        vm.jogging = setInterval(sendJog,40,axis,dir);
+    };
+
+    vm.stop = function(){
+        console.log('stop jogging');
+        clearInterval(vm.jogging);
+    };
+
+    function sendJog(axis,dir){
+        console.log('jog');
+        socket.emit('jog',{axis:axis,dir:dir});
+    }
+
 
 
     vm.goHome = function(){
