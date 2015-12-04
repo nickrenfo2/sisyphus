@@ -19,4 +19,3 @@ If there are multiple people/browsers controlling a single Sisbot, when any one 
 For info on The Art of Motion Control and the Sisyphus itself, [see http://www.taomc.com/](http://www.taomc.com/).
 
 For info on this interface, email me at nickrenfo@gmail.com
-Test
