@@ -143,20 +143,20 @@ router.get('/sis/getState', function (req,res) {
 
 //update the state of a sisbot
 router.post('/sis/putState', function (req,res) {
-    console.log("router: updating state: req.body:");
-    console.log(req.body);
+    // console.log("router: updating state: req.body:");
+    // console.log(req.body);
 
     var newState = req.body;
-    console.log(newState.curPlaylist);
-    console.log(newState.paths);
+    // console.log(newState.curPlaylist);
+    // console.log(newState.paths);
     //console.log('router: email: ',req.user.email);
     //console.log('router: password: ',req.user.password);
     //console.log('router: sisSerials: ',req.user.sisSerials);
     //console.log('router: current sisbot: ', req.user.curSisbot);
     //console.log('router: updating to newState:');
-    console.log('router: newstate: ',newState);
+    // console.log('router: newstate: ',newState);
 
-    console.log('router:newstate:paths', newState.paths);
+    // console.log('router:newstate:paths', newState.paths);
 
     Sisbot.findOneAndUpdate({serial: req.user.curSisbot}, {$set: {state: newState}},
         function (err) {
