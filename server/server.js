@@ -225,6 +225,12 @@ io.on('connection', function (socket) {
         sendEventToSisbot(socket.request.user.curSisbot,'jog',dir);
     });
 
+    socket.on('homed', function () {
+      var serial = socket.handshake.query.serial;
+      sendEventToSisbot(serial,"homed");
+      sendEventToControllers(serial,"homed");
+    });
+
     socket.on('pathcomplete', function(){
         console.log('server: received pathcomplete from sisbot');
         passportSocketIo.filterSocketsByUser(io, function(user){
@@ -381,6 +387,14 @@ function sendEventToSisbot(serial,event,data){
             console.log('Sisbot',serial,'not connected');
         }
     });
+}
+
+function sendEventToControllers(serial,event,data) { //Send event to all users currently commanding this sisbot
+  passportSocketIo.filterSocketsByUser(io, function(user){
+      return user.curSisbot===serial;
+  }).forEach(function(socket){
+      socket.emit('statechange',state);
+  });
 }
 
 var server = http.listen(process.env.PORT || 3000, function () {
