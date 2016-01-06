@@ -383,6 +383,7 @@ function sendEventToSisbot(serial,event,data){
         if(bot.socketid) {
             //console.log('socket id:',bot.socketid);
             io.sockets.connected[bot.socketid].emit(event, data ? data : null);
+            console.log('sending event "'+event+'"to sisbot',serial);
         } else {
             console.log('Sisbot',serial,'not connected');
         }
@@ -392,6 +393,7 @@ function sendEventToSisbot(serial,event,data){
 function sendEventToControllers(serial,event,data) { //Send event to all users currently commanding this sisbot
   passportSocketIo.filterSocketsByUser(io, function(user){
       return user.curSisbot===serial;
+      console.log('sending event "'+event+'" to user',user.username);
   }).forEach(function(socket){
       socket.emit(event,data ? data : null);
   });
