@@ -1,0 +1,48 @@
+Sisbot config.txt file Sis_39+   230:18
+
+Plot size and gearing:
+1. Radius (inches)= 6.0
+2. Theta steps/rev (after gearing)= 40888.89
+3. R steps/rev= 3200
+4. steps/inch= 2573.284
+
+Default movement parameters:
+5. Default velocity (in/sec)= 1
+6. Default acceleration (in/sec^2)= 1
+7. Default max Theta motor velocity (radians/sec)= .7
+8. Jog distance Theta (rads) = .01
+9. Jog distance R (inches) = .04
+10. Jog velocity for Theta (rad/s)= .6
+11. Jog velocity for R (inch/s)= .6
+12. Homing velocity for Theta (rad/s)= .2
+13. Homing velocity for R (inch/s)= .6
+
+Home and fault sensing:
+14. Use Home sensors = 1
+15. Active state for Home sensor (0 or 1) = 0
+16. Use Fault sensors = 0
+17. Active state for Fault sensor (0 or 1) = 1
+
+Axis directions and nested axis compensation:
+18. Nested axis sign (-1 or 1, or 0 if no Naxis) = -1
+19. Theta Direction sign (-1 or 1) = 1
+20. R Direction sign (-1 or 1) = 1
+
+Sleep/wake and auto mode:
+21. Wake time default(0-23):(0-59)format = 7:00
+22. Sleep time default(0-23):(0-59)format = 23:00
+23. Wake/sleep enabled on startup (0 or 1)= 1
+24. Auto mode on startup (0 or 1)= 0
+25. Default playlist for auto mode = pl2c2.pl
+26. LED brightness during AWAKE time (0-10)= 8
+27. LED brightness during SLEEP time (0-10)= 1
+
+
+
+
+
+
+
+
+
+

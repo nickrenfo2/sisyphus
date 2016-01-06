@@ -1,0 +1,16 @@
+{
+  "name": "sisbot",
+  "version": "1.0.0",
+  "description": "Controller for Sisyphus",
+  "main": "sis01.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node sis01.js"
+  },
+  "author": "Nick Renford + Bruce Shapiro",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^2.0.5",
+    "socket.io-client": "^1.3.7"
+  }
+}
