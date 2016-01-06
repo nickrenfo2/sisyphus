@@ -382,7 +382,7 @@ function sendEventToSisbot(serial,event,data){
         //console.log(bot);
         if(bot.socketid) {
             //console.log('socket id:',bot.socketid);
-            io.sockets.connected[bot.socketid].emit(event, data);
+            io.sockets.connected[bot.socketid].emit(event, data ? data : null);
         } else {
             console.log('Sisbot',serial,'not connected');
         }
@@ -393,7 +393,7 @@ function sendEventToControllers(serial,event,data) { //Send event to all users c
   passportSocketIo.filterSocketsByUser(io, function(user){
       return user.curSisbot===serial;
   }).forEach(function(socket){
-      socket.emit('statechange',state);
+      socket.emit(event,data ? data : null);
   });
 }
 
