@@ -5,7 +5,7 @@
   "main": "sis01.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node sis01.js"
+    "start": "node sisbot.js"
   },
   "author": "Nick Renford + Bruce Shapiro",
   "license": "ISC",
