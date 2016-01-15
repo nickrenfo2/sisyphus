@@ -432,14 +432,14 @@ md-switch.md-checked .md-bar {
         width: 100%;
         height: 6%;
     }
-    .repeatContainer {
+    .repeatContainer, .shuffleContainer {
         width: 50%;
         height: 100%;
         padding-top: 1px;
         margin: 0;
         float: left;
     }
-    .repeatBox {
+    .repeatBox, .shuffleBox {
         margin-left: 10%;
         padding-top: 5px;
     }
@@ -625,16 +625,16 @@ md-switch.md-checked .md-bar {
         width: 100%;
         height: 10%;
     }
-    .repeatContainer {
+    .repeatContainer, .shuffleContainer {
         width: 50%;
         height: 100%;
         float: left;
     }
-    .repeatDiv {
+    .repeatDiv, .shuffleDiv {
         margin-top: 7%;
         margin-left: 10%;
     }
-    .repeatBox {
+    .repeatBox, .shuffleBox {
         margin-left: 10%;
     }
     .manualContainer {
@@ -745,7 +745,7 @@ md-switch.md-checked .md-bar {
 } /* end tablet or desktop */
 
 
-.awakePlaylistContainer, .xOutOfYContainer, .progressContainer, .playPauseContainer, .repeatContainer, .speedContainer, .lightsContainer{
+.awakePlaylistContainer, .xOutOfYContainer, .progressContainer, .playPauseContainer, .repeatContainer, .shuffleContainer, .speedContainer, .lightsContainer{
     border: none;
 }
 
