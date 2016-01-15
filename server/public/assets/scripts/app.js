@@ -357,6 +357,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         }
 
         state.repeat        = vm.repeatVal;
+        state.shuffle       = vm.shuffleVal;
         state.speed         = vm.speedSlider.value;
         state.lights        = vm.lightsSlider.value;
 
