@@ -48,6 +48,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         state.curPathInd    = 0;
         state.progress      = 0;
         state.repeat        = false;
+        state.shuffle       = false;
         state.paths         = ['Paths -none selected '];
         state.speed         = 1;
         state.lights        = 0;
