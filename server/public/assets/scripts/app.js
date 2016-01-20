@@ -96,6 +96,15 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         });
     }
 
+    function sendStateItem(item){
+        captureUIState();
+        data = {
+            item:item,
+            state:state[item]
+        };
+        socket.emit('stateItemChange',data);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////
     // get call to server for all playlists to determine paths in curPlaylist //
@@ -591,7 +600,6 @@ app.controller('ManualController', [function() {
         console.log('test');
     };
 
-
     ////////////////////////////////
     //Send a jog command to sisbot//
     ////////////////////////////////
@@ -614,6 +622,7 @@ app.controller('ManualController', [function() {
 
 
     vm.goHome = function(){
+        console.log('go home');
         socket.emit('goHome');
     }
 

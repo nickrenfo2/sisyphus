@@ -114,9 +114,9 @@
         <!-- repeat playlist-->
         <div class="repeatContainer">
             <div class="repeatDiv">
-                <input ng-change="main.sendState()" class="repeatBox" type="checkbox" ng-model="main.repeatVal">
+                <input ng-change="main.sendStateItem('repeat')" class="repeatBox" type="checkbox" ng-model="main.repeatVal">
                 <span class="repeatText UItext">Repeat Playlist</span>
-                <input ng-change="main.sendState()" class="shuffleBox" type="checkbox" ng-model="main.shuffleVal">
+                <input ng-change="main.sendStateItem('shuffle')" class="shuffleBox" type="checkbox" ng-model="main.shuffleVal">
                 <span class="repeatText UItext">Shuffle Playlist</span>
             </div>
             <!--<div class="shuffleDiv">-->
@@ -154,7 +154,7 @@
 
     <!-- PlayPauseM is only shown on mobile-->
     <div class="playPauseContainerM">
-        <div class="playPauseButtonM" ng-click="main.playPauseClick();main.sendState();">
+        <div class="playPauseButtonM" ng-click="main.playPauseClick();main.sendStateItem('status');">
             <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
             <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
         </div>
@@ -170,14 +170,14 @@
                 rz-slider-model="main.speedSlider.value"
                 rz-slider-floor="main.speedSlider.floor"
                 rz-slider-ceil= "main.speedSlider.ceil"
-                rz-slider-on-end="main.sendState()">
+                rz-slider-on-end="main.sendStateItem('speed')">
             </rzslider>
         </div>
 
 
         <!-- PlayPauseD is only shown on desktop-->
         <div class="playPauseContainerD">
-            <div class="playPauseButtonD" ng-click="main.playPauseClick();main.sendState();">
+            <div class="playPauseButtonD" ng-click="main.playPauseClick();main.sendStateItem('status');">
                 <i class="fa fa-play fa-4x" ng-show="main.showPlay"></i>
                 <i class="fa fa-pause fa-4x" ng-hide="main.showPlay"></i>
             </div>
@@ -191,7 +191,7 @@
                 rz-slider-model="main.lightsSlider.value"
                 rz-slider-floor="main.lightsSlider.floor"
                 rz-slider-ceil="main.lightsSlider.ceil"
-                rz-slider-on-change="main.sendState()">
+                rz-slider-on-change="main.sendStateItem('lights')">
             </rzslider>
         </div>
     </div>

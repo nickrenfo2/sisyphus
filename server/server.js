@@ -220,6 +220,12 @@ io.on('connection', function (socket) {
         });
     });
 
+    socket.on('stateItemChange',function(data){
+        console.log('state item changed.');
+        console.log(data);
+        sendEventToSisbot(socket.request.user.curSisbot,'state_'+data.item,data.state);
+    });
+
     socket.on('jog', function (dir) {
         //console.log('jog recieved');
         sendEventToSisbot(socket.request.user.curSisbot,'jog',dir);
