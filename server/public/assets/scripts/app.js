@@ -5,30 +5,11 @@
 
 
 var socket = io();
-socket.on('connect', function () {
+    socket.on('connect', function () {
             socket.emit('myTest');
 });
 
-
-socket.on('statechange', function (state) {
-    
-});
-
 var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngMaterial']);  //normally want this
-
-//var app = angular.module('sisApp',['rzModule', 'ui.bootstrap', 'ngAria', 'ngAnimate', 'ngMaterial'],function($mdThemingProvider) {
-//    var blueTheme = $mdThemingProvider.theme('blueTheme', 'default');
-//    var bluePalette = $mdThemingProvider.extendPalette('blue', {
-//        '500': '#03A9F4'
-//    });
-//    $mdThemingProvider.definePalette('bluePalette', bluePalette);
-//    blueTheme.primaryPalette('bluePalette');
-//});  //normally want this
-
-
-// var app = angular.module('sisApp',[]);  //necessary if logged out
-
-
 
 
 app.controller('MainController',['$http', '$scope','$mdDialog', function ($http, $scope,$mdDialog) {
@@ -96,14 +77,15 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         });
     }
 
-    function sendStateItem(item){
+    vm.sendStateItem = function (item){
+        console.log('send state item change');
         captureUIState();
-        data = {
+        var data = {
             item:item,
             state:state[item]
         };
         socket.emit('stateItemChange',data);
-    }
+    };
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -183,7 +165,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
             vm.onoffswitch = false;
             play = false;
             vm.showPlay = true;
-        } else if (state.status == 'play') {
+        } else if (state.status == 'playing') {
             play = true;
             vm.showPlay = false;
             vm.onoffswitch = true;
@@ -292,16 +274,6 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     };
 
 
-    ///////////////////////////////////////
-    // UI click to go to the Manual page //
-    ///////////////////////////////////////
-
-    //vm.manualMovement = function(){
-    //    console.log('saw Manual Movement click');
-    //    window.location.asssign("/manual");
-    //};
-
-
     ////////////////////////////////////
     // Watch for changes to controls, //
     // -update db  on control changes //
@@ -321,21 +293,6 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     vm.sendState = function(){
         captureUIState();
     };
-
-    /////////////////////////////////////////////////////////
-    // Capture state on UI button click during development //
-    /////////////////////////////////////////////////////////
-
-    //vm.captureUIState=function(){
-    //    console.log('saw capture state click');
-    //    console.log('******** new switch: ',vm.onoffswitch);
-    //    captureUIState();
-    //};
-
-
-    /////////////////////////
-    //Have sisbot find home//
-    /////////////////////////
 
     vm.goHome = function(){
         socket.emit('goHome');
@@ -357,12 +314,10 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         // update the state object from UI inputs
 
         // determine the status from the on/off and play/pause switches
-        if(vm.onoffswitch == false){
-            state.status = "sleep";
-        } else if(play==true) {
-            state.status = "play";
+        if(play==true) {
+            state.status = "playing";
         } else {
-            state.status = "pause";
+            state.status = "waiting";
         }
 
         state.repeat        = vm.repeatVal;
@@ -475,7 +430,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
         // update current path index and progress
 
         // Pathcomplete should only happen in play mode. Otherwise disregard.
-        if (state.status == 'play') {
+        if (state.status == 'playing') {
             // if not done with playlist start next path
             if (state.curPathInd < (state.paths.length - 1)) {
                 state.curPathInd++;
@@ -549,7 +504,9 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     }
 
     vm.manualMovement = showAlert;
-
+    //vm.sendStateItem('curPlaylist'); //Send the playlist every time the page is loaded.
+    //For some reason the above line breaks everything. Specifically, when it tries to grab the value of SpeedSlider
+    //My guess is that the element hasn't fully rendered yet, so it is undefined when it tries to get the value
 }]);
 
 
