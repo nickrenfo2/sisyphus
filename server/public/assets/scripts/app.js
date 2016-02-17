@@ -24,7 +24,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     //////////////////////////////////////////////////////
 
     var state = {};
-        state.status        = 'sleep';
+        state.status        = 'waiting';
         state.curPlaylist   = 'Playlist -none selected';
         state.curPathInd    = 0;
         state.progress      = 0;
@@ -71,7 +71,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
             state = response.data.state;
 
             curPlaylist = state.curPlaylist;
-
+            socket.emit('changePL',state.curPlaylist);
             // use curPlaylist and Playlist db
             getPlaylistsFromDb()
         });
@@ -84,6 +84,8 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
             item:item,
             state:state[item]
         };
+        console.log('Sending State Item:');
+        console.log(data);
         socket.emit('stateItemChange',data);
     };
 
@@ -381,14 +383,14 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
     ///////////////////////////////////////////
 
     // send a test statechange message to sisbot
-    vm.changeState = function() {
-        console.log('clientApp: saw change state click');
-        var changes = {
-            status:'paused',
-            speed:10
-        };
-        socket.emit('statechange',changes);
-    };
+    //vm.changeState = function() {
+    //    console.log('clientApp: saw change state click');
+    //    var changes = {
+    //        status:'paused',
+    //        speed:10
+    //    };
+    //    socket.emit('statechange',changes);
+    //};
 
 
     /////////////////////////////////////////////////////////////
@@ -443,7 +445,7 @@ app.controller('MainController',['$http', '$scope','$mdDialog', function ($http,
                 //console.log('clientApp:pathcomplete: zero curPathInd: ', state.curPathInd);
             // otherwise playlist is done, change status to pause and set progress to 100%.
             } else {
-                state.status = "pause";
+                state.status = "waiting";
                 state.progress = 100;
                 //console.log('clientApp:pathcomplete: leave curPathInd alone: ', state.curPathInd);
             }

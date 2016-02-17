@@ -300,6 +300,10 @@ io.on('connection', function (socket) {
         })
     });
 
+    socket.on('changePL',function(newPL){
+        sendEventToSisbot(socket.request.user.curSisbot,'changePL',newPL);
+    });
+
     socket.on('goHome', function () {
         //console.log('go home');
         sendEventToSisbot(socket.request.user.curSisbot,'goHome');
